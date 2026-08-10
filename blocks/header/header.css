@@ -983,6 +983,7 @@ header nav .nav-brand a img {
     position: relative;
     top: auto;
     left: auto;
+    z-index: 10;                /* keep the overhanging logo above the hero */
     background-color: var(--conti-white);
     border-bottom: 1px solid var(--color-neutral-300);
     overflow: visible;
@@ -1011,14 +1012,28 @@ header nav .nav-brand a img {
     overflow: visible;
   }
 
-  /* Brand column: logo on the LEFT, vertically centered across both rows */
+  /* Brand column: large logo on the LEFT that overhangs BELOW the white header
+     into the hero (like the original). The logo is absolutely positioned within
+     its reserved column so its overflow doesn't grow the header height. */
   header nav .nav-brand {
     grid-area: brand;
-    place-self: center start;
+    place-self: stretch start;
+    position: relative;
+    width: 240px;
+    min-width: 240px;
+  }
+
+  header nav .nav-brand a {
+    position: absolute;
+    bottom: -28px;              /* overhang into the hero */
+    left: 0;
+    display: block;
+    margin: 0;
+    line-height: 0;
   }
 
   header nav .nav-brand a img {
-    height: 80px;
+    height: 135px;
     width: auto;
     transition: height 0.25s ease;
   }
