@@ -531,6 +531,14 @@ export default async function decorate(block) {
   navWrapper.append(nav);
   block.append(navWrapper);
 
+  // Condense the transparent overlapping header into a compact white sticky
+  // bar once the user scrolls past the top (matches the source .scrolled state).
+  const applyScrolledState = () => {
+    navWrapper.classList.toggle('scrolled', window.scrollY > 40);
+  };
+  applyScrolledState();
+  window.addEventListener('scroll', applyScrolledState, { passive: true });
+
   navWrapper.addEventListener('mouseout', (e) => {
     if (isDesktop.matches && !nav.contains(e.relatedTarget)) {
       toggleAllNavSections(navSections);
