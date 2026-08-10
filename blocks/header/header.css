@@ -980,45 +980,46 @@ header nav .nav-brand a img {
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
   }
 
-  /* Two-row grid: logo spans the left; utility (tools) over main nav (sections)
-     on the right. Match [aria-expanded] too so this beats the boilerplate's
+  /* Two-row grid: logo pinned to the far RIGHT (spans both rows); the two nav
+     rows sit to its left — utility (tools) on top, main nav (sections) below.
+     Match [aria-expanded] too so this beats the boilerplate's
      `header nav[aria-expanded='true']` 3-row stacked grid (higher specificity). */
   header nav,
   header nav[aria-expanded='true'],
   header nav[aria-expanded='false'] {
     display: grid;
     grid-template:
-      'brand tools' auto
-      'brand sections' auto / auto 1fr;
-    align-items: start;
+      'tools brand' auto
+      'sections brand' auto / 1fr auto;
+    align-items: center;
     justify-content: unset;
-    gap: 6px 32px;
+    gap: 10px 40px;
     max-width: 1264px;
     height: auto;
-    min-height: 104px;
-    padding: 0 32px;
+    min-height: 124px;          /* taller so both rows fit comfortably */
+    padding: 14px 32px;
     overflow: visible;
   }
 
-  /* Brand column: large logo that overlaps downward into the hero */
+  /* Brand column: logo on the far right, vertically centered across both rows */
   header nav .nav-brand {
     grid-area: brand;
-    align-self: start;
+    place-self: center end;
   }
 
   header nav .nav-brand a img {
-    height: 90px;
+    height: 80px;
     width: auto;
     transition: height 0.25s ease;
   }
 
-  /* Utility row (Find Your Tire / Where to buy) — top-right, smaller */
+  /* Utility row (Find Your Tire / Where to buy) — top row, right-aligned next to the logo */
   header nav .nav-tools {
     grid-area: tools;
     justify-self: end;
     align-items: center;
     gap: 20px;
-    padding-top: 8px;
+    padding-top: 0;
   }
 
   header nav .nav-tools .default-content-wrapper > ul {
@@ -1041,7 +1042,7 @@ header nav .nav-brand a img {
     color: var(--conti-orange);
   }
 
-  /* Main nav row — bottom-right */
+  /* Main nav row — second row, right-aligned next to the logo */
   header nav .nav-sections {
     grid-area: sections;
     place-self: center end;
@@ -1049,6 +1050,7 @@ header nav .nav-brand a img {
 
   header nav .nav-sections .default-content-wrapper > ul {
     justify-content: flex-end;
+    margin: 0;
   }
 
   /* --- Scrolled: condensed white sticky bar --- */
@@ -1064,6 +1066,7 @@ header nav .nav-brand a img {
     min-height: 56px;
     align-items: center;
     row-gap: 0;
+    padding: 6px 32px;
   }
 
   /* Shrink logo and hide the utility row in the condensed bar */
