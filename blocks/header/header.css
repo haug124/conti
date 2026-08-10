@@ -388,6 +388,19 @@ header nav .nav-tools button.nav-wishlist-button {
   position: relative;
 }
 
+/* Dashboard icon (leftmost commerce icon, before the wishlist) */
+header nav .nav-tools a.nav-dashboard-button {
+  display: block;
+  box-sizing: border-box;
+  height: 40px;
+  width: 40px;
+  padding: 10px;
+  background-image: url('../../icons/dashboard.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
 header nav .nav-tools button.nav-search-button {
   font-size: 0;
   background-image: url('../../icons/search.svg');

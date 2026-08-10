@@ -223,6 +223,15 @@ export default async function decorate(block) {
 
   const navTools = nav.querySelector('.nav-tools');
 
+  /** Dashboard (leftmost commerce icon, before the wishlist) */
+  const dashboard = document.createRange().createContextualFragment(`
+     <div class="dashboard-wrapper nav-tools-wrapper">
+       <a class="nav-dashboard-button" href="${rootLink('/customer/account')}" aria-label="Dashboard"></a>
+     </div>
+   `);
+
+  navTools.append(dashboard);
+
   /** Wishlist */
   const wishlist = document.createRange().createContextualFragment(`
      <div class="wishlist-wrapper nav-tools-wrapper">
