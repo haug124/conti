@@ -1041,9 +1041,13 @@ header nav .nav-brand a img {
     list-style: none;
   }
 
+  /* Utility row links: BOLD, with a leading icon (tire / pin). */
   header nav .nav-tools .default-content-wrapper > ul > li > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-size: 14.5px;
-    font-weight: 500;
+    font-weight: 700;
     color: var(--conti-black);
     text-decoration: none;
     font-family: var(--conti-font-family);
@@ -1051,6 +1055,29 @@ header nav .nav-brand a img {
 
   header nav .nav-tools .default-content-wrapper > ul > li > a:hover {
     color: var(--conti-orange);
+  }
+
+  /* Leading icons before the utility links (keyed by href).
+     Inline SVGs (currentColor) so they inherit black / orange-on-hover. */
+  header nav .nav-tools .default-content-wrapper > ul > li > a::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    background-color: currentcolor;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  /* Tire icon → "Find Your Tire" (product-search link) */
+  header nav .nav-tools .default-content-wrapper > ul > li > a[href*="product-search"]::before {
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>');
+  }
+
+  /* Map-pin icon → "Where to buy" */
+  header nav .nav-tools .default-content-wrapper > ul > li > a[href*="where-to-buy"]::before {
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.6"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>');
   }
 
   /* Main nav row — second row, right-aligned next to the logo */
@@ -1062,6 +1089,18 @@ header nav .nav-brand a img {
   header nav .nav-sections .default-content-wrapper > ul {
     justify-content: flex-end;
     margin: 0;
+  }
+
+  /* Normalize ALL top-level nav labels to one size/weight — the boilerplate
+     renders dropdown labels (<p>, 14px) differently from simple links (<a>,
+     16px). Force both to 16px / weight 700 / consistent line-height. */
+  header nav .nav-sections .default-content-wrapper > ul > li > p,
+  header nav .nav-sections .default-content-wrapper > ul > li > p > a,
+  header nav .nav-sections .default-content-wrapper > ul > li > a {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    font-family: var(--conti-font-family);
   }
 
   /* Subtle shadow once scrolled (JS adds .scrolled to .nav-wrapper). The header
