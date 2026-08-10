@@ -1,0 +1,44 @@
+{
+  "variantName": "columns-teaser",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-08-10T11:14:55.458Z",
+  "sourceContext": {
+    "originUrl": "https://www.continental-tires.com",
+    "originPage": "Continental Tires global homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "text-image-teaser",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "2 cols: heading + paragraph + Read more | image (order reversible)",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "about/teaser rows with text beside image",
+      "alternating text-left / image-left promo rows",
+      "2-column informational sections"
+    ],
+    "notSuitableFor": [
+      "grids of repeatable distinct cards",
+      "3+ column data comparisons"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/index",
+      "/products/car/index",
+      "/products/car/product-search/index",
+      "/products/car/product-search/search-by-size/index",
+      "/products/car/product-search/search-by-vehicle/index"
+    ],
+    "reuseCount": 5,
+    "lastUsed": "2026-08-10T12:47:30.000Z"
+  }
+}

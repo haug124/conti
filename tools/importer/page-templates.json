@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "projectType": "da"
+  },
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": [
+        "https://www.continental-tires.com"
+      ],
+      "coverageGaps": [],
+      "description": "Global homepage: welcome stage, product-area gateway carousel, region/location selector, 'More about Continental' teaser rows, and Trending Stories card grid.",
+      "blocks": [
+        {
+          "name": "hero-welcome",
+          "instances": [
+            "main .stage-image.teaser"
+          ]
+        },
+        {
+          "name": "carousel-gateway",
+          "instances": [
+            "main .product-area-gateway"
+          ]
+        },
+        {
+          "name": "region-selector",
+          "instances": [
+            "main .container:nth-of-type(4)"
+          ]
+        },
+        {
+          "name": "columns-teaser",
+          "instances": [
+            "main .container:nth-of-type(8)",
+            "main .container:nth-of-type(10)",
+            "main .container:nth-of-type(12)"
+          ]
+        },
+        {
+          "name": "cards-story",
+          "instances": [
+            "main .container:nth-of-type(13)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "car-landing",
+      "urls": [
+        "https://www.continental-tires.com/products/car/"
+      ],
+      "coverageGaps": [],
+      "description": "Car & Van product landing page: promo stage, 'Find your tire' CTA, vehicle-type card grid, product carousel, technologies teaser, smart tips card grid, and 'Why Continental' quality-promise grid.",
+      "blocks": [
+        {
+          "name": "hero-welcome",
+          "instances": [
+            "main .stage-image.teaser"
+          ]
+        },
+        {
+          "name": "cards-feature",
+          "instances": [
+            "main .image-list.image-list--a",
+            "main .image-list.image-list--d"
+          ]
+        },
+        {
+          "name": "carousel-gateway",
+          "instances": [
+            "main .product-highlighting-cards"
+          ]
+        },
+        {
+          "name": "columns-teaser",
+          "instances": [
+            "main .product-hero-teaser"
+          ]
+        },
+        {
+          "name": "cards-story",
+          "instances": [
+            "main .image-list.image-list--e"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "product-search",
+      "urls": [
+        "https://www.continental-tires.com/products/car/product-search/"
+      ],
+      "coverageGaps": [],
+      "description": "Tire finder entry page: 'How would you like to search?' mode chooser with Search by size / Search by vehicle options and Skip to results.",
+      "blocks": [
+        {
+          "name": "columns-teaser",
+          "instances": [
+            "main .tiresearch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "search-results",
+      "urls": [
+        "https://www.continental-tires.com/products/car/search-results/"
+      ],
+      "coverageGaps": [],
+      "description": "Product listing page (PLP): filter panel (vehicle type, OEM, additional filters) plus a grid of Continental car/4x4/van tire product cards.",
+      "blocks": []
+    },
+    {
+      "name": "search-by-size",
+      "urls": [
+        "https://www.continental-tires.com/products/car/product-search/search-by-size/"
+      ],
+      "coverageGaps": [],
+      "description": "Search-by-size page: heading, instructions, and a static tire-size input form (width, aspect ratio, diameter, speed/load index) with Back/Show results controls.",
+      "blocks": [
+        {
+          "name": "columns-teaser",
+          "instances": [
+            "main .tiresearchbysize"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "search-by-vehicle",
+      "urls": [
+        "https://www.continental-tires.com/products/car/product-search/search-by-vehicle/"
+      ],
+      "coverageGaps": [],
+      "description": "Search-by-vehicle page: heading, instructions, and a static vehicle-selection form (brand, model, year, version, fitment) with Back/Show results controls.",
+      "blocks": [
+        {
+          "name": "columns-teaser",
+          "instances": [
+            "main .tiresearchbyvehicle"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+/* Block: carousel-gateway
+ * Horizontal tile carousel — handles two authored shapes:
+ *   1. Homepage vehicle categories: image + H5 title + "Explore" link
+ *   2. Car-landing product tiles:   image + orange eyebrow + H5 + description + "View details" link
+ * Values extracted from source computed styles (continental-tires.com):
+ *   title h5 24px/700 #000 ls .5px · eyebrow 16px/500 #ffa500 ls .24px · body 18px/300 #000
+ *   links 18px/700 #000 (black, not orange buttons) · tiles scroll horizontally, ~5 visible on wide.
+ */
+
+.carousel-gateway {
+  --cg-gap: 16px;
+  --cg-img-height: 200px;
+}
+
+/* Track ---------------------------------------------------------------- */
+.carousel-gateway .carousel-gateway-slides-container {
+  position: relative;
+}
+
+.carousel-gateway .carousel-gateway-slides {
+  display: flex;
+  gap: var(--cg-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel-gateway .carousel-gateway-slides::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tile ----------------------------------------------------------------- */
+.carousel-gateway .carousel-gateway-slide {
+  flex: 0 0 68%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Image sits on a shared baseline so mixed aspect ratios line up
+   (tall tire product shots on the homepage, square PNGs on car-landing). */
+.carousel-gateway .carousel-gateway-slide-image {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: var(--cg-img-height);
+}
+
+.carousel-gateway .carousel-gateway-slide-image picture {
+  display: inline-flex;
+  height: 100%;
+  align-items: flex-end;
+}
+
+.carousel-gateway .carousel-gateway-slide-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Content -------------------------------------------------------------- */
+.carousel-gateway .carousel-gateway-slide-content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 16px 12px 0;
+}
+
+/* Orange eyebrow label (car-landing shape only). */
+.carousel-gateway .carousel-gateway-eyebrow {
+  order: -1;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0.24px;
+  color: var(--conti-orange);
+}
+
+.carousel-gateway .carousel-gateway-slide-content h5 {
+  margin: 8px 0 4px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  color: var(--conti-black);
+}
+
+/* Description paragraph (car-landing shape). */
+.carousel-gateway .carousel-gateway-slide-content p:not(.carousel-gateway-eyebrow, .carousel-gateway-cta) {
+  margin: 8px 0 0;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 24px;
+  color: var(--conti-black);
+}
+
+/* CTA: "Explore" / "View details" — black, bold, no underline (not an orange button). */
+.carousel-gateway .carousel-gateway-cta {
+  margin: 16px 0 0;
+}
+
+.carousel-gateway .carousel-gateway-cta a {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--conti-black);
+  text-decoration: none;
+}
+
+.carousel-gateway .carousel-gateway-cta a:hover,
+.carousel-gateway .carousel-gateway-cta a:focus-visible {
+  color: var(--conti-orange);
+  text-decoration: none;
+}
+
+/* Navigation arrows ---------------------------------------------------- */
+.carousel-gateway .carousel-gateway-navigation-buttons {
+  position: absolute;
+  top: calc(var(--cg-img-height) / 2);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.carousel-gateway .carousel-gateway-navigation-buttons[hidden] {
+  display: none;
+}
+
+.carousel-gateway .carousel-gateway-navigation-buttons button {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--conti-black);
+  border-radius: 50%;
+  background-color: var(--conti-white);
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.carousel-gateway .carousel-gateway-navigation-buttons button::before {
+  content: '';
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--conti-black);
+  border-bottom: 2px solid var(--conti-black);
+  transition: border-color 0.2s;
+}
+
+.carousel-gateway .carousel-gateway-nav-prev::before {
+  transform: rotate(135deg);
+  margin-left: 4px;
+}
+
+.carousel-gateway .carousel-gateway-nav-next::before {
+  transform: rotate(-45deg);
+  margin-right: 4px;
+}
+
+.carousel-gateway .carousel-gateway-navigation-buttons button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.carousel-gateway .carousel-gateway-navigation-buttons button:hover:not(:disabled),
+.carousel-gateway .carousel-gateway-navigation-buttons button:focus-visible:not(:disabled) {
+  border-color: var(--conti-orange);
+}
+
+.carousel-gateway .carousel-gateway-navigation-buttons button:hover:not(:disabled)::before,
+.carousel-gateway .carousel-gateway-navigation-buttons button:focus-visible:not(:disabled)::before {
+  border-color: var(--conti-orange);
+}
+
+/* Responsive ----------------------------------------------------------- */
+@media (min-width: 600px) {
+  .carousel-gateway .carousel-gateway-slide {
+    flex-basis: calc((100% - 2 * var(--cg-gap)) / 3);
+  }
+}
+
+@media (min-width: 900px) {
+  .carousel-gateway {
+    --cg-gap: 24px;
+    --cg-img-height: 240px;
+  }
+
+  .carousel-gateway .carousel-gateway-slide {
+    flex-basis: calc((100% - 3 * var(--cg-gap)) / 4);
+  }
+}
+
+@media (min-width: 1200px) {
+  .carousel-gateway .carousel-gateway-slide {
+    flex-basis: calc((100% - 4 * var(--cg-gap)) / 5);
+  }
+}

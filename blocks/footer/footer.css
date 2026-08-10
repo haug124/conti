@@ -1,13 +1,17 @@
 footer {
-    background-color: var(--color-neutral-100);
-    font: var(--type-body-2-default-font);
+    background-color: var(--conti-white);
+    color: var(--conti-black);
+    border-top: 1px solid var(--color-neutral-300);
+    font-family: var(--conti-font-family);
+    font-size: 1.4rem;
     letter-spacing: var(--type-body-2-default-letter-spacing);
 }
 
 footer .footer > div {
-    margin: auto;
-    max-width: 1200px;
-    padding: 40px 24px 24px;
+    margin: 0;
+    max-width: none;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--color-neutral-300);
 }
 
 footer .footer p {
@@ -71,3 +75,90 @@ footer .footer p {
         padding: 40px 32px 24px;
     }
 }
+
+/* ==========================================================================
+   Continental Tires — footer brand styling
+   Columns for Explore/Follow us + logo + legal, orange link hovers.
+   ========================================================================== */
+/* stylelint-disable no-descending-specificity */
+
+footer .footer {
+    margin: auto;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 24px;
+}
+
+footer .footer h3 {
+    font-family: var(--conti-font-family);
+    color: var(--conti-black);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 16px;
+}
+
+footer .footer img {
+    height: 32px;
+    width: auto;
+}
+
+footer .footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+footer .footer a {
+    color: var(--conti-black);
+    text-decoration: none;
+}
+
+footer .footer a:hover {
+    color: var(--conti-orange);
+    text-decoration: underline;
+}
+
+/* Legal links row: wrap horizontally */
+footer .footer > div:last-child ul {
+    flex-flow: row wrap;
+    gap: 8px 20px;
+}
+
+footer .footer > div:last-child {
+    border-bottom: 0;
+}
+
+footer .footer > div:last-child p {
+    margin-top: 16px;
+    color: var(--color-neutral-700);
+}
+
+@media (min-width: 900px) {
+    footer .footer {
+        grid-template-columns: auto 1fr 1fr;
+        gap: 0 48px;
+        padding: 48px 32px;
+        align-items: start;
+    }
+
+    /* Logo spans left; Explore + Follow us are the two right columns */
+    footer .footer > div {
+        border-bottom: 0;
+        padding: 0;
+    }
+
+    /* Legal links span the full width as a bottom row */
+    footer .footer > div:last-child {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--color-neutral-300);
+        margin-top: 32px;
+        padding-top: 24px;
+    }
+}
+
+/* stylelint-enable no-descending-specificity */

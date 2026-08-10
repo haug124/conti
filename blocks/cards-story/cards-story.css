@@ -1,0 +1,116 @@
+/*
+ * cards-story — article/story card grid.
+ * Visual design migrated from continental-tires.com "image-list--e"
+ * ("Our smart tips" on /products/car/, "Trending Stories" on the homepage).
+ * Source card = borderless: image on top, bold title, underlined "Read more".
+ * Date + description are present in the content but hidden in this variant
+ * (matches the source, which sets them to display:none).
+ * All values below come from the source computed styles (root font-size 18px).
+ */
+
+/* Grid: 1 col mobile, 2 tablet, 3 desktop. Source column-gap measured at 0
+   (images sit flush against each other); row spacing via li margin-bottom. */
+.cards-story > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (min-width: 600px) {
+  .cards-story > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .cards-story > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card: borderless, transparent, sharp corners (source li has no border/bg/shadow). */
+.cards-story > ul > li {
+  margin: 0 0 40px;              /* source mobile margin-block-end 2.22222rem */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+@media (min-width: 900px) {
+  .cards-story > ul > li {
+    margin-bottom: 90px;         /* source desktop margin-block-end 5rem */
+  }
+}
+
+/* Image: full card width, source crop ratio 382x343, object-fit cover. */
+.cards-story .cards-story-card-image {
+  line-height: 0;
+}
+
+.cards-story .cards-story-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 382 / 343;       /* from source image 382.5w x 343h */
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Body: source text-content padding 20px top / 12px sides. */
+.cards-story .cards-story-card-body {
+  padding: 20px 12px 0;
+}
+
+/* Hide empty body cells (homepage card with no authored image). */
+.cards-story .cards-story-card-body:empty {
+  display: none;
+  padding: 0;
+}
+
+/* Title: 30px/40px bold black (source item-title). The link inherits so it is
+   not shrunk to 16px by the global `main a` font shorthand. */
+.cards-story .cards-story-card-body h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* stylelint-disable no-descending-specificity */
+.cards-story .cards-story-card-body h3 a {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-decoration: none;
+}
+
+.cards-story .cards-story-card-body h3 a:hover {
+  color: var(--conti-orange);
+}
+
+/* Date + description are text-only paragraphs — hidden to match image-list--e.
+   The "Read more" paragraph contains a link and is kept. */
+.cards-story .cards-story-card-body > p:not(:has(a)) {
+  display: none;
+}
+
+/* Read more: bold, underlined, black, 18px, 15px above the title (source). */
+.cards-story .cards-story-card-body > p:has(a) {
+  margin: 15px 0 0;
+}
+
+.cards-story .cards-story-card-body > p:has(a) a {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--conti-black);
+  text-decoration: underline;
+}
+
+.cards-story .cards-story-card-body > p:has(a) a:hover {
+  color: var(--conti-orange);
+}
+/* stylelint-enable no-descending-specificity */

@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "url": "https://www.continental-tires.com/products/car/",
+  "path": "products/car/index",
+  "timestamp": "2026-08-10T13:49:03.390Z",
+  "title": "Continental Car Tires - The fastest way to the perfect tire",
+  "template": "car-landing",
+  "blocks": [
+    "hero-welcome",
+    "cards-feature",
+    "carousel-gateway",
+    "columns-teaser",
+    "cards-story"
+  ]
+}

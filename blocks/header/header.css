@@ -890,3 +890,71 @@ body:has(.seller-assisted-buying-banner) {
     display: inline-block;
   }
 }
+
+/* ==========================================================================
+   Continental Tires — header brand accents
+   Layered on the commerce boilerplate header. White bg, black nav text,
+   Continental orange hover/active, sharp corners.
+   These intentionally override earlier boilerplate header rules.
+   ========================================================================== */
+/* stylelint-disable no-descending-specificity */
+
+/* Nav links: Continental font, black, orange on hover */
+header nav .nav-sections ul > li > a,
+header nav .nav-sections ul > li > p > a {
+  color: var(--conti-black);
+  font-family: var(--conti-font-family);
+  text-decoration: none;
+}
+
+header nav .nav-sections ul > li > a:hover,
+header nav .nav-sections ul > li > p > a:hover,
+header nav .nav-sections .nav-drop:hover > p {
+  color: var(--conti-orange);
+}
+
+/* Top-level dropdown label (Products / About Us) */
+header nav .nav-sections .default-content-wrapper > ul > li > p {
+  margin: 0;
+  cursor: pointer;
+  color: var(--conti-black);
+  font-family: var(--conti-font-family);
+}
+
+/* Orange underline indicator on hover/active top-level items (desktop) */
+@media (min-width: 900px) {
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    border-radius: 0;
+    position: relative;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li::after {
+    content: '';
+    position: absolute;
+    left: var(--spacing-small);
+    right: var(--spacing-small);
+    bottom: -6px;
+    height: 3px;
+    background-color: var(--conti-orange);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true']::after {
+    transform: scaleX(1);
+  }
+
+  /* Dropdown panels: sharp corners, white bg, subtle border */
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] ul {
+    border-radius: 0;
+    background-color: var(--conti-white);
+  }
+}
+/* stylelint-enable no-descending-specificity */
+
+/* Continental logo: constrain height (boilerplate sizes via .nav-brand img at line 166) */
+header nav .nav-brand a img {
+  height: 32px;
+  width: auto;
+}

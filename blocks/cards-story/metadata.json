@@ -1,0 +1,41 @@
+{
+  "variantName": "cards-story",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-10T11:14:55.458Z",
+  "sourceContext": {
+    "originUrl": "https://www.continental-tires.com",
+    "originPage": "Continental Tires global homepage",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "story-grid",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per card: image + date + title + description + Read more",
+    "buttonCount": 1,
+    "imageCount": 6
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "article/story grids",
+      "news or blog teaser grids",
+      "related-content card grids with images"
+    ],
+    "notSuitableFor": [
+      "text-only card lists",
+      "single feature highlight"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/index",
+      "/products/car/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-08-10T12:06:17.715Z"
+  }
+}

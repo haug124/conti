@@ -1,0 +1,10 @@
+{
+  "type": "da",
+  "sites": {
+    "conti": {
+      "previewOrg": "haug124",
+      "previewSite": "conti",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  }
+}

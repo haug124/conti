@@ -1,0 +1,41 @@
+{
+  "variantName": "carousel-gateway",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-08-10T11:14:55.458Z",
+  "sourceContext": {
+    "originUrl": "https://www.continental-tires.com",
+    "originPage": "Continental Tires global homepage",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "product-gateway",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per slide: product image + title + Explore link",
+    "buttonCount": 1,
+    "imageCount": 7
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "product-area / category gateways",
+      "rotating product tile galleries",
+      "vehicle or category selectors"
+    ],
+    "notSuitableFor": [
+      "single stand-alone hero image",
+      "text-heavy content slides"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/index",
+      "/products/car/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-08-10T12:06:17.715Z"
+  }
+}

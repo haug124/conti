@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://www.continental-tires.com/products/car/product-search/search-by-vehicle/",
+  "path": "products/car/product-search/search-by-vehicle/index",
+  "timestamp": "2026-08-10T13:49:25.269Z",
+  "title": "search-by-vehicle",
+  "template": "search-by-vehicle",
+  "blocks": [
+    "columns-teaser"
+  ]
+}

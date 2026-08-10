@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "url": "https://www.continental-tires.com",
+  "path": "index",
+  "timestamp": "2026-08-10T13:48:56.218Z",
+  "title": "Continental Tires | Discover Tires Online",
+  "template": "homepage",
+  "blocks": [
+    "hero-welcome",
+    "carousel-gateway",
+    "region-selector",
+    "columns-teaser",
+    "cards-story"
+  ]
+}

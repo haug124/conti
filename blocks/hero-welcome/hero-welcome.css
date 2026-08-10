@@ -1,0 +1,149 @@
+/*
+ * hero-welcome — full-bleed welcome stage
+ * Source: https://www.continental-tires.com  (main .stage-image.teaser)
+ * Values from source computed styles. Layout: background image with a
+ * bottom-darkening gradient and overlaid text (pretitle + H1 + CTA) anchored
+ * bottom-left. Mobile-first.
+ */
+
+/* Full-bleed: escape the section's 1200px max-width + padding. */
+.hero-welcome-container .hero-welcome-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-welcome {
+  position: relative;
+  overflow: hidden;
+  min-height: 440px;            /* mobile: room for overlaid text */
+  color: var(--conti-white);
+}
+
+/* --- Background image (row 1) --- */
+.hero-welcome .hero-welcome-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
+
+.hero-welcome .hero-welcome-image > div {
+  height: 100%;
+}
+
+.hero-welcome .hero-welcome-image picture {
+  display: block;
+  height: 100%;
+}
+
+.hero-welcome .hero-welcome-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* Bottom-darkening gradient overlay (source ::after on image wrapper). */
+.hero-welcome .hero-welcome-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(0 0 0 / 0%) 25%, rgb(0 0 0 / 60%));
+  pointer-events: none;
+}
+
+/* --- Overlaid content (row 2), bottom-left --- */
+.hero-welcome .hero-welcome-content {
+  position: absolute;
+  z-index: 1;
+  left: 24px;
+  right: 24px;
+  bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 700px;
+}
+
+.hero-welcome .hero-welcome-content > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Pretitle ("Welcome to") */
+.hero-welcome .hero-welcome-pretitle {
+  margin: 0;
+  color: var(--conti-white);
+  font-family: var(--conti-font-family);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0.24px;
+}
+
+/* Title */
+.hero-welcome h1 {
+  margin: 0;
+  color: var(--conti-white);
+  font-family: var(--conti-font-family);
+  font-size: 38px;
+  line-height: 44px;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+/* CTA — inherits the brand orange button from styles.css; source-specific
+   font-size (18px) and the 40px gap above it. Reset the global button-wrapper
+   padding/centering so the CTA aligns with the title's left edge. */
+.hero-welcome .hero-welcome-content .button-wrapper {
+  width: auto;
+  margin: 40px 0 0;
+  padding: 0;
+  text-align: left;
+}
+
+.hero-welcome a.button:any-link {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+/* --- No-image fallback --- */
+.hero-welcome.no-image {
+  min-height: 0;
+  background-color: var(--conti-black);
+}
+
+.hero-welcome.no-image .hero-welcome-content {
+  position: static;
+  padding: 40px 24px;
+}
+
+/* --- Desktop --- */
+@media (min-width: 900px) {
+  .hero-welcome {
+    min-height: 0;
+    aspect-ratio: 1425 / 680;   /* ~2.1 : 1 full-bleed stage */
+  }
+
+  .hero-welcome .hero-welcome-content {
+    left: 100px;
+    right: auto;
+    bottom: 112px;
+    max-width: 700px;
+  }
+
+  .hero-welcome .hero-welcome-pretitle {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .hero-welcome h1 {
+    font-size: 50px;
+    line-height: 60px;
+  }
+}

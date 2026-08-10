@@ -1,0 +1,41 @@
+{
+  "variantName": "hero-welcome",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-10T11:14:55.458Z",
+  "sourceContext": {
+    "originUrl": "https://www.continental-tires.com",
+    "originPage": "Continental Tires global homepage",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "minimal",
+    "purpose": "welcome-stage",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "pretitle + heading + 1 CTA over background image",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "homepage welcome stages",
+      "brand intro banners",
+      "full-bleed image hero with overlaid text"
+    ],
+    "notSuitableFor": [
+      "text-only heros on light background",
+      "multi-column intro sections"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/index",
+      "/products/car/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-08-10T12:06:17.715Z"
+  }
+}

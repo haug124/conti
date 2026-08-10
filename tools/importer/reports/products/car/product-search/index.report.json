@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://www.continental-tires.com/products/car/product-search/",
+  "path": "products/car/product-search/index",
+  "timestamp": "2026-08-10T13:49:10.933Z",
+  "title": "Find Tires",
+  "template": "product-search",
+  "blocks": [
+    "columns-teaser"
+  ]
+}

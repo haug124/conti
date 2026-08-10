@@ -1,0 +1,80 @@
+/*
+ * region-selector block
+ * Visual design migrated from https://www.continental-tires.com/
+ * ("Visit our websites in your region..." location picker).
+ *
+ * Decorated DOM (built by region-selector.js):
+ *   .region-selector
+ *     ├─ select.region-selector-dropdown
+ *     └─ button.region-selector-button
+ *
+ * Source values (getComputedStyle):
+ *   container  : flex column, align-items center, max-width 758px
+ *   dropdown   : bg #f4f4f4, 1px solid #f4f4f4, sharp corners, 55px tall,
+ *                padding 14px …/23px, 24px/35px, orange chevron (#ffa500)
+ *   button     : transparent, 2px solid #b0b0b0 (disabled) / #000 (enabled),
+ *                sharp corners, padding 11px 30px, 18px/24px, width 250px
+ */
+
+.region-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;                    /* source dropdown margin-bottom */
+  max-width: 758px;             /* source container width */
+  margin: 0 auto;
+}
+
+/* Dropdown field --------------------------------------------------------- */
+.region-selector .region-selector-dropdown {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 55px;             /* source field height */
+  padding: 14px 50px 14px 23px; /* source 14px …/23px + room for chevron */
+  border: 1px solid #f4f4f4;
+  border-radius: 0;             /* sharp corners */
+  background-color: #f4f4f4;    /* source field fill */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 5.5 8 10l4.5-4.5' stroke='%23ffa500' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 23px center;
+  background-size: 16px 16px;
+  font-family: var(--conti-font-family);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: normal;
+  color: var(--conti-black);
+  cursor: pointer;
+  appearance: none;
+}
+
+/* Button ----------------------------------------------------------------- */
+.region-selector .region-selector-button {
+  box-sizing: border-box;
+  width: 250px;                 /* source button width */
+  max-width: 100%;
+  padding: 11px 30px;
+  border: 2px solid var(--conti-muted);   /* #b0b0b0 – disabled/default */
+  border-radius: 0;             /* sharp corners */
+  background-color: transparent;
+  font-family: var(--conti-font-family);
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 24px;
+  text-align: center;
+  color: var(--conti-muted);    /* greyed until a location is chosen */
+  cursor: not-allowed;
+}
+
+/* Enabled once a location is selected (source: black outline + black text) */
+.region-selector .region-selector-button:enabled {
+  border-color: var(--conti-black);
+  color: var(--conti-black);
+  cursor: pointer;
+}
+
+.region-selector .region-selector-button:enabled:hover,
+.region-selector .region-selector-button:enabled:focus-visible {
+  background-color: var(--conti-black);
+  color: var(--conti-white);
+}

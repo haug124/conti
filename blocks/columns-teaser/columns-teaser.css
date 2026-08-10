@@ -1,0 +1,251 @@
+/* ==========================================================================
+   columns-teaser — Continental "text | image" teaser
+   Shapes (all share the 2-cell text|image contract):
+     .columns-teaser--teaser  homepage About rows (heading + copy + Read more)
+     .columns-teaser--modes   product-search mode chooser (eyebrow + H1 + options)
+     .columns-teaser--form    static search-by-size / search-by-vehicle forms
+   Values extracted from https://www.continental-tires.com (see migration-work).
+   ========================================================================== */
+
+.columns-teaser {
+  margin: var(--spacing-xbig) 0;
+}
+
+/* --- Base (mobile-first): single column, image stacks under the text ------ */
+.columns-teaser > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.columns-teaser-img-col {
+  order: 1;
+}
+
+.columns-teaser-img-col picture {
+  display: block;
+  line-height: 0;
+}
+
+.columns-teaser-img-col img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- Desktop: side-by-side, ~50/50, vertically centered ------------------- */
+@media (min-width: 900px) {
+  .columns-teaser > div {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xlarge);
+  }
+
+  /* Alternate image side on consecutive teaser rows (source alternates). */
+  .columns-teaser--reverse > div {
+    flex-direction: row-reverse;
+  }
+
+  .columns-teaser > div > div {
+    flex: 1;
+    min-width: 0;
+    order: unset;
+  }
+}
+
+/* ==========================================================================
+   Shape: TEASER (homepage About rows)
+   h4 30px/700, p 22px/light, "Read more" 22px/700 underlined black.
+   ========================================================================== */
+.columns-teaser--teaser h4 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 var(--spacing-medium);
+}
+
+.columns-teaser--teaser p {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0.24px;
+  color: var(--conti-black);
+  margin: 0 0 var(--spacing-medium);
+}
+
+.columns-teaser--teaser .columns-teaser-text-col a {
+  display: inline;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--conti-black);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.columns-teaser--teaser .columns-teaser-text-col a:hover {
+  color: var(--conti-orange);
+}
+
+@media (min-width: 900px) {
+  .columns-teaser--teaser h4 {
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: var(--spacing-xbig);
+  }
+
+  .columns-teaser--teaser p {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .columns-teaser--teaser .columns-teaser-text-col a {
+    font-size: 22px;
+    line-height: 30px;
+  }
+}
+
+/* ==========================================================================
+   Shape: MODES (product-search mode chooser)
+   eyebrow h4 30px/500, H1 50px/700, big light option list, Skip = outlined.
+   ========================================================================== */
+.columns-teaser--modes h4 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.33;
+  margin: 0 0 var(--spacing-small);
+}
+
+.columns-teaser--modes h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 var(--spacing-big);
+}
+
+.columns-teaser-options {
+  list-style: none;
+  margin: 0 0 var(--spacing-big);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-medium) var(--spacing-xbig);
+}
+
+.columns-teaser-option {
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 1.15;
+  color: var(--conti-black);
+  cursor: pointer;
+}
+
+.columns-teaser-option:hover {
+  color: var(--conti-orange);
+}
+
+@media (min-width: 900px) {
+  .columns-teaser--modes h4 {
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .columns-teaser--modes h1 {
+    font-size: 50px;
+    line-height: 60px;
+    margin-bottom: var(--spacing-xbig);
+  }
+
+  .columns-teaser-option {
+    font-size: 40px;
+  }
+}
+
+/* ==========================================================================
+   Shape: FORM (static search-by-size / search-by-vehicle)
+   Small eyebrow H1 16px, hero H2 40px, faux input boxes, primary/secondary CTAs.
+   ========================================================================== */
+.columns-teaser--form h1 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--conti-black);
+}
+
+.columns-teaser--form h2 {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 0 0 var(--spacing-small);
+  color: var(--conti-black);
+}
+
+.columns-teaser--form .columns-teaser-text-col > p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0 0 var(--spacing-medium);
+}
+
+/* Fields: label above a bordered rectangle (faux input) with placeholder text. */
+.columns-teaser-fields {
+  list-style: none;
+  margin: var(--spacing-medium) 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+  max-width: 480px;
+}
+
+.columns-teaser-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxsmall);
+}
+
+.columns-teaser-field-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--conti-black);
+}
+
+.columns-teaser-field-box {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 16px;
+  background-color: #f4f4f4;
+  border: 1px solid var(--conti-muted);
+  border-radius: 0;
+  color: #969696;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+/* Actions: Back (outlined) on the left, Show results (orange) on the right. */
+.columns-teaser-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-medium);
+  margin-top: var(--spacing-big);
+  max-width: 480px;
+}
+
+.columns-teaser-actions .button.primary {
+  margin-left: auto;
+}
+
+@media (min-width: 900px) {
+  .columns-teaser--form > div {
+    align-items: start;
+  }
+
+  .columns-teaser--form h2 {
+    font-size: 40px;
+    line-height: 50px;
+  }
+}

@@ -1,0 +1,128 @@
+/*
+ * cards-feature
+ * Full-bleed image tiles with the TITLE OVERLAID on top of the image (top-centered),
+ * distinct from cards-story (image-on-top / bordered text-below).
+ *
+ * Source: https://www.continental-tires.com/products/car/
+ *  - Variant A  (.image-list--a)  vehicle-type grid, 3 items -> MOSAIC (first tile full-width)
+ *  - Variant D  (.image-list--d)  "Why Continental" quality-promise grid, 4 items -> 2x2
+ * Both authored with the same "cards" content model and the same .cards-feature class,
+ * so the two shapes are selected here by item count via :has().
+ *
+ * Values (grid, gaps, aspect ratios, overlay padding, title treatment) extracted from
+ * the source computed styles at 1440px. Tiles are edge-to-edge (gap 0); no scrim.
+ */
+
+/* ---- Grid: mobile-first single column, edge-to-edge ---- */
+.cards-feature > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0; /* source gap: normal -> tiles touch, no gutter */
+}
+
+/* ---- Tile ---- */
+.cards-feature > ul > li {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1225 / 840; /* ~1.46 wide feature banner (extracted full-tile ratio) */
+}
+
+/* full-bleed image fills the tile */
+.cards-feature .cards-feature-card-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  line-height: 0;
+}
+
+.cards-feature .cards-feature-card-image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cards-feature .cards-feature-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- Title overlaid at top-center (source pins the label to the top of the tile) ---- */
+.cards-feature .cards-feature-card-body {
+  position: absolute;
+  inset: 0 0 auto; /* top, full width; height driven by content */
+  z-index: 1;
+  margin: 0;
+  padding: var(--spacing-medium, 24px) var(--spacing-medium, 24px) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Only the title shows over the image; source hides date/description/read-more. */
+.cards-feature .cards-feature-card-body p {
+  display: none;
+}
+
+.cards-feature .cards-feature-card-body h2,
+.cards-feature .cards-feature-card-body h3,
+.cards-feature .cards-feature-card-body h4,
+.cards-feature .cards-feature-card-body h5 {
+  margin: 0;
+  color: var(--conti-black, #000);
+  text-align: center;
+  text-shadow: 0 0 11px rgb(133 133 133 / 10%); /* faint halo, extracted */
+}
+
+/* the title link must inherit the heading font (not the 16px body-link font) */
+.cards-feature .cards-feature-card-body a {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cards-feature .cards-feature-card-body a:hover {
+  color: var(--conti-orange, #ffa500);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Tablet / desktop: two columns for both shapes (source: 2 equal tracks)
+   ========================================================================== */
+@media (min-width: 600px) {
+  /* -- Variant D: 4 items -> 2x2 grid -- */
+  .cards-feature > ul:has(> li:nth-child(4)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-feature > ul:has(> li:nth-child(4)) > li {
+    aspect-ratio: 613 / 580; /* ~1.06 – near-square feature tile */
+  }
+
+  /* -- Variant A: exactly 3 items -> mosaic (1 full-width over 2 half-width) -- */
+  .cards-feature > ul:has(> li:nth-child(3):last-child) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-feature > ul:has(> li:nth-child(3):last-child) > li:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 1225 / 840; /* 1.46 – full-width banner */
+  }
+
+  .cards-feature > ul:has(> li:nth-child(3):last-child) > li:not(:first-child) {
+    aspect-ratio: 613 / 840; /* 0.73 – portrait half-tile; matches full-tile row height */
+  }
+}
+
+@media (min-width: 900px) {
+  /* full extracted overlay padding on larger tiles */
+  .cards-feature .cards-feature-card-body {
+    padding: 55px 60px 0;
+  }
+}

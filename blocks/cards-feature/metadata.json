@@ -1,0 +1,42 @@
+{
+  "variantName": "cards-feature",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-10T12:10:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.continental-tires.com/products/car/",
+    "originPage": "Continental Car & Van product landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "feature-grid",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per card: full-bleed image with title (and optional short description) overlaid on top; whole card links",
+    "buttonCount": 0,
+    "imageCount": 4
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "category / gateway tile grids with title overlaid on the image",
+      "quality-promise or feature grids where each tile is a full-bleed photo with an overlaid label",
+      "image-forward navigation grids where the whole tile is a link"
+    ],
+    "notSuitableFor": [
+      "article/story grids with image-on-top and text-below (use cards-story)",
+      "text-only card lists",
+      "cards requiring a separate visible CTA button below the text"
+    ]
+  },
+  "differsFromCardsStory": "cards-story renders bordered cards with the image on top and date/title/description/read-more stacked below; cards-feature renders full-bleed image tiles with the title (and optional description) overlaid on the image. Same base 'cards' content model (row = image cell + text cell), different visual treatment.",
+  "usage": {
+    "pagesUsing": [
+      "/products/car/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-10T12:10:00.000Z"
+  }
+}

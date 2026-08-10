@@ -1,3 +1,5 @@
+@import url('brand.css');
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -648,3 +650,121 @@ body.columns main > .section:empty {
 main[hidden] {
   display: none !important;
 }
+
+/* ==========================================================================
+   Continental Tires — brand styling
+   Layered on top of the boilerplate; scoped to authored content in <main>.
+   Source: https://www.continental-tires.com/
+   ========================================================================== */
+
+/* Headings: Continental Stag Sans, exact sizes from source (sharp, bold). */
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+  font-family: var(--conti-font-family);
+  color: var(--conti-black);
+  letter-spacing: 0.2px;
+}
+
+main h1 {
+  font-size: var(--conti-h1-size);
+  line-height: var(--conti-h1-line);
+  font-weight: var(--conti-h1-weight);
+}
+
+main h2 {
+  font-size: var(--conti-h2-size);
+  line-height: var(--conti-h2-line);
+  font-weight: 700;
+}
+
+main h3 {
+  font-size: var(--conti-h3-size);
+  line-height: var(--conti-h3-line);
+  font-weight: 700;
+}
+
+main h4 {
+  font-size: var(--conti-h4-size);
+  line-height: var(--conti-h4-line);
+  font-weight: 700;
+}
+
+main h5 {
+  font-size: var(--conti-h5-size);
+  line-height: var(--conti-h5-line);
+  font-weight: 700;
+}
+
+main h6 {
+  font-size: var(--conti-h6-size);
+  line-height: var(--conti-h6-line);
+  font-weight: 700;
+}
+
+/* Body copy in the Continental font. */
+main p,
+main li {
+  font-family: var(--conti-font-family);
+}
+
+/* Text links: black, orange on hover (matches source).
+   These intentionally override the boilerplate link/button rules defined earlier. */
+/* stylelint-disable no-descending-specificity */
+main a:not(.dropin-design a, .button) {
+  color: var(--conti-black);
+}
+
+main a:not(.dropin-design a, .button):hover {
+  color: var(--conti-orange);
+  text-decoration: underline;
+}
+
+/* Buttons — Continental uses sharp corners (no radius).
+   Default authored CTA = solid orange with black text (primary look). */
+main a.button:any-link,
+main button.button {
+  font-family: var(--conti-font-family);
+  border-radius: 0;
+  border: 2px solid transparent;
+  background-color: var(--conti-orange);
+  color: var(--conti-black);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  padding: 13px 40px;
+  text-transform: none;
+}
+
+main a.button:any-link:hover,
+main a.button:any-link:focus,
+main button.button:hover,
+main button.button:focus {
+  background-color: var(--conti-orange-hover);
+  color: var(--conti-black);
+}
+
+/* Primary explicit variant keeps the orange treatment. */
+main a.button.primary,
+main button.button.primary {
+  background-color: var(--conti-orange);
+  color: var(--conti-black);
+  border-color: transparent;
+}
+
+/* Secondary variant = outlined, transparent fill, sharp corners. */
+main a.button.secondary,
+main button.button.secondary {
+  background-color: transparent;
+  color: var(--conti-black);
+  border: 2px solid var(--conti-black);
+}
+
+main a.button.secondary:hover,
+main button.button.secondary:hover {
+  background-color: var(--conti-black);
+  color: var(--conti-white);
+}
+/* stylelint-enable no-descending-specificity */

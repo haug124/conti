@@ -1,0 +1,40 @@
+{
+  "variantName": "region-selector",
+  "baseBlock": "region-selector",
+  "version": "1.0.0",
+  "created": "2026-08-10T11:14:55.458Z",
+  "sourceContext": {
+    "originUrl": "https://www.continental-tires.com",
+    "originPage": "Continental Tires global homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "minimal",
+    "purpose": "locale-switcher",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "locale label + target path per row; placeholder + button",
+    "buttonCount": 1,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "country/region selectors",
+      "locale switchers on global homepages"
+    ],
+    "notSuitableFor": [
+      "content navigation menus",
+      "product filters"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-10T11:14:55.458Z"
+  },
+  "custom": true
+}
