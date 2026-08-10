@@ -1038,7 +1038,7 @@ header nav .nav-brand a img {
 
   header nav .nav-brand a {
     position: absolute;
-    bottom: -28px;              /* overhang into the hero */
+    top: -14px;                 /* flush to the header's top edge (cancels nav's 14px padding) */
     left: 0;
     display: block;
     margin: 0;
@@ -1046,7 +1046,7 @@ header nav .nav-brand a img {
   }
 
   header nav .nav-brand a img {
-    height: 135px;
+    height: 150px;              /* tall enough to still overhang into the hero */
     width: auto;
     transition: height 0.25s ease;
   }
