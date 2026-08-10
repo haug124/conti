@@ -969,15 +969,24 @@ header nav .nav-brand a img {
 /* stylelint-disable no-descending-specificity */
 
 @media (min-width: 900px) {
-  /* Fixed, transparent, overlapping the hero at the top of the page */
+  /* The <header> grid row must grow to the full two-row height (the boilerplate
+     hard-codes 64px, which is too short for two rows and makes the nav overflow
+     onto the hero). Let it size to its content so the hero starts cleanly below. */
+  header {
+    height: auto;
+    min-height: 124px;
+  }
+
+  /* Solid white, in-flow header bar (NOT fixed/transparent — that overflow was
+     what made the icon row bleed onto the hero). Reserves its own space. */
   header .nav-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: transparent;
-    border-bottom: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    background-color: var(--conti-white);
+    border-bottom: 1px solid var(--color-neutral-300);
     overflow: visible;
-    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    transition: box-shadow 0.25s ease;
   }
 
   /* Two-row grid: logo on the LEFT (spans both rows, unchanged); the two nav
@@ -1055,33 +1064,10 @@ header nav .nav-brand a img {
     margin: 0;
   }
 
-  /* --- Scrolled: condensed white sticky bar --- */
-  header.scrolled .nav-wrapper,
+  /* Subtle shadow once scrolled (JS adds .scrolled to .nav-wrapper). The header
+     stays in-flow (no overlap); we just add depth. */
   header .nav-wrapper.scrolled {
-    background-color: var(--conti-white);
     box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
-  }
-
-  header.scrolled nav,
-  header.scrolled nav[aria-expanded='true'],
-  header.scrolled nav[aria-expanded='false'] {
-    min-height: 56px;
-    align-items: center;
-    row-gap: 0;
-    padding: 6px 32px;
-  }
-
-  /* Shrink logo and hide the utility row in the condensed bar */
-  header.scrolled nav .nav-brand a img {
-    height: 40px;
-  }
-
-  header.scrolled nav .nav-tools .default-content-wrapper {
-    display: none;
-  }
-
-  header.scrolled nav .nav-sections {
-    align-self: center;
   }
 }
 /* stylelint-enable no-descending-specificity */
