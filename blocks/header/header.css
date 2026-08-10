@@ -980,8 +980,12 @@ header nav .nav-brand a img {
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
   }
 
-  /* Two-row grid: logo spans the left; utility (tools) over main nav (sections) on the right */
-  header nav {
+  /* Two-row grid: logo spans the left; utility (tools) over main nav (sections)
+     on the right. Match [aria-expanded] too so this beats the boilerplate's
+     `header nav[aria-expanded='true']` 3-row stacked grid (higher specificity). */
+  header nav,
+  header nav[aria-expanded='true'],
+  header nav[aria-expanded='false'] {
     display: grid;
     grid-template:
       'brand tools' auto
@@ -993,6 +997,7 @@ header nav .nav-brand a img {
     height: auto;
     min-height: 104px;
     padding: 0 32px;
+    overflow: visible;
   }
 
   /* Brand column: large logo that overlaps downward into the hero */
@@ -1053,7 +1058,9 @@ header nav .nav-brand a img {
     box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
   }
 
-  header.scrolled nav {
+  header.scrolled nav,
+  header.scrolled nav[aria-expanded='true'],
+  header.scrolled nav[aria-expanded='false'] {
     min-height: 56px;
     align-items: center;
     row-gap: 0;
