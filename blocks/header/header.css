@@ -980,17 +980,18 @@ header nav .nav-brand a img {
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
   }
 
-  /* Two-row grid: logo pinned to the far RIGHT (spans both rows); the two nav
-     rows sit to its left — utility (tools) on top, main nav (sections) below.
-     Match [aria-expanded] too so this beats the boilerplate's
-     `header nav[aria-expanded='true']` 3-row stacked grid (higher specificity). */
+  /* Two-row grid: logo on the LEFT (spans both rows, unchanged); the two nav
+     rows sit on the RIGHT — top row = utility links + commerce icons (icons at
+     the far-right end), bottom row = main nav. Match [aria-expanded] too so this
+     beats the boilerplate's `header nav[aria-expanded='true']` 3-row stacked
+     grid (higher specificity). */
   header nav,
   header nav[aria-expanded='true'],
   header nav[aria-expanded='false'] {
     display: grid;
     grid-template:
-      'tools brand' auto
-      'sections brand' auto / 1fr auto;
+      'brand tools' auto
+      'brand sections' auto / auto 1fr;
     align-items: center;
     justify-content: unset;
     gap: 10px 40px;
@@ -1001,10 +1002,10 @@ header nav .nav-brand a img {
     overflow: visible;
   }
 
-  /* Brand column: logo on the far right, vertically centered across both rows */
+  /* Brand column: logo on the LEFT, vertically centered across both rows */
   header nav .nav-brand {
     grid-area: brand;
-    place-self: center end;
+    place-self: center start;
   }
 
   header nav .nav-brand a img {
@@ -1013,7 +1014,8 @@ header nav .nav-brand a img {
     transition: height 0.25s ease;
   }
 
-  /* Utility row (Find Your Tire / Where to buy) — top row, right-aligned next to the logo */
+  /* Top row: utility links (Find Your Tire / Where to buy) + commerce icons
+     (wishlist, cart, search, account). Right-aligned; icons end at the far right. */
   header nav .nav-tools {
     grid-area: tools;
     justify-self: end;
