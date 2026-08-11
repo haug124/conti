@@ -20,7 +20,7 @@
    region-selector.js tags its wrapper with .region-selector-heading). */
 .region-selector-heading {
   text-align: center;
-  margin-bottom: 40px;          /* space between heading and the dropdown */
+  margin-bottom: 72px;          /* space between heading and the dropdown */
 }
 
 .region-selector {
