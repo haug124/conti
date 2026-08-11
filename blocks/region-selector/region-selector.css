@@ -22,12 +22,14 @@
   text-align: center;
 }
 
-/* Space between the heading and the selector. Applied on the always-present
-   block wrapper so it holds even before region-selector.js tags the heading.
-   Scoped through `main .section` to outrank the boilerplate's
-   `main > .section > div { margin: auto }` (which otherwise zeroes margin-top). */
+/* Space around the selector: above (from the heading) and below (to the next
+   section's heading). Applied on the always-present block wrapper so it holds
+   even before region-selector.js tags the heading. Scoped through
+   `main .section` to outrank the boilerplate's `main > .section > div
+   { margin: auto }` (which otherwise zeroes the vertical margins). */
 main .section .region-selector-wrapper {
   margin-top: 72px;
+  margin-bottom: 96px;
 }
 
 .region-selector {

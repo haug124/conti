@@ -8,6 +8,29 @@
  * All values below come from the source computed styles (root font-size 18px).
  */
 
+/* Section heading above the grid (homepage "Trending Stories"). Injected by
+   cards-story.js — two centered lines: bold title + normal-weight subtitle. */
+.cards-story .cards-story-heading {
+  text-align: center;
+  margin: 0 0 var(--spacing-xbig);
+}
+
+.cards-story .cards-story-heading-title {
+  margin: 0;
+  font-size: var(--conti-h3-size);
+  line-height: var(--conti-h3-line);
+  font-weight: 700;
+  color: var(--conti-black);
+}
+
+.cards-story .cards-story-heading-subtitle {
+  margin: 0;
+  font-size: var(--conti-h3-size);
+  line-height: var(--conti-h3-line);
+  font-weight: 400;
+  color: var(--conti-black);
+}
+
 /* Grid: 1 col mobile, 2 tablet, 3 desktop. Source column-gap measured at 0
    (images sit flush against each other); row spacing via li margin-bottom. */
 .cards-story > ul {
