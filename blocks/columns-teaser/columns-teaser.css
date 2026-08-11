@@ -7,6 +7,12 @@
    Values extracted from https://www.continental-tires.com (see migration-work).
    ========================================================================== */
 
+/* Centered heading that introduces the teaser rows (authored as default
+   content; columns-teaser.js tags its wrapper). */
+.columns-teaser-section-heading {
+  text-align: center;
+}
+
 .columns-teaser {
   margin: var(--spacing-xbig) 0;
 }

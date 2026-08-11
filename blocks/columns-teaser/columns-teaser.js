@@ -106,5 +106,18 @@ export default function decorate(block) {
     const teasers = [...document.querySelectorAll('.columns-teaser--teaser')];
     const idx = teasers.indexOf(block);
     if (idx > 0 && idx % 2 === 1) block.classList.add('columns-teaser--reverse');
+
+    // Center a heading-only default-content block that introduces the teaser
+    // rows (e.g. homepage "More about Continental Tires").
+    const wrapper = block.closest('.columns-teaser-wrapper');
+    const prev = wrapper?.previousElementSibling;
+    if (
+      prev
+      && prev.classList.contains('default-content-wrapper')
+      && prev.querySelector('h1, h2, h3, h4, h5, h6')
+      && !prev.querySelector('p, ul, ol')
+    ) {
+      prev.classList.add('columns-teaser-section-heading');
+    }
   }
 }
