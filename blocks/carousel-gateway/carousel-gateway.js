@@ -97,8 +97,20 @@ export default async function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-roledescription', 'Carousel');
 
+  // Pull the preceding default-content headings (e.g. "Discover the range /
+  // of Continental Tires") into the block so they can be overlaid, centered,
+  // in front of the background image — matching the source layout.
+  const heading = document.createElement('div');
+  heading.classList.add('carousel-gateway-heading');
+  const prev = block.closest('.carousel-gateway-wrapper')?.previousElementSibling;
+  if (prev && prev.classList.contains('default-content-wrapper') && prev.querySelector('h1, h2, h3, h4, h5, h6')) {
+    while (prev.firstChild) heading.append(prev.firstChild);
+    prev.remove();
+  }
+
   const container = document.createElement('div');
   container.classList.add('carousel-gateway-slides-container');
+  if (heading.childNodes.length) container.append(heading);
 
   const track = document.createElement('ul');
   track.classList.add('carousel-gateway-slides');

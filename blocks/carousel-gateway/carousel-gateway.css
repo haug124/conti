@@ -30,6 +30,28 @@
   pointer-events: none;
 }
 
+/* Centered headline overlaid in front of the background image. */
+.carousel-gateway .carousel-gateway-heading {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 32px 16px 0;
+}
+
+.carousel-gateway .carousel-gateway-heading h1,
+.carousel-gateway .carousel-gateway-heading h2,
+.carousel-gateway .carousel-gateway-heading h3,
+.carousel-gateway .carousel-gateway-heading h4,
+.carousel-gateway .carousel-gateway-heading h5,
+.carousel-gateway .carousel-gateway-heading h6 {
+  margin: 0;
+  font-family: var(--conti-font-family);
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--conti-black);
+}
+
 .carousel-gateway .carousel-gateway-slides {
   position: relative;
   z-index: 1;                    /* above the background image */
@@ -51,11 +73,42 @@
 
 /* Tile ----------------------------------------------------------------- */
 .carousel-gateway .carousel-gateway-slide {
+  position: relative;
   flex: 0 0 68%;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   min-width: 0;
+}
+
+/* Yellow vertical bars framing the tile — hidden by default, shown on hover
+   (matches the source's hover treatment). */
+.carousel-gateway .carousel-gateway-slide::before,
+.carousel-gateway .carousel-gateway-slide::after {
+  content: '';
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  width: 4px;
+  background-color: var(--conti-orange);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.carousel-gateway .carousel-gateway-slide::before {
+  left: 6%;
+}
+
+.carousel-gateway .carousel-gateway-slide::after {
+  right: 6%;
+}
+
+.carousel-gateway .carousel-gateway-slide:hover::before,
+.carousel-gateway .carousel-gateway-slide:hover::after,
+.carousel-gateway .carousel-gateway-slide:focus-within::before,
+.carousel-gateway .carousel-gateway-slide:focus-within::after {
+  opacity: 1;
 }
 
 /* Image sits on a shared baseline so mixed aspect ratios line up
@@ -92,11 +145,22 @@
 }
 
 /* Content -------------------------------------------------------------- */
+
+/* Hidden by default; the title + Explore fade/slide in on tile hover. */
 .carousel-gateway .carousel-gateway-slide-content {
   display: flex;
   flex-direction: column;
   text-align: center;
   padding: 16px 12px 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-gateway .carousel-gateway-slide:hover .carousel-gateway-slide-content,
+.carousel-gateway .carousel-gateway-slide:focus-within .carousel-gateway-slide-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Orange eyebrow label (car-landing shape only). */
@@ -134,7 +198,9 @@
 }
 
 .carousel-gateway .carousel-gateway-cta a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.2px;
@@ -142,10 +208,28 @@
   text-decoration: none;
 }
 
+/* Arrow icon after the Explore label (→). */
+.carousel-gateway .carousel-gateway-cta a::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: currentcolor;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transition: transform 0.2s ease;
+}
+
 .carousel-gateway .carousel-gateway-cta a:hover,
 .carousel-gateway .carousel-gateway-cta a:focus-visible {
   color: var(--conti-orange);
   text-decoration: none;
+}
+
+.carousel-gateway .carousel-gateway-cta a:hover::after,
+.carousel-gateway .carousel-gateway-cta a:focus-visible::after {
+  transform: translateX(3px);
 }
 
 /* Navigation arrows ---------------------------------------------------- */
