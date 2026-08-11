@@ -1,17 +1,9 @@
 footer {
-    background-color: var(--conti-white);
+    background-color: #f0f0f0;              /* source footer fill */
     color: var(--conti-black);
-    border-top: 1px solid var(--color-neutral-300);
     font-family: var(--conti-font-family);
     font-size: 1.4rem;
     letter-spacing: var(--type-body-2-default-letter-spacing);
-}
-
-footer .footer > div {
-    margin: 0;
-    max-width: none;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--color-neutral-300);
 }
 
 footer .footer p {
@@ -70,47 +62,39 @@ footer .footer p {
     margin-bottom: var(--spacing-small);
 }
 
-@media (min-width: 900px) {
-    footer .footer > div {
-        padding: 40px 32px 24px;
-    }
-}
-
 /* ==========================================================================
    Continental Tires — footer brand styling
-   Columns for Explore/Follow us + logo + legal, orange link hovers.
+   Row 1: Explore (orange chevrons) | divider | Follow us (brand icons)
+   Row 2: logo + legal links
+   Layout built by footer.js (.footer-top / .footer-bottom).
    ========================================================================== */
 /* stylelint-disable no-descending-specificity */
 
 footer .footer {
-    margin: auto;
     max-width: 1200px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    padding: 24px;
+    margin: auto;
+    padding: 40px 24px;
+}
+
+footer .footer .footer-top > div,
+footer .footer .footer-bottom > div {
+    margin: 0;
+    padding: 0;
+    max-width: none;
 }
 
 footer .footer h3 {
     font-family: var(--conti-font-family);
     color: var(--conti-black);
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 700;
-    margin: 0 0 16px;
-}
-
-footer .footer img {
-    height: 32px;
-    width: auto;
+    margin: 0 0 20px;
 }
 
 footer .footer ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
 }
 
 footer .footer a {
@@ -120,44 +104,145 @@ footer .footer a {
 
 footer .footer a:hover {
     color: var(--conti-orange);
-    text-decoration: underline;
 }
 
-/* Legal links row: wrap horizontally */
-footer .footer > div:last-child ul {
+/* --- Row 1: Explore | divider | Follow us -------------------------------- */
+footer .footer .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+footer .footer .footer-divider {
+    display: none;               /* horizontal stack on mobile — no divider */
+}
+
+/* Explore column: centered heading + link list, orange chevron after each. */
+footer .footer .footer-explore {
+    text-align: center;
+}
+
+footer .footer .footer-explore ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+footer .footer .footer-explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+}
+
+footer .footer .footer-explore-link::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: var(--conti-orange);
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+}
+
+/* Follow us column: centered heading + intro + row of brand icons. */
+footer .footer .footer-follow {
+    text-align: center;
+}
+
+footer .footer .footer-follow p {
+    font-size: 22px;
+    margin: 0 0 28px;
+}
+
+footer .footer .footer-follow ul {
+    display: flex;
     flex-flow: row wrap;
-    gap: 8px 20px;
+    justify-content: center;
+    gap: 32px;
 }
 
-footer .footer > div:last-child {
-    border-bottom: 0;
+footer .footer .footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-footer .footer > div:last-child p {
+footer .footer .footer-social-link svg {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.2s ease;
+}
+
+footer .footer .footer-social-link:hover svg {
+    transform: scale(1.12);
+}
+
+/* --- Row 2: logo + legal links ------------------------------------------- */
+footer .footer .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding-top: 24px;
+}
+
+footer .footer .footer-logo img {
+    height: 26px;
+    width: auto;
+}
+
+footer .footer .footer-legal ul {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 12px 32px;
+}
+
+footer .footer .footer-legal a {
+    font-size: 18px;
+}
+
+footer .footer .footer-legal p {
     margin-top: 16px;
     color: var(--color-neutral-700);
+    text-align: center;
 }
 
 @media (min-width: 900px) {
     footer .footer {
-        grid-template-columns: auto 1fr 1fr;
-        gap: 0 48px;
-        padding: 48px 32px;
+        padding: 56px 32px;
+    }
+
+    footer .footer .footer-top {
+        grid-template-columns: 1fr 1px 1fr;
+        gap: 0 64px;
         align-items: start;
+        padding-bottom: 56px;
     }
 
-    /* Logo spans left; Explore + Follow us are the two right columns */
-    footer .footer > div {
-        border-bottom: 0;
-        padding: 0;
+    footer .footer .footer-divider {
+        display: block;
+        align-self: stretch;
+        width: 1px;
+        background-color: #d0d0d0;
     }
 
-    /* Legal links span the full width as a bottom row */
-    footer .footer > div:last-child {
-        grid-column: 1 / -1;
-        border-top: 1px solid var(--color-neutral-300);
-        margin-top: 32px;
-        padding-top: 24px;
+    footer .footer .footer-bottom {
+        flex-direction: row;
+        align-items: center;
+        gap: 40px;
+    }
+
+    footer .footer .footer-legal {
+        flex: 1 1 auto;
+    }
+
+    footer .footer .footer-legal ul {
+        justify-content: flex-start;
     }
 }
 
