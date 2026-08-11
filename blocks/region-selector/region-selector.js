@@ -18,6 +18,17 @@
  * @param {Element} block The block element
  */
 export default function decorate(block) {
+  // Center the heading that precedes this block (authored as default content).
+  const wrapper = block.closest('.region-selector-wrapper');
+  const prevHeadingWrapper = wrapper?.previousElementSibling;
+  if (
+    prevHeadingWrapper
+    && prevHeadingWrapper.classList.contains('default-content-wrapper')
+    && prevHeadingWrapper.querySelector('h1, h2, h3, h4, h5, h6')
+  ) {
+    prevHeadingWrapper.classList.add('region-selector-heading');
+  }
+
   const rows = [...block.children];
   const options = [];
   const buttonLabel = 'Visit local website';

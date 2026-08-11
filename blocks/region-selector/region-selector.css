@@ -16,6 +16,12 @@
  *                sharp corners, padding 11px 30px, 18px/24px, width 250px
  */
 
+/* Centered heading above the selector (authored as default content;
+   region-selector.js tags its wrapper with .region-selector-heading). */
+.region-selector-heading {
+  text-align: center;
+}
+
 .region-selector {
   display: flex;
   flex-direction: column;
