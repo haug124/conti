@@ -114,3 +114,32 @@
   color: var(--conti-orange);
 }
 /* stylelint-enable no-descending-specificity */
+
+/* "See stories" CTA: bordered box centered under the grid, black outline,
+   orange fill on hover (source cmp-button--center). */
+/* stylelint-disable no-descending-specificity */
+.cards-story .cards-story-cta {
+  margin: 0;
+  text-align: center;
+}
+
+.cards-story .cards-story-cta a {
+  display: inline-block;
+  padding: 18px 60px;
+  border: 2px solid var(--conti-black);
+  border-radius: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--conti-black);
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cards-story .cards-story-cta a:hover,
+.cards-story .cards-story-cta a:focus-visible {
+  border-color: var(--conti-orange);
+  background-color: var(--conti-orange);
+  color: var(--conti-white);
+}
+/* stylelint-enable no-descending-specificity */

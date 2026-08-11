@@ -14,4 +14,14 @@ export default function decorate(block) {
   });
   ul.querySelectorAll('picture > img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
   block.replaceChildren(ul);
+
+  // "See stories" call-to-action below the grid (matches the source homepage,
+  // which closes the stories section with a bordered CTA linking to /about-us/stories/).
+  const ctaWrapper = document.createElement('p');
+  ctaWrapper.className = 'cards-story-cta';
+  const cta = document.createElement('a');
+  cta.href = '/about-us/stories/';
+  cta.textContent = 'See stories';
+  ctaWrapper.append(cta);
+  block.append(ctaWrapper);
 }
