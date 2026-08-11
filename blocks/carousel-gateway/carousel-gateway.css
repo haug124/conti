@@ -9,7 +9,12 @@
 
 .carousel-gateway {
   --cg-gap: 16px;
-  --cg-img-height: 200px;
+  --cg-img-height: 260px;
+
+  /* White frame with breathing room from the hero above and the page edges. */
+  margin: 40px 24px 56px;
+  padding: 24px;
+  background-color: var(--conti-white);
 }
 
 /* Track ---------------------------------------------------------------- */
@@ -35,7 +40,7 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  padding: 32px 16px 0;
+  padding: 48px 16px 0;
 }
 
 .carousel-gateway .carousel-gateway-heading h1,
@@ -59,7 +64,7 @@
   gap: var(--cg-gap);
   list-style: none;
   margin: 0;
-  padding: 24px 0;               /* breathing room over the backdrop */
+  padding: 56px 0 24px;          /* more space between headline and images */
   overflow: auto hidden;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -113,6 +118,7 @@
   justify-content: center;
   height: var(--cg-img-height);
   margin-top: auto;
+  overflow: hidden;              /* contain the hover zoom */
 }
 
 .carousel-gateway .carousel-gateway-slide-image picture {
@@ -126,6 +132,14 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  transform-origin: center bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Zoom the tire in on hover (stays sharp — transform only, no blur). */
+.carousel-gateway .carousel-gateway-slide:hover .carousel-gateway-slide-image img,
+.carousel-gateway .carousel-gateway-slide:focus-within .carousel-gateway-slide-image img {
+  transform: scale(1.12);
 }
 
 /* Content -------------------------------------------------------------- */
