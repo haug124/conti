@@ -45,7 +45,9 @@ export default function decorate(block) {
     const label = cells[0]?.textContent.trim();
     const link = cells[1]?.querySelector('a');
     const href = link ? link.getAttribute('href') : cells[1]?.textContent.trim();
-    if (label && href) options.push({ label, href });
+    // The locale list is label-driven; the target path may be empty (the source
+    // resolves it at runtime), so add the option on label alone.
+    if (label) options.push({ label, href: href || '' });
   });
 
   const fieldId = `region-selector-${Math.random().toString(36).slice(2, 8)}`;
