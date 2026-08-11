@@ -57,6 +57,11 @@
   color: var(--conti-black);
 }
 
+/* Second headline line renders in the normal (non-bold) weight. */
+.carousel-gateway .carousel-gateway-heading > :nth-child(2) {
+  font-weight: 400;
+}
+
 .carousel-gateway .carousel-gateway-slides {
   position: relative;
   z-index: 1;                    /* above the background image */
@@ -85,8 +90,9 @@
   flex-direction: column;
   min-width: 0;
 
-  /* Extra top band above the image so the overlaid title/Explore has room. */
-  min-height: calc(var(--cg-img-height) + 96px);
+  /* Large top band above the image so the overlaid title/Explore sits well
+     clear of the tire — even when the image zooms up on hover. */
+  min-height: calc(var(--cg-img-height) + 150px);
 }
 
 /* A single yellow vertical bar toward the centre-left of the tile — hidden by
@@ -118,7 +124,6 @@
   justify-content: center;
   height: var(--cg-img-height);
   margin-top: auto;
-  overflow: hidden;              /* contain the hover zoom */
 }
 
 .carousel-gateway .carousel-gateway-slide-image picture {
@@ -148,7 +153,7 @@
    hidden by default and faded in on hover. No scrim — the tire stays sharp. */
 .carousel-gateway .carousel-gateway-slide-content {
   position: absolute;
-  top: 6%;
+  top: 24px;
   left: calc(18% + 22px);        /* just right of the yellow bar */
   right: 6%;
   z-index: 2;
