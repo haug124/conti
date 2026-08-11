@@ -17,12 +17,27 @@
   position: relative;
 }
 
+/* Branded background image behind the tiles (matches source's wavy backdrop). */
+.carousel-gateway .carousel-gateway-slides-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/images/carousel-gateway-bg.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  pointer-events: none;
+}
+
 .carousel-gateway .carousel-gateway-slides {
+  position: relative;
+  z-index: 1;                    /* above the background image */
   display: flex;
   gap: var(--cg-gap);
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 24px 0;               /* breathing room over the backdrop */
   overflow: auto hidden;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -63,6 +78,17 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  transform: scale(0.85);        /* tiles sit slightly reduced… */
+  transform-origin: center bottom;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0%));
+}
+
+/* …and grow with a drop-shadow on hover — the dynamic "featured" effect. */
+.carousel-gateway .carousel-gateway-slide:hover .carousel-gateway-slide-image img,
+.carousel-gateway .carousel-gateway-slide:focus-within .carousel-gateway-slide-image img {
+  transform: scale(1);
+  filter: drop-shadow(0 12px 18px rgb(0 0 0 / 25%));
 }
 
 /* Content -------------------------------------------------------------- */
