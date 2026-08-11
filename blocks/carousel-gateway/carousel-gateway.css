@@ -79,6 +79,9 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+
+  /* Extra top band above the image so the overlaid title/Explore has room. */
+  min-height: calc(var(--cg-img-height) + 96px);
 }
 
 /* A single yellow vertical bar toward the centre-left of the tile — hidden by
@@ -86,9 +89,9 @@
 .carousel-gateway .carousel-gateway-slide::before {
   content: '';
   position: absolute;
-  top: 8%;
+  top: 4%;
   bottom: 8%;
-  left: 22%;
+  left: 18%;
   width: 4px;
   background-color: var(--conti-orange);
   opacity: 0;
@@ -102,13 +105,14 @@
   opacity: 1;
 }
 
-/* Image sits on a shared baseline so mixed aspect ratios line up
-   (tall tire product shots on the homepage, square PNGs on car-landing). */
+/* Image sits on a shared baseline, bottom-anchored, leaving a top band free
+   for the overlaid title/Explore (matches the reference's text-above-tire look). */
 .carousel-gateway .carousel-gateway-slide-image {
   display: flex;
   align-items: flex-end;
   justify-content: center;
   height: var(--cg-img-height);
+  margin-top: auto;
 }
 
 .carousel-gateway .carousel-gateway-slide-image picture {
@@ -122,36 +126,22 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  transform: scale(0.85);        /* tiles sit slightly reduced… */
-  transform-origin: center bottom;
-  transition: transform 0.5s ease, filter 0.5s ease;
-  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0%));
-}
-
-/* …and grow with a drop-shadow on hover — the dynamic "featured" effect. */
-.carousel-gateway .carousel-gateway-slide:hover .carousel-gateway-slide-image img,
-.carousel-gateway .carousel-gateway-slide:focus-within .carousel-gateway-slide-image img {
-  transform: scale(1);
-  filter: drop-shadow(0 12px 18px rgb(0 0 0 / 25%));
 }
 
 /* Content -------------------------------------------------------------- */
 
-/* Overlaid ON TOP of the image (not below), centred; hidden by default and
-   faded in on hover. */
+/* Overlaid ON TOP of the image, anchored top-left next to the yellow bar;
+   hidden by default and faded in on hover. No scrim — the tire stays sharp. */
 .carousel-gateway .carousel-gateway-slide-content {
   position: absolute;
-  inset: 0;
+  top: 6%;
+  left: calc(18% + 22px);        /* just right of the yellow bar */
+  right: 6%;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 16px 12px;
-
-  /* Soft white scrim so the overlaid title/Explore stays legible over the tire. */
-  background: radial-gradient(ellipse at center, rgb(255 255 255 / 80%) 0%, rgb(255 255 255 / 55%) 55%, rgb(255 255 255 / 0%) 80%);
+  align-items: flex-start;
+  text-align: left;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -175,10 +165,10 @@
 }
 
 .carousel-gateway .carousel-gateway-slide-content h5 {
-  margin: 8px 0 4px;
-  font-size: 24px;
+  margin: 0;
+  font-size: 28px;
   font-weight: 700;
-  line-height: 30px;
+  line-height: 32px;
   letter-spacing: 0.5px;
   color: var(--conti-black);
 }
@@ -194,7 +184,7 @@
 
 /* CTA: "Explore" / "View details" — black, bold, no underline (not an orange button). */
 .carousel-gateway .carousel-gateway-cta {
-  margin: 16px 0 0;
+  margin: 6px 0 0;
 }
 
 .carousel-gateway .carousel-gateway-cta a {
