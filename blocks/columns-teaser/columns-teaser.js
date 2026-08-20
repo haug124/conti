@@ -46,17 +46,28 @@ export default function decorate(block) {
   else if (list) shape = 'modes';
   block.classList.add(`columns-teaser--${shape}`);
 
-  // Helper: turn a plain <p> whose text matches `label` into a styled button.
+  // Helper: turn a <p> whose text matches `label` into a styled CTA.
+  // If the author linked the label (e.g. "[Show results](/a4?...)"), render a
+  // real anchor <a class="button"> so the CTA navigates; otherwise fall back to
+  // a plain (non-navigating) <button>.
   const asButton = (label, variant) => {
     const p = [...textCol.querySelectorAll('p')]
       .find((el) => el.textContent.trim().toLowerCase() === label.toLowerCase());
     if (!p) return null;
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = `button ${variant}`.trim();
-    btn.textContent = p.textContent.trim();
-    p.replaceWith(btn);
-    return btn;
+    const link = p.querySelector('a[href]');
+    let cta;
+    if (link) {
+      cta = document.createElement('a');
+      cta.href = link.getAttribute('href');
+      if (link.target) cta.target = link.target;
+    } else {
+      cta = document.createElement('button');
+      cta.type = 'button';
+    }
+    cta.className = `button ${variant}`.trim();
+    cta.textContent = p.textContent.trim();
+    p.replaceWith(cta);
+    return cta;
   };
 
   if (shape === 'modes') {
