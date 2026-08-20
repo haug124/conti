@@ -77,10 +77,17 @@ export default function decorate(block) {
       return out;
     };
     const optionSets = [
+      // search-by-size
       { key: 'width', options: range(115, 355, 10) },
       { key: 'aspect', options: ['60', '70', '80', '85', '90'] },
       { key: 'diameter', options: ['13', '14', '15', '16', '17'] },
       { key: 'speed', options: ['112T', '112V', '112W'] },
+      // search-by-vehicle
+      { key: 'brand', options: ['Volkswagen', 'Audi', 'Mercedes-Benz', 'BMW'] },
+      { key: 'model', options: ['A4', 'A6', 'E-Class', 'C-Class', '3 Series', '5 Series', 'Golf', 'Passat'] },
+      { key: 'year', options: ['2022', '2023', '2024', '2025', '2026'] },
+      { key: 'version', options: ['1.6 L', '1.8 T', '1.9 TDI', '2.0 FSI', '2.4 V6', '2.5 TDI', '3.0 V6'] },
+      { key: 'fitment', options: ['195/65 R 15', '205/55 R 16', '205/60 R 15', '205/65 R 15', '215/55 R 16', '235/40 R 18', '235/45 R 17'] },
     ];
 
     // Turn the list of "Label (eg. value)" items into label + <select> dropdown.
