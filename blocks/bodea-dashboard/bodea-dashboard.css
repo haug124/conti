@@ -1,11 +1,26 @@
 /* ==========================================================================
    Bodea Dashboard — Full Enterprise UI Styles
-   Brand: Bodea
+   Brand: Continental
    ========================================================================== */
+
+/* ── Design tokens the dashboard/order blocks expect but that the
+      Continental theme doesn't define. Scoped to the dashboard page so they
+      never leak into the rest of the site. Dark surfaces drive the left nav
+      and the top welcome banner (white text sits on them). ──────────────── */
 
 /* ── Page-level overrides when dashboard is active ─────────────────────── */
 
 body.dashboard-page {
+  /* Design tokens the dashboard/order blocks expect but that the Continental
+     theme doesn't define. Dark surfaces drive the left nav and the top welcome
+     banner (white text sits on them). */
+  --color-surface-dark: #141414;      /* near-black nav / banner base */
+  --color-surface-dark-mid: #232323;  /* slightly lighter gradient stop */
+  --color-neutral-0: #fff;
+  --color-accent-500: var(--conti-orange);
+  --color-accent-600: var(--conti-orange-hover);
+  --color-teal-500: #57534e;
+
   /* Override body grid layout from styles.css */
   display: block;
   overflow: hidden;
@@ -164,12 +179,11 @@ main .bodea-dashboard a:not(.dropin-design a):hover {
 
 .bodea-nav__logo-img {
   display: block;
-  max-width: 260px;
+  max-width: 200px;
   width: 100%;
   height: auto;
-  max-height: 88px;
+  max-height: 72px;
   object-fit: contain;
-  mix-blend-mode: lighten; /* Makes black background transparent, white logo visible */
 }
 
 /* Nav list */
