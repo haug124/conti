@@ -94,7 +94,7 @@ function getKpiDefinitions(kpis, isAuthenticated) {
       id: 'material-types',
       icon: 'materials',
       iconColor: 'blue',
-      label: 'Material Types',
+      label: 'Tire Types',
       value: kpis.materialTypes,
       href: '/order',
     },
