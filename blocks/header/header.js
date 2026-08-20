@@ -226,7 +226,7 @@ export default async function decorate(block) {
   /** Dashboard (leftmost commerce icon, before the wishlist) */
   const dashboard = document.createRange().createContextualFragment(`
      <div class="dashboard-wrapper nav-tools-wrapper">
-       <a class="nav-dashboard-button" href="${rootLink('/customer/account')}" aria-label="Dashboard"></a>
+       <a class="nav-dashboard-button" href="${rootLink('/dashboard')}" aria-label="Dashboard"></a>
      </div>
    `);
 
