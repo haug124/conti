@@ -2,9 +2,10 @@
   "type": "da",
   "sites": {
     "conti": {
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json",
       "previewOrg": "haug124",
       "previewSite": "conti",
-      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+      "contentHostUrl": "https://content.da.live/haug124/conti/"
     }
   }
 }
