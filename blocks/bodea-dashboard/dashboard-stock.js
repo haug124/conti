@@ -13,22 +13,18 @@
  * See dashboard-service.js → normaliseProduct() for full qty resolution logic.
  */
 
-import {
-  LOW_STOCK_THRESHOLD,
-  EQUIPMENT_DISPLAY_NAMES,
-  EQUIPMENT_STOCK_CAPACITY,
-  FEATURED_EQUIPMENT_SKUS,
-} from './dashboard-config.js';
+import { getCodeAssetUrl } from '../../scripts/commerce.js';
 
-/* ── Brick icon (featured masonry / HCS-BR-* catalog; matches low-stock SKU line) ─ */
-
-const BRICK_ICON = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <rect x="2" y="3" width="9" height="5" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
-  <rect x="13" y="3" width="9" height="5" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
-  <rect x="7" y="10" width="9" height="5" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
-  <rect x="2" y="17" width="10" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
-  <rect x="14" y="17" width="8" height="4" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
-</svg>`;
+/* ── Demo low-stock tire (fake) ────────────────────────────────────────────
+   The live Commerce catalog belongs to a different demo (bricks), so the Low
+   Stock Alert would surface an unrelated SKU. For this Continental demo we show
+   a fixed tire product instead of the live stock data. */
+const DEMO_TIRE = {
+  name: 'AllSeasonContact 2 – 205/55 R16',
+  image: getCodeAssetUrl('/images/tire-allseasoncontact.png'),
+  qty: 120,
+  capacity: 500,
+};
 
 /* ── Progress bar colour logic ─────────────────────────────────────────── */
 
@@ -36,66 +32,6 @@ function getStockBarVariant(ratio) {
   if (ratio > 0.5) return 'good';
   if (ratio > 0.25) return 'warning';
   return 'critical';
-}
-
-/* ── Display name ──────────────────────────────────────────────────────── */
-
-function getDisplayName(product) {
-  return EQUIPMENT_DISPLAY_NAMES[product.sku] ?? product.name ?? product.sku;
-}
-
-/* ── Single stock item row ─────────────────────────────────────────────── */
-
-function buildStockItem(product) {
-  const { qty } = product;
-  const capacity = EQUIPMENT_STOCK_CAPACITY[product.sku] ?? LOW_STOCK_THRESHOLD * 2;
-  const isOutOfStock = product.stockStatus === 'OUT_OF_STOCK';
-
-  let ratio;
-  if (qty !== null) {
-    ratio = Math.min(qty / capacity, 1);
-  } else {
-    ratio = isOutOfStock ? 0 : 0.5;
-  }
-
-  const variant = getStockBarVariant(ratio);
-  const pct = Math.round(ratio * 100);
-
-  let displayQty;
-  if (qty !== null) {
-    displayQty = `${qty.toLocaleString()} units`;
-  } else if (isOutOfStock) {
-    displayQty = 'Out of stock';
-  } else {
-    displayQty = 'Stock data unavailable';
-  }
-
-  const qtyNote = !product.qtyIsReal
-    ? '<span class="stock-item__qty-note" title="Precise quantity requires inventory API integration">~</span>'
-    : '';
-
-  const li = document.createElement('li');
-  li.className = `stock-item${isOutOfStock ? ' stock-item--out-of-stock' : ''}`;
-
-  const stockBadge = isOutOfStock
-    ? '<span class="stock-item__badge stock-item__badge--out">Out of Stock</span>'
-    : '<span class="stock-item__badge stock-item__badge--low">Low Stock</span>';
-
-  li.innerHTML = `
-    <div class="stock-item__icon">${BRICK_ICON}</div>
-    <div class="stock-item__details">
-      <div class="stock-item__header">
-        <span class="stock-item__name">${getDisplayName(product)}</span>
-        ${stockBadge}
-      </div>
-      <div class="stock-item__qty">${qtyNote}${displayQty}${capacity ? ` / ${capacity.toLocaleString()} cap.` : ''}</div>
-      <div class="stock-item__bar-track" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${getDisplayName(product)} stock level ${pct}%">
-        <div class="stock-item__bar-fill stock-item__bar-fill--${variant}" style="width:${pct}%"></div>
-      </div>
-    </div>
-  `;
-
-  return li;
 }
 
 /* ── Skeleton ──────────────────────────────────────────────────────────── */
@@ -166,54 +102,38 @@ export function buildStockSection() {
  * @param {HTMLElement} section
  * @param {object[]|null} stockData - from DashboardService.fetchEquipmentStock()
  */
-export function updateStockSection(section, stockData) {
+export function updateStockSection(section) {
   const list = section.querySelector('.stock-list');
   if (!list) return;
 
   list.innerHTML = '';
   list.classList.remove('stock-list--loading');
 
-  if (!stockData || !stockData.length) {
-    list.innerHTML = `
-      <li class="stock-empty">
-        <p class="stock-empty__message">Stock data is currently unavailable.</p>
-      </li>
-    `;
-    return;
-  }
+  /* Demo: always show the fixed Continental tire as the low-stock item
+     instead of the live (bricks) Commerce catalog. */
+  const ratio = Math.min(DEMO_TIRE.qty / DEMO_TIRE.capacity, 1);
+  const pct = Math.round(ratio * 100);
+  const variant = getStockBarVariant(ratio);
 
-  /* Filter to only low/out-of-stock items, sorted worst first */
-  const lowStockItems = stockData
-    .filter((p) => {
-      if (p.stockStatus === 'OUT_OF_STOCK') return true;
-      if (p.qty !== null && p.qty < LOW_STOCK_THRESHOLD) return true;
-      /* If qty is unknown but product is in scope, still show it with status-only display */
-      if (p.qty === null && FEATURED_EQUIPMENT_SKUS.includes(p.sku)) return false;
-      return false;
-    })
-    .sort((a, b) => {
-      if (a.stockStatus === 'OUT_OF_STOCK' && b.stockStatus !== 'OUT_OF_STOCK') return -1;
-      if (b.stockStatus === 'OUT_OF_STOCK' && a.stockStatus !== 'OUT_OF_STOCK') return 1;
-      return (a.qty ?? Infinity) - (b.qty ?? Infinity);
-    });
-
-  if (!lowStockItems.length) {
-    list.innerHTML = `
-      <li class="stock-all-good">
-        <div class="stock-all-good__icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-        </div>
-        <p class="stock-all-good__message">All equipment stock levels are healthy.</p>
-      </li>
-    `;
-    return;
-  }
-
-  lowStockItems.forEach((product) => {
-    list.appendChild(buildStockItem(product));
-  });
+  const li = document.createElement('li');
+  li.className = 'stock-item';
+  li.innerHTML = `
+    <div class="stock-item__icon">
+      <img src="${DEMO_TIRE.image}" alt="${DEMO_TIRE.name}" width="32" height="32"
+        style="width:32px;height:32px;object-fit:contain;border-radius:6px" />
+    </div>
+    <div class="stock-item__details">
+      <div class="stock-item__header">
+        <span class="stock-item__name">${DEMO_TIRE.name}</span>
+        <span class="stock-item__badge stock-item__badge--low">Low Stock</span>
+      </div>
+      <div class="stock-item__qty">~${DEMO_TIRE.qty.toLocaleString()} units / ${DEMO_TIRE.capacity.toLocaleString()} cap.</div>
+      <div class="stock-item__bar-track" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="${DEMO_TIRE.name} stock level ${pct}%">
+        <div class="stock-item__bar-fill stock-item__bar-fill--${variant}" style="width:${pct}%"></div>
+      </div>
+    </div>
+  `;
+  list.appendChild(li);
 
   /* Manage Inventory link */
   const footer = document.createElement('li');
