@@ -68,23 +68,62 @@ export default function decorate(block) {
   }
 
   if (shape === 'form') {
-    // Turn the list of "Label (eg. value)" items into label + faux input boxes.
+    // Tire-size dropdown values, keyed by a token found in the field label.
+    // Authors keep the simple "Label (eg. value)" list; the block turns each
+    // into a real <select> populated from the matching option list here.
+    const range = (start, end, step) => {
+      const out = [];
+      for (let v = start; v <= end; v += step) out.push(String(v));
+      return out;
+    };
+    const optionSets = [
+      { key: 'width', options: range(115, 355, 10) },
+      { key: 'aspect', options: ['60', '70', '80', '85', '90'] },
+      { key: 'diameter', options: ['13', '14', '15', '16', '17'] },
+      { key: 'speed', options: ['112T', '112V', '112W'] },
+    ];
+
+    // Turn the list of "Label (eg. value)" items into label + <select> dropdown.
     list.classList.add('columns-teaser-fields');
     listItems.forEach((li) => {
       const raw = li.textContent.trim();
       const match = raw.match(/^(.*?)\s*\(\s*eg\.\s*(.*?)\s*\)\s*$/i);
       const label = match ? match[1].trim() : raw;
-      const placeholder = match ? `eg. ${match[2].trim()}` : '';
       li.textContent = '';
       li.classList.add('columns-teaser-field');
+
       const labelEl = document.createElement('span');
       labelEl.className = 'columns-teaser-field-label';
       labelEl.textContent = label;
-      const boxEl = document.createElement('span');
-      boxEl.className = 'columns-teaser-field-box';
-      boxEl.textContent = placeholder;
-      boxEl.setAttribute('aria-hidden', 'true');
-      li.append(labelEl, boxEl);
+
+      const select = document.createElement('select');
+      select.className = 'columns-teaser-field-select';
+      select.setAttribute('aria-label', label);
+
+      // Placeholder (disabled, selected by default).
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Please select';
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      select.append(placeholder);
+
+      const set = optionSets.find((s) => label.toLowerCase().includes(s.key));
+      (set ? set.options : []).forEach((val) => {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.textContent = val;
+        select.append(opt);
+      });
+
+      // Grey out while showing the placeholder; switch to solid once a value
+      // is chosen (see .is-placeholder in the CSS).
+      select.classList.add('is-placeholder');
+      select.addEventListener('change', () => {
+        select.classList.toggle('is-placeholder', select.value === '');
+      });
+
+      li.append(labelEl, select);
     });
 
     // Back (secondary) + Show results (primary orange), grouped in an actions row.

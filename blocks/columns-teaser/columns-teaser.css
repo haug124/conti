@@ -218,7 +218,7 @@
   margin: 0 0 var(--spacing-medium);
 }
 
-/* Fields: label above a bordered rectangle (faux input) with placeholder text. */
+/* Fields: label above a bordered dropdown (<select>). */
 .columns-teaser-fields {
   list-style: none;
   margin: var(--spacing-medium) 0;
@@ -242,17 +242,35 @@
   color: var(--conti-black);
 }
 
-.columns-teaser-field-box {
-  display: flex;
-  align-items: center;
+.columns-teaser-field-select {
+  width: 100%;
   min-height: 50px;
-  padding: 0 16px;
+  padding: 0 44px 0 16px;
   background-color: #f4f4f4;
   border: 1px solid var(--conti-muted);
   border-radius: 0;
-  color: #969696;
+  color: var(--conti-black);
+  font-family: var(--conti-font-family);
   font-size: 16px;
   font-weight: 300;
+  cursor: pointer;
+
+  /* Custom chevron; remove native dropdown arrow. */
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+}
+
+.columns-teaser-field-select:focus {
+  outline: 2px solid var(--conti-orange);
+  outline-offset: -2px;
+}
+
+/* Placeholder (nothing chosen yet) renders muted; chosen values are black. */
+.columns-teaser-field-select.is-placeholder {
+  color: #969696;
 }
 
 /* Actions: Back (outlined) on the left, Show results (orange) on the right. */
@@ -270,8 +288,10 @@
 }
 
 @media (min-width: 900px) {
+  /* Center the image vertically against the form column (image sits at the
+     middle of the form rather than aligned to the top). */
   .columns-teaser--form > div {
-    align-items: start;
+    align-items: center;
   }
 
   .columns-teaser--form h2 {
