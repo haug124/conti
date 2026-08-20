@@ -148,7 +148,8 @@ header nav .nav-brand {
   min-width: 128px;
 }
 
-header nav .nav-brand a {
+header nav .nav-brand a,
+header nav .nav-brand .default-content-wrapper {
   grid-area: brand;
   flex-basis: 128px;
   font: var(--type-headline-1-font);
@@ -166,6 +167,14 @@ li.nav-drop img {
 header nav .nav-brand img {
   width: 128px;
   height: auto;
+}
+
+/* The logo may be authored either as a linked image (<a><img>) or as plain
+   default content (<picture><img>) — normalize the wrapper so the picture
+   fills the brand column in both cases. */
+header nav .nav-brand .default-content-wrapper picture {
+  display: block;
+  line-height: 0;
 }
 
 /* sections */
@@ -967,7 +976,8 @@ header nav .nav-sections .default-content-wrapper > ul > li > p {
 /* stylelint-enable no-descending-specificity */
 
 /* Continental logo: constrain height (boilerplate sizes via .nav-brand img at line 166) */
-header nav .nav-brand a img {
+header nav .nav-brand a img,
+header nav .nav-brand .default-content-wrapper img {
   height: 32px;
   width: auto;
 }
@@ -1036,7 +1046,8 @@ header nav .nav-brand a img {
     min-width: 240px;
   }
 
-  header nav .nav-brand a {
+  header nav .nav-brand a,
+  header nav .nav-brand .default-content-wrapper {
     position: absolute;
     top: -14px;                 /* flush to the header's top edge (cancels nav's 14px padding) */
     left: 0;
@@ -1045,7 +1056,8 @@ header nav .nav-brand a img {
     line-height: 0;
   }
 
-  header nav .nav-brand a img {
+  header nav .nav-brand a img,
+  header nav .nav-brand .default-content-wrapper img {
     height: 150px;              /* tall enough to still overhang into the hero */
     width: auto;
     transition: height 0.25s ease;
