@@ -87,13 +87,13 @@ function buildNewCustomerBanner() {
   const banner = document.createElement('div');
   banner.className = 'dashboard-new-customer-banner';
   banner.setAttribute('role', 'region');
-  banner.setAttribute('aria-label', 'Welcome to Bodea');
+  banner.setAttribute('aria-label', 'Welcome to Continental');
   banner.style.cssText = 'display:block !important; min-height:1px;'; /* fallback visibility */
 
   banner.innerHTML = `
     <div class="dashboard-new-customer-banner__inner">
       <div class="dashboard-new-customer-banner__content">
-        <h2 class="dashboard-new-customer-banner__heading">Welcome to Bodea</h2>
+        <h2 class="dashboard-new-customer-banner__heading">Welcome to Continental</h2>
         <p class="dashboard-new-customer-banner__text">
           You're all set up. Get started by creating your first order — use the button in the top right to place an order.
         </p>
@@ -122,7 +122,7 @@ function buildWelcomeBanner(customerName) {
   banner.innerHTML = `
     <div class="dashboard-welcome__text">
       <h1 class="dashboard-welcome__heading">
-        ${customerName ? `Welcome back, ${customerName}!` : 'Welcome to Bodea'}
+        ${customerName ? `Welcome back, ${customerName}!` : 'Welcome to Continental'}
       </h1>
       <p class="dashboard-welcome__sub">Your brick & construction supply hub</p>
     </div>
