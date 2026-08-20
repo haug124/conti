@@ -375,6 +375,20 @@ export function rootLink(link) {
 }
 
 /**
+ * Resolves a repo-relative asset path (e.g. an image committed under /images)
+ * to an absolute URL against the current code base path.
+ * @param {string} absolutePath asset path, with or without a leading slash
+ * @returns {string} URL prefixed with window.hlx.codeBasePath when available
+ */
+export function getCodeAssetUrl(absolutePath) {
+  const path = absolutePath.startsWith('/') ? absolutePath : `/${absolutePath}`;
+  const base = typeof window !== 'undefined' && window.hlx?.codeBasePath != null
+    ? window.hlx.codeBasePath
+    : '';
+  return `${base}${path}`;
+}
+
+/**
  * Decorates Columns Template to the main element.
  * @param {Element} doc The document element
  */

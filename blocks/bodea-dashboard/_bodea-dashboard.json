@@ -1,0 +1,17 @@
+{
+  "definitions": [{
+    "title": "Bodea Dashboard",
+    "id": "bodea-dashboard",
+    "model": "bodea-dashboard",
+    "plugins": {
+      "da": {
+        "type": "key-value-block"
+      }
+    }
+  }],
+  "models": [{
+    "id": "bodea-dashboard",
+    "fields": []
+  }],
+  "filters": []
+}

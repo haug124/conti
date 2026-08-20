@@ -1,0 +1,765 @@
+/* eslint-disable max-len, no-continue */
+/**
+ * Bodea Dashboard – Site Locations Map + Deliveries Side Panel
+ *
+ * MAP IMPLEMENTATION:
+ * - Leaflet.js loaded from jsDelivr CDN (reliable, widely allow-listed)
+ * - OpenStreetMap tiles — highly reliable, free, no API key required
+ * - Nonce is read from the page's existing nonce scripts for CSP compatibility
+ * - Falls back to a clean site list if Leaflet cannot load
+ *
+ * TILE URL: https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+ *
+ * DELIVERIES PANEL:
+ * - Shows orders with status "processing" as active deliveries.
+ * - DATA: real orders from DashboardService.fetchOrders() passed in at update time.
+ */
+
+import { MAP_CONFIG, QUICK_ACTIONS, SITE_COORDINATES } from './dashboard-config.js';
+import { getDeliverySites } from '../order-new-delivery/sites.js';
+import {
+  rootLink,
+  CUSTOMER_ORDERS_PATH,
+  CUSTOMER_ORDER_DETAILS_PATH,
+} from '../../scripts/commerce.js';
+
+/* ── CDN / tile constants ──────────────────────────────────────────────── */
+
+const LEAFLET_JS = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js';
+const LEAFLET_CSS = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css';
+
+/** OpenStreetMap — highly reliable, no API key, widely supported (avoids CARTO tile loading issues) */
+const TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const TILE_SUBDOMAINS = 'abc';
+
+const GEOCODE_CACHE_PREFIX = 'ond-nominatim-coord:';
+/** Nominatim usage policy: space requests; UK postcodes use postcodes.io first to avoid hammering OSM. */
+const NOMINATIM_DELAY_MS = 550;
+
+/**
+ * UK postcodes: primary browser-safe geocode (OpenStreetMap Nominatim often blocks or throttles
+ * client-side requests; postcodes.io is CORS-friendly for GB/NI).
+ */
+function shouldTryUkPostcodeApi(site) {
+  const cc = (site.countryCode || '').toUpperCase();
+  if (cc && cc !== 'GB' && cc !== 'UK') return false;
+  return Boolean(site.postcode && String(site.postcode).trim());
+}
+
+/**
+ * @param {string} postcode
+ * @returns {Promise<number[] | null>}
+ */
+async function geocodeUkPostcode(postcode) {
+  const raw = String(postcode || '').trim();
+  if (!raw) return null;
+  const compact = raw.replace(/\s+/g, '').toUpperCase();
+  if (compact.length < 5) return null;
+
+  const tryUrls = [
+    `https://api.postcodes.io/postcodes/${encodeURIComponent(compact)}`,
+    `https://api.postcodes.io/postcodes/${encodeURIComponent(raw)}`,
+  ];
+
+  for (let u = 0; u < tryUrls.length; u += 1) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const res = await fetch(tryUrls[u], {
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) continue;
+      // eslint-disable-next-line no-await-in-loop
+      const data = await res.json();
+      const r = data.result;
+      if (r?.latitude != null && r?.longitude != null) {
+        return [parseFloat(r.latitude), parseFloat(r.longitude)];
+      }
+    } catch {
+      /* try next */
+    }
+  }
+  return null;
+}
+
+/**
+ * Resolve [lat, lng] for a delivery site: optional static override, else Nominatim (cached).
+ * @param {{ id: string, address1?: string, city?: string, postcode?: string, region?: string, countryCode?: string }} site
+ * @returns {Promise<number[] | null>}
+ */
+function peekKnownCoordinates(site) {
+  const override = SITE_COORDINATES[site.id];
+  if (Array.isArray(override) && override.length === 2) {
+    return override;
+  }
+  const cacheKey = `${GEOCODE_CACHE_PREFIX}${site.id}`;
+  try {
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length === 2
+        && typeof parsed[0] === 'number' && typeof parsed[1] === 'number') {
+        return parsed;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
+async function resolveSiteCoordinates(site) {
+  const known = peekKnownCoordinates(site);
+  if (known) return known;
+
+  const cacheKey = `${GEOCODE_CACHE_PREFIX}${site.id}`;
+
+  if (shouldTryUkPostcodeApi(site)) {
+    const uk = await geocodeUkPostcode(site.postcode);
+    if (uk) {
+      sessionStorage.setItem(cacheKey, JSON.stringify(uk));
+      return uk;
+    }
+  }
+
+  const q = [
+    site.address1,
+    site.city,
+    site.postcode,
+    site.region,
+    site.countryCode,
+    'United Kingdom',
+  ].filter(Boolean).join(', ');
+
+  if (!q.trim()) return null;
+
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`;
+
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const hit = data[0];
+    if (!hit?.lat || !hit?.lon) return null;
+    const coords = [parseFloat(hit.lat), parseFloat(hit.lon)];
+    sessionStorage.setItem(cacheKey, JSON.stringify(coords));
+    return coords;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Leaflet divIcon for site markers on the dashboard map.
+ * @param {*} L - Leaflet namespace
+ */
+function createBodeaMarkerIcon(L) {
+  return L.divIcon({
+    className: 'bodea-map-marker',
+    html: `
+      <div class="bodea-map-marker__pin">
+        <svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 0C7.163 0 0 7.163 0 16c0 10.627 14.4 23.04 15.04 23.6a1.28 1.28 0 0 0 1.92 0C17.6 39.04 32 26.627 32 16 32 7.163 24.837 0 16 0z" fill="#c2410c"/>
+          <circle cx="16" cy="16" r="6" fill="white"/>
+        </svg>
+      </div>
+    `,
+    iconSize: [32, 40],
+    iconAnchor: [16, 40],
+    popupAnchor: [0, -44],
+  });
+}
+
+/** Stronger pin for “selected” location (address book ↔ map). */
+function createBodeaMarkerIconSelected(L) {
+  return L.divIcon({
+    className: 'bodea-map-marker bodea-map-marker--selected',
+    html: `
+      <div class="bodea-map-marker__pin">
+        <svg width="36" height="44" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 0C7.163 0 0 7.163 0 16c0 10.627 14.4 23.04 15.04 23.6a1.28 1.28 0 0 0 1.92 0C17.6 39.04 32 26.627 32 16 32 7.163 24.837 0 16 0z" fill="#9a3412" stroke="#fff" stroke-width="2"/>
+          <circle cx="16" cy="16" r="7" fill="white"/>
+        </svg>
+      </div>
+    `,
+    iconSize: [36, 44],
+    iconAnchor: [18, 44],
+    popupAnchor: [0, -48],
+  });
+}
+
+/**
+ * Add markers for each site; returns bounds coords for fitBounds.
+ * @param {*} L - Leaflet namespace
+ * @param {*} markerLayer - L.layerGroup()
+ * @param {Array<object>} sites - delivery sites from getDeliverySites()
+ * @param {*} bodeaIcon - L.divIcon
+ * @param {*} bodeaIconSelected - L.divIcon
+ * @param {HTMLElement|null} mapContainer - stores `__bodeaMarkersById` + icon refs
+ */
+async function addMarkersForSites(L, markerLayer, sites, bodeaIcon, bodeaIconSelected, mapContainer) {
+  const siteBounds = [];
+  const markersById = new Map();
+  let isFirstNetworkLookup = true;
+  // eslint-disable-next-line no-restricted-syntax
+  for (let i = 0; i < sites.length; i += 1) {
+    const site = sites[i];
+    const hadCoords = Boolean(peekKnownCoordinates(site));
+    if (!hadCoords) {
+      if (!isFirstNetworkLookup) {
+        // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
+        await new Promise((r) => setTimeout(r, NOMINATIM_DELAY_MS));
+      }
+      isFirstNetworkLookup = false;
+    }
+    // eslint-disable-next-line no-await-in-loop
+    const coords = await resolveSiteCoordinates(site);
+    if (!coords) continue;
+    siteBounds.push(coords);
+
+    const typeLabel = site.type
+      ? site.type.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ')
+      : 'Site';
+
+    const marker = L.marker(coords, { icon: bodeaIcon })
+      .bindPopup(
+        `<div class="bodea-map-popup">
+          <strong class="bodea-map-popup__name">${site.name}</strong>
+          <div class="bodea-map-popup__type">${typeLabel}</div>
+          <div class="bodea-map-popup__addr">${site.address1}, ${site.city}</div>
+          <div class="bodea-map-popup__postcode">${site.postcode}</div>
+        </div>`,
+        { maxWidth: 240, className: 'bodea-popup-wrap' },
+      )
+      .addTo(markerLayer);
+    marker.__bodeaSiteId = site.id;
+    markersById.set(site.id, marker);
+  }
+
+  if (mapContainer) {
+    mapContainer.__bodeaMarkersById = markersById;
+    mapContainer.__bodeaMarkerIconDefault = bodeaIcon;
+    mapContainer.__bodeaMarkerIconSelected = bodeaIconSelected;
+    const sel = mapContainer.__bodeaSelectedSiteId;
+    if (sel && markersById.has(sel)) {
+      markersById.get(sel).setIcon(bodeaIconSelected);
+    }
+  }
+
+  return siteBounds;
+}
+
+/* ── Leaflet loader ────────────────────────────────────────────────────── */
+
+/** Read the nonce from the first nonce-bearing script on the page. */
+function getPageNonce() {
+  const el = document.querySelector('script[nonce]');
+  return el ? el.nonce : '';
+}
+
+function loadLeafletCss() {
+  if (document.querySelector(`link[href="${LEAFLET_CSS}"]`)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = LEAFLET_CSS;
+  link.crossOrigin = 'anonymous';
+  document.head.appendChild(link);
+}
+
+function loadLeafletJs() {
+  if (window.L) return Promise.resolve(window.L);
+
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = LEAFLET_JS;
+    script.crossOrigin = 'anonymous';
+    const nonce = getPageNonce();
+    if (nonce) script.nonce = nonce;
+    script.onload = () => resolve(window.L);
+    script.onerror = () => reject(new Error('Leaflet failed to load from jsDelivr'));
+    document.head.appendChild(script);
+  });
+}
+
+/* ── Map initialiser ───────────────────────────────────────────────────── */
+
+async function initMap(container) {
+  loadLeafletCss();
+  const L = await loadLeafletJs();
+
+  const map = L.map(container, {
+    center: MAP_CONFIG.center,
+    zoom: MAP_CONFIG.zoom,
+    zoomControl: true,
+    scrollWheelZoom: false,
+    attributionControl: true,
+  });
+
+  L.tileLayer(TILE_URL, {
+    attribution: TILE_ATTRIBUTION,
+    subdomains: TILE_SUBDOMAINS,
+    maxZoom: 20,
+  }).addTo(map);
+
+  const bodeaIcon = createBodeaMarkerIcon(L);
+  const bodeaIconSelected = createBodeaMarkerIconSelected(L);
+
+  const markerLayer = L.layerGroup().addTo(map);
+  container.__bodeaLeafletMap = map;
+  container.__bodeaMarkerLayer = markerLayer;
+
+  /* Add a marker for each address-book site (geocoded unless SITE_COORDINATES overrides). */
+  const sites = getDeliverySites();
+  const siteBounds = await addMarkersForSites(
+    L,
+    markerLayer,
+    sites,
+    bodeaIcon,
+    bodeaIconSelected,
+    container,
+  );
+  container.__bodeaSiteBounds = siteBounds;
+
+  function fitToSites() {
+    const bounds = container.__bodeaSiteBounds;
+    if (!bounds?.length) return;
+    map.fitBounds(bounds, {
+      padding: [28, 28],
+      maxZoom: 6,
+    });
+  }
+
+  fitToSites();
+
+  /*
+   * Leaflet calculates tile coverage from the container's pixel dimensions at
+   * init time. In EDS the block decorates before layout is fully painted, so
+   * the container may report a small or zero size. We watch with ResizeObserver
+   * and call invalidateSize() once the real dimensions are settled.
+   * A 600 ms timeout acts as a belt-and-braces fallback.
+   */
+  let sizeFixed = false;
+
+  function fixSize() {
+    if (sizeFixed) return;
+    sizeFixed = true;
+    map.invalidateSize({ animate: false, pan: false });
+    fitToSites();
+  }
+
+  const ro = new ResizeObserver((entries) => {
+    const rect = entries[0]?.contentRect;
+    if (rect && rect.width > 100 && rect.height > 100) {
+      ro.disconnect();
+      fixSize();
+    }
+  });
+  ro.observe(container);
+
+  setTimeout(fixSize, 1000);
+
+  return map;
+}
+
+/**
+ * Re-run geocoding + markers after delivery sites were loaded late (e.g. after GraphQL auth).
+ * No-op if the map has not been initialised yet.
+ * @param {HTMLElement} mapContainer - `.dashboard-map-container`
+ */
+export async function refreshDashboardSiteMarkers(mapContainer) {
+  const map = mapContainer?.__bodeaLeafletMap;
+  const markerLayer = mapContainer?.__bodeaMarkerLayer;
+  if (!map || !markerLayer) return;
+
+  /* Leaflet attaches to window; avoid prefer-destructuring false positive on reassignment. */
+  // eslint-disable-next-line prefer-destructuring
+  let L = window.L;
+  if (!L) {
+    try {
+      L = await loadLeafletJs();
+    } catch {
+      return;
+    }
+  }
+
+  const { __bodeaSelectedSiteId: prevSel } = mapContainer;
+  markerLayer.clearLayers();
+  const sites = getDeliverySites();
+  const bodeaIcon = createBodeaMarkerIcon(L);
+  const bodeaIconSelected = createBodeaMarkerIconSelected(L);
+  mapContainer.__bodeaSelectedSiteId = prevSel;
+  const siteBounds = await addMarkersForSites(
+    L,
+    markerLayer,
+    sites,
+    bodeaIcon,
+    bodeaIconSelected,
+    mapContainer,
+  );
+  mapContainer.__bodeaSiteBounds = siteBounds;
+
+  if (siteBounds.length) {
+    map.fitBounds(siteBounds, {
+      padding: [28, 28],
+      maxZoom: 6,
+    });
+  }
+  map.invalidateSize({ animate: false, pan: false });
+}
+
+/* ── Map fallback (Leaflet unavailable) ────────────────────────────────── */
+
+function buildMapFallback(container) {
+  const sites = getDeliverySites();
+  const siteRows = sites.length
+    ? sites.map((s) => `
+          <div class="map-fallback__site">
+            <strong>${s.name}</strong>
+            <span>${s.city}, ${s.postcode}</span>
+          </div>
+        `).join('')
+    : '<p class="map-fallback__no-sites">No saved addresses in your address book.</p>';
+
+  container.innerHTML = `
+    <div class="map-fallback">
+      <div class="map-fallback__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+          <line x1="8" y1="2" x2="8" y2="18"/>
+          <line x1="16" y1="6" x2="16" y2="22"/>
+        </svg>
+      </div>
+      <p class="map-fallback__title">Map unavailable</p>
+      <p class="map-fallback__desc">Map tiles could not be loaded. Your saved delivery locations are listed below.</p>
+      <div class="map-fallback__sites">
+        ${siteRows}
+      </div>
+    </div>
+  `;
+}
+
+/* ── Deliveries side panel ─────────────────────────────────────────────── */
+
+function formatTime(dateStr) {
+  if (!dateStr) return '—';
+  try {
+    return new Date(dateStr).toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return '—';
+  }
+}
+
+function formatShortDate(dateStr) {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${d.getDate()} ${months[d.getMonth()]}`;
+  } catch {
+    return '';
+  }
+}
+
+function buildDeliveryRow(order) {
+  const detailHref = rootLink(`${CUSTOMER_ORDER_DETAILS_PATH}?orderRef=${order.number}`);
+  const li = document.createElement('li');
+  li.className = 'delivery-item';
+
+  li.innerHTML = `
+    <div class="delivery-item__icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="3" width="15" height="13" rx="1"/>
+        <path d="M16 8h4l3 5v3h-7V8z"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/>
+        <circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    </div>
+    <div class="delivery-item__body">
+      <a href="${detailHref}" class="delivery-item__number">#${order.number}</a>
+      <span class="delivery-item__location">${order.city ?? order.location ?? 'Unknown location'}</span>
+    </div>
+    <div class="delivery-item__time">
+      <span class="delivery-item__time-value">${formatTime(order.orderDate)}</span>
+      <span class="delivery-item__date">${formatShortDate(order.orderDate)}</span>
+    </div>
+  `;
+
+  return li;
+}
+
+function buildDeliverySkeletonRow() {
+  const li = document.createElement('li');
+  li.className = 'delivery-item delivery-item--skeleton';
+  li.innerHTML = `
+    <div class="delivery-item__icon">
+      <div class="skeleton-block" style="width:16px;height:16px;border-radius:3px"></div>
+    </div>
+    <div class="delivery-item__body">
+      <div class="skeleton-line" style="width:70px;height:13px;margin-bottom:4px"></div>
+      <div class="skeleton-line" style="width:100px;height:11px"></div>
+    </div>
+    <div class="delivery-item__time">
+      <div class="skeleton-line" style="width:40px;height:12px"></div>
+    </div>
+  `;
+  return li;
+}
+
+/* ── Public API ────────────────────────────────────────────────────────── */
+
+/**
+ * Build the bottom section: Leaflet map (left) + deliveries/quick-actions (right).
+ * @returns {HTMLElement}
+ */
+export function buildBottomSection() {
+  const section = document.createElement('section');
+  section.className = 'dashboard-bottom';
+  section.setAttribute('aria-label', 'Site map and recent deliveries');
+
+  /* Left: map */
+  const mapWrap = document.createElement('div');
+  mapWrap.className = 'dashboard-map-wrap';
+
+  const mapPanelHeader = document.createElement('div');
+  mapPanelHeader.className = 'panel-header';
+  mapPanelHeader.innerHTML = '<h2 class="panel-header__title">Site Locations</h2>';
+  mapWrap.appendChild(mapPanelHeader);
+
+  const mapContainer = document.createElement('div');
+  mapContainer.className = 'dashboard-map-container';
+  mapContainer.setAttribute('aria-label', 'Bodea site locations map');
+  mapWrap.appendChild(mapContainer);
+
+  section.appendChild(mapWrap);
+
+  /* Right: deliveries + quick actions */
+  const rightCol = document.createElement('div');
+  rightCol.className = 'dashboard-right-col';
+
+  /* Deliveries panel */
+  const deliveriesPanel = document.createElement('div');
+  deliveriesPanel.className = 'dashboard-panel dashboard-deliveries';
+  deliveriesPanel.setAttribute('aria-label', 'Recent deliveries');
+
+  const deliveriesHeader = document.createElement('div');
+  deliveriesHeader.className = 'panel-header';
+  deliveriesHeader.innerHTML = `
+    <h2 class="panel-header__title">Recent Deliveries</h2>
+    <a href="${rootLink(CUSTOMER_ORDERS_PATH)}" class="panel-header__view-all">
+      View All
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
+  `;
+  deliveriesPanel.appendChild(deliveriesHeader);
+
+  const deliveriesCount = document.createElement('div');
+  deliveriesCount.className = 'deliveries-count deliveries-count--loading';
+  deliveriesCount.innerHTML = `
+    <div class="skeleton-block" style="width:120px;height:28px;border-radius:6px"></div>
+  `;
+  deliveriesPanel.appendChild(deliveriesCount);
+
+  const deliveriesList = document.createElement('ul');
+  deliveriesList.className = 'delivery-list delivery-list--loading';
+  deliveriesList.setAttribute('role', 'list');
+
+  for (let i = 0; i < 3; i += 1) {
+    deliveriesList.appendChild(buildDeliverySkeletonRow());
+  }
+  deliveriesPanel.appendChild(deliveriesList);
+
+  const quickActionsPanel = buildQuickActionsPanel();
+
+  rightCol.appendChild(deliveriesPanel);
+  rightCol.appendChild(quickActionsPanel);
+  section.appendChild(rightCol);
+
+  section.__deliveriesCount = deliveriesCount;
+  section.__deliveriesList = deliveriesList;
+  section.__mapContainer = mapContainer;
+  section.__mapInitialised = false;
+
+  return section;
+}
+
+/**
+ * Initialise the Leaflet map only after the bottom section has been appended
+ * to the live DOM and the map container is visible with proper dimensions.
+ * Initialising too early (e.g. when below the fold or during prerender) causes
+ * zero-size container → gray tiles and markers clustered at origin.
+ *
+ * @param {HTMLElement} section
+ */
+export function initializeBottomSectionMap(section) {
+  const mapContainer = section?.__mapContainer;
+  if (!mapContainer || section.__mapInitialised) return;
+
+  function doInit() {
+    if (section.__mapInitialised) return;
+    const { offsetWidth, offsetHeight } = mapContainer;
+    if (offsetWidth < 50 || offsetHeight < 50) return;
+
+    section.__mapInitialised = true;
+    initMap(mapContainer).catch((err) => {
+      console.warn('[Dashboard] Map failed to load:', err.message);
+      buildMapFallback(mapContainer);
+    });
+  }
+
+  /* Wait for container to be visible with dimensions (handles below-fold, prerender) */
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (entries[0]?.isIntersecting) {
+        io.disconnect();
+        requestAnimationFrame(() => {
+          requestAnimationFrame(doInit);
+        });
+      }
+    },
+    { threshold: 0.01, rootMargin: '50px' },
+  );
+  io.observe(mapContainer);
+
+  /* Fallback if IntersectionObserver never fires (e.g. container always visible) */
+  const id = setInterval(() => {
+    if (section.__mapInitialised) {
+      clearInterval(id);
+      return;
+    }
+    const { offsetWidth, offsetHeight } = mapContainer;
+    if (offsetWidth >= 50 && offsetHeight >= 50) {
+      clearInterval(id);
+      io.disconnect();
+      doInit();
+    }
+  }, 100);
+  setTimeout(() => {
+    clearInterval(id);
+    if (!section.__mapInitialised) doInit();
+  }, 3000);
+}
+
+/**
+ * Update the deliveries panel with real order data.
+ * @param {HTMLElement} section
+ * @param {object|null} ordersData
+ * @param {boolean} isAuthenticated
+ */
+export function updateDeliveriesPanel(section, ordersData, isAuthenticated) {
+  const countEl = section.__deliveriesCount;
+  const listEl = section.__deliveriesList;
+
+  if (!countEl || !listEl) return;
+
+  countEl.classList.remove('deliveries-count--loading');
+  listEl.classList.remove('delivery-list--loading');
+
+  if (!isAuthenticated || !ordersData) {
+    countEl.innerHTML = '';
+    listEl.innerHTML = '<li class="delivery-empty"><p>Sign in to view delivery activity.</p></li>';
+    return;
+  }
+
+  const delivering = (ordersData.orders ?? []).filter((o) => o.status === 'processing');
+
+  countEl.innerHTML = `
+    <div class="deliveries-count__badge">
+      <span class="deliveries-count__number">${delivering.length}</span>
+      <span class="deliveries-count__label">Delivering</span>
+      <span class="status-pill status-pill--info" style="margin-left:8px">Moving</span>
+    </div>
+  `;
+
+  listEl.innerHTML = '';
+
+  if (!delivering.length) {
+    listEl.innerHTML = '<li class="delivery-empty"><p>No active deliveries at this time.</p></li>';
+    return;
+  }
+
+  delivering.slice(0, 4).forEach((order) => {
+    listEl.appendChild(buildDeliveryRow(order));
+  });
+}
+
+/* ── Quick actions panel ───────────────────────────────────────────────── */
+
+function buildQuickActionsPanel() {
+  const panel = document.createElement('div');
+  panel.className = 'dashboard-panel dashboard-quick-actions';
+  panel.setAttribute('aria-label', 'Quick actions');
+
+  panel.innerHTML = `
+    <div class="panel-header">
+      <h2 class="panel-header__title">Quick Actions</h2>
+    </div>
+    <ul class="quick-actions-list" role="list">
+      ${QUICK_ACTIONS.map((action) => `
+        <li class="quick-action-item">
+          <a href="${rootLink(action.href)}" class="quick-action-link${action.primary ? ' quick-action-link--primary' : ''}">
+            <span class="quick-action-link__label">${action.label}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </a>
+        </li>
+      `).join('')}
+    </ul>
+  `;
+
+  return panel;
+}
+
+/**
+ * Initialise the same Leaflet + OSM map used on the dashboard (address-book markers).
+ * @param {HTMLElement} container - Map mount node (e.g. `.dashboard-map-container`)
+ * @returns {Promise<*>} Leaflet map instance
+ */
+export async function initSiteLocationsMap(container) {
+  return initMap(container);
+}
+
+/** List-only fallback when tiles fail (shared with bodea-address-book). */
+export { buildMapFallback as buildSiteMapFallback };
+
+/**
+ * Highlight one site’s pin (address book card selection).
+ * @param {HTMLElement} mapContainer
+ * @param {string|null|undefined} siteId
+ */
+export function setAddressBookMapSelection(mapContainer, siteId) {
+  const markersById = mapContainer?.__bodeaMarkersById;
+  const defI = mapContainer?.__bodeaMarkerIconDefault;
+  const selI = mapContainer?.__bodeaMarkerIconSelected;
+  if (!markersById || !defI || !selI) return;
+  mapContainer.__bodeaSelectedSiteId = siteId || null;
+  markersById.forEach((marker, id) => {
+    marker.setIcon(id === siteId ? selI : defI);
+  });
+}
+
+/**
+ * Pan/zoom to a site, open popup, and set selected pin.
+ * @param {HTMLElement} mapContainer
+ * @param {string} siteId
+ */
+export function focusAddressBookMapOnSite(mapContainer, siteId) {
+  const map = mapContainer?.__bodeaLeafletMap;
+  const markersById = mapContainer?.__bodeaMarkersById;
+  if (!map || !markersById?.has(siteId)) return;
+  const marker = markersById.get(siteId);
+  const ll = marker.getLatLng();
+  map.setView(ll, Math.max(map.getZoom(), 12), { animate: true });
+  setAddressBookMapSelection(mapContainer, siteId);
+  marker.openPopup();
+}
