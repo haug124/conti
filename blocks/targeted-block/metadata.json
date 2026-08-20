@@ -1,0 +1,17 @@
+{
+  "variantName": "targeted-block",
+  "baseBlock": "targeted-block",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "personalization",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "config rows (type, segments, groups, rules) plus a content cell shown to targeted audiences",
+    "buttonCount": 0,
+    "imageCount": 0
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "variantName": "hero",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "default",
+    "purpose": "hero-stage",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "single cell: background image with heading (and optional body/CTA) overlaid",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "usage": {
+    "pagesUsing": ["index"],
+    "reuseCount": 1
+  }
+}

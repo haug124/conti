@@ -1,0 +1,21 @@
+{
+  "variantName": "enrichment",
+  "baseBlock": "enrichment",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "content-enrichment",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "config-driven: type and position rows select enrichment fragments to inject",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "usage": {
+    "pagesUsing": ["apparel"],
+    "reuseCount": 1
+  }
+}

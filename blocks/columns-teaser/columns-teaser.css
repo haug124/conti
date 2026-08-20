@@ -146,9 +146,32 @@
   cursor: pointer;
 }
 
-.columns-teaser-option:hover {
+/* When the option text is authored as a link, make the link carry the big
+   option styling (instead of the global small/bold link style) and append a
+   yellow ">" chevron after it, matching the source page. */
+/* stylelint-disable no-descending-specificity */
+.columns-teaser--modes .columns-teaser-option a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 1.15;
+  color: var(--conti-black);
+  text-decoration: none;
+}
+
+.columns-teaser-option a::after {
+  content: '>';
+  color: var(--conti-orange);
+  font-weight: 400;
+}
+
+.columns-teaser-option:hover,
+.columns-teaser-option a:hover {
   color: var(--conti-orange);
 }
+/* stylelint-enable no-descending-specificity */
 
 @media (min-width: 900px) {
   .columns-teaser--modes h4 {
@@ -162,7 +185,8 @@
     margin-bottom: var(--spacing-xbig);
   }
 
-  .columns-teaser-option {
+  .columns-teaser-option,
+  .columns-teaser--modes .columns-teaser-option a {
     font-size: 40px;
   }
 }

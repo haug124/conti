@@ -1,0 +1,17 @@
+{
+  "variantName": "fragment",
+  "baseBlock": "fragment",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "content-include",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "single cell containing a link to the fragment path to include",
+    "buttonCount": 0,
+    "imageCount": 0
+  }
+}

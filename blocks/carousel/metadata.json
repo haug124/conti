@@ -1,0 +1,21 @@
+{
+  "variantName": "carousel",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "slideshow",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per slide: image cell + text cell (heading, body, CTA)",
+    "buttonCount": 1,
+    "imageCount": 2
+  },
+  "usage": {
+    "pagesUsing": ["index"],
+    "reuseCount": 1
+  }
+}

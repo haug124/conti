@@ -1,0 +1,17 @@
+{
+  "variantName": "widget",
+  "baseBlock": "widget",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "external-widget",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "single cell containing a link to the widget asset to load and decorate",
+    "buttonCount": 0,
+    "imageCount": 0
+  }
+}

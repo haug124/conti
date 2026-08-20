@@ -1,0 +1,21 @@
+{
+  "variantName": "cards",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "card-grid",
+    "imagePattern": "thumbnail"
+  },
+  "contentPattern": {
+    "structure": "per card: image cell + body cell (title, description, link)",
+    "buttonCount": 0,
+    "imageCount": 2
+  },
+  "usage": {
+    "pagesUsing": ["index"],
+    "reuseCount": 1
+  }
+}

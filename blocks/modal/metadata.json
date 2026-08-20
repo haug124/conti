@@ -1,0 +1,17 @@
+{
+  "variantName": "modal",
+  "baseBlock": "modal",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "dialog",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "single cell holding the modal dialog content",
+    "buttonCount": 0,
+    "imageCount": 0
+  }
+}

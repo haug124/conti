@@ -1,0 +1,21 @@
+{
+  "variantName": "columns",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-08-20T00:00:00.000Z",
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "default",
+    "purpose": "layout",
+    "imagePattern": "mixed"
+  },
+  "contentPattern": {
+    "structure": "single row split into multiple columns (text and/or image per column)",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "usage": {
+    "pagesUsing": ["index"],
+    "reuseCount": 1
+  }
+}
