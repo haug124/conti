@@ -316,11 +316,11 @@ body.dashboard-page main > .section > div {
   font-size: 11px;
 }
 
-.commerce-invoices-list {
+.bodea-invoices-list {
   width: 100%;
 }
 
-.commerce-invoices-list__card {
+.bodea-invoices-list__card {
   background: var(--color-neutral-50);
   border: 1px solid var(--color-neutral-200);
   border-radius: var(--shape-border-radius-card);
@@ -330,7 +330,7 @@ body.dashboard-page main > .section > div {
   overflow: hidden;
 }
 
-.commerce-invoices-list__hero {
+.bodea-invoices-list__hero {
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -346,7 +346,7 @@ body.dashboard-page main > .section > div {
   box-shadow: var(--shape-shadow-card);
 }
 
-.commerce-invoices-list__hero::after {
+.bodea-invoices-list__hero::after {
   content: "";
   position: absolute;
   inset: auto 0 0;
@@ -354,12 +354,12 @@ body.dashboard-page main > .section > div {
   background: linear-gradient(90deg, var(--color-accent-500), var(--color-teal-500));
 }
 
-.commerce-invoices-list__hero-copy {
+.bodea-invoices-list__hero-copy {
   position: relative;
   z-index: 1;
 }
 
-.commerce-invoices-list__hero-eyebrow {
+.bodea-invoices-list__hero-eyebrow {
   display: inline-flex;
   margin-bottom: var(--spacing-xxsmall);
   color: rgb(255 255 255 / 75%);
@@ -368,21 +368,21 @@ body.dashboard-page main > .section > div {
   text-transform: uppercase;
 }
 
-.commerce-invoices-list__hero-title {
+.bodea-invoices-list__hero-title {
   margin: 0;
   color: var(--color-neutral-50);
   font-size: 2.6rem;
   line-height: 1.15;
 }
 
-.commerce-invoices-list__hero-text {
+.bodea-invoices-list__hero-text {
   max-width: 68ch;
   margin: var(--spacing-xsmall) 0 0;
   color: rgb(255 255 255 / 78%);
   font: var(--type-body-2-default-font);
 }
 
-.commerce-invoices-list__hero-badge {
+.bodea-invoices-list__hero-badge {
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -398,7 +398,7 @@ body.dashboard-page main > .section > div {
   text-transform: uppercase;
 }
 
-.commerce-invoices-list__filters {
+.bodea-invoices-list__filters {
   display: flex;
   align-items: center;
   gap: var(--spacing-small);
@@ -407,7 +407,7 @@ body.dashboard-page main > .section > div {
   border-bottom: 1px solid var(--color-neutral-200);
 }
 
-.commerce-invoices-list__filter-label {
+.bodea-invoices-list__filter-label {
   margin: 0;
   color: var(--color-neutral-700);
   font: var(--type-details-caption-1-font);
@@ -416,7 +416,7 @@ body.dashboard-page main > .section > div {
   white-space: nowrap;
 }
 
-.commerce-invoices-list__month-select {
+.bodea-invoices-list__month-select {
   min-width: 160px;
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   border: 1px solid var(--color-neutral-300);
@@ -428,32 +428,32 @@ body.dashboard-page main > .section > div {
   appearance: auto;
 }
 
-.commerce-invoices-list__month-select:hover {
+.bodea-invoices-list__month-select:hover {
   border-color: var(--color-brand-500);
 }
 
-.commerce-invoices-list__month-select:focus {
+.bodea-invoices-list__month-select:focus {
   outline: none;
   border-color: var(--color-brand-500);
   box-shadow: 0 0 0 2px rgb(3 105 161 / 20%);
 }
 
-.commerce-invoices-list__content {
+.bodea-invoices-list__content {
   background: var(--color-neutral-50);
 }
 
-.commerce-invoices-list__table-wrap {
+.bodea-invoices-list__table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.commerce-invoices-list__table {
+.bodea-invoices-list__table {
   width: 100%;
   min-width: 760px;
   border-collapse: collapse;
 }
 
-.commerce-invoices-list__table thead th {
+.bodea-invoices-list__table thead th {
   background: linear-gradient(180deg, var(--color-neutral-100) 0%, rgb(241 245 249) 100%);
   color: var(--color-neutral-700);
   font: var(--type-details-overline-font);
@@ -465,40 +465,40 @@ body.dashboard-page main > .section > div {
   border-bottom: 1px solid var(--color-neutral-300);
 }
 
-.commerce-invoices-list__row {
+.bodea-invoices-list__row {
   border-bottom: 1px solid var(--color-neutral-200);
   transition: background-color 0.12s ease;
 }
 
-.commerce-invoices-list__row:last-child {
+.bodea-invoices-list__row:last-child {
   border-bottom: none;
 }
 
-.commerce-invoices-list__row:hover {
+.bodea-invoices-list__row:hover {
   background: var(--color-neutral-100);
 }
 
-.commerce-invoices-list__row td {
+.bodea-invoices-list__row td {
   padding: var(--spacing-small) var(--spacing-medium);
   color: var(--color-neutral-700);
   font: var(--type-body-2-default-font);
   vertical-align: middle;
 }
 
-.commerce-invoices-list__invoice-number,
-.commerce-invoices-list__order-link {
+.bodea-invoices-list__invoice-number,
+.bodea-invoices-list__order-link {
   color: var(--color-brand-500);
   font-weight: 600;
   text-decoration: none;
 }
 
-.commerce-invoices-list__order-link:hover {
+.bodea-invoices-list__order-link:hover {
   color: var(--color-brand-600);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.commerce-invoices-list__status {
+.bodea-invoices-list__status {
   display: inline-flex;
   align-items: center;
   padding: 0.2em 0.65em;
@@ -510,29 +510,29 @@ body.dashboard-page main > .section > div {
   white-space: nowrap;
 }
 
-.commerce-invoices-list__status[data-status="complete"] {
+.bodea-invoices-list__status[data-status="complete"] {
   background: var(--color-positive-200);
   color: var(--color-positive-500);
 }
 
-.commerce-invoices-list__status[data-status="pending"] {
+.bodea-invoices-list__status[data-status="pending"] {
   background: var(--color-informational-200);
   color: var(--color-informational-500);
 }
 
-.commerce-invoices-list__status[data-status="canceled"] {
+.bodea-invoices-list__status[data-status="canceled"] {
   background: var(--color-alert-200);
   color: var(--color-alert-500);
 }
 
-.commerce-invoices-list__status[data-status="neutral"] {
+.bodea-invoices-list__status[data-status="neutral"] {
   background: var(--color-neutral-200);
   color: var(--color-neutral-700);
 }
 
-.commerce-invoices-list__download,
-.commerce-invoices-list__load-more,
-.commerce-invoices-list__retry {
+.bodea-invoices-list__download,
+.bodea-invoices-list__load-more,
+.bodea-invoices-list__retry {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -551,27 +551,27 @@ body.dashboard-page main > .section > div {
     color 0.12s ease;
 }
 
-.commerce-invoices-list__download:hover,
-.commerce-invoices-list__load-more:hover,
-.commerce-invoices-list__retry:hover {
+.bodea-invoices-list__download:hover,
+.bodea-invoices-list__load-more:hover,
+.bodea-invoices-list__retry:hover {
   background: var(--color-neutral-100);
   border-color: var(--color-brand-500);
   color: var(--color-brand-600);
 }
 
-.commerce-invoices-list__download:disabled,
-.commerce-invoices-list__load-more:disabled,
-.commerce-invoices-list__retry:disabled {
+.bodea-invoices-list__download:disabled,
+.bodea-invoices-list__load-more:disabled,
+.bodea-invoices-list__retry:disabled {
   opacity: 0.65;
   cursor: wait;
 }
 
-.commerce-invoices-list__action-disabled {
+.bodea-invoices-list__action-disabled {
   color: var(--color-neutral-600);
   font: var(--type-details-caption-1-font);
 }
 
-.commerce-invoices-list__footer {
+.bodea-invoices-list__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -581,13 +581,13 @@ body.dashboard-page main > .section > div {
   border-top: 1px solid var(--color-neutral-300);
 }
 
-.commerce-invoices-list__footer-message {
+.bodea-invoices-list__footer-message {
   margin: 0;
   color: var(--color-alert-500);
   font: var(--type-details-caption-2-font);
 }
 
-.commerce-invoices-list__state {
+.bodea-invoices-list__state {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -598,14 +598,14 @@ body.dashboard-page main > .section > div {
   text-align: center;
 }
 
-.commerce-invoices-list__state-message {
+.bodea-invoices-list__state-message {
   margin: 0;
   color: var(--color-neutral-700);
   font: var(--type-body-2-default-font);
 }
 
-.commerce-invoices-list__skeleton-line,
-.commerce-invoices-list__skeleton-button {
+.bodea-invoices-list__skeleton-line,
+.bodea-invoices-list__skeleton-button {
   display: block;
   border-radius: 999px;
   background:
@@ -616,20 +616,20 @@ body.dashboard-page main > .section > div {
       var(--color-neutral-200) 75%
     );
   background-size: 200% 100%;
-  animation: commerce-invoices-list-shimmer 1.3s infinite linear;
+  animation: bodea-invoices-list-shimmer 1.3s infinite linear;
 }
 
-.commerce-invoices-list__skeleton-line {
+.bodea-invoices-list__skeleton-line {
   width: 70%;
   height: 0.9rem;
 }
 
-.commerce-invoices-list__skeleton-button {
+.bodea-invoices-list__skeleton-button {
   width: 7rem;
   height: 2.25rem;
 }
 
-@keyframes commerce-invoices-list-shimmer {
+@keyframes bodea-invoices-list-shimmer {
   0% {
     background-position: 200% 0;
   }
@@ -639,10 +639,10 @@ body.dashboard-page main > .section > div {
   }
 }
 
-.commerce-invoices-list__download:focus-visible,
-.commerce-invoices-list__load-more:focus-visible,
-.commerce-invoices-list__retry:focus-visible,
-.commerce-invoices-list__order-link:focus-visible {
+.bodea-invoices-list__download:focus-visible,
+.bodea-invoices-list__load-more:focus-visible,
+.bodea-invoices-list__retry:focus-visible,
+.bodea-invoices-list__order-link:focus-visible {
   outline: 2px solid var(--color-brand-500);
   outline-offset: 2px;
 }
@@ -682,20 +682,20 @@ body.dashboard-page main > .section > div {
     padding: 16px;
   }
 
-  .commerce-invoices-list__filters {
+  .bodea-invoices-list__filters {
     padding: var(--spacing-medium) var(--spacing-medium);
   }
 
-  .commerce-invoices-list__hero {
+  .bodea-invoices-list__hero {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .commerce-invoices-list__table {
+  .bodea-invoices-list__table {
     min-width: 680px;
   }
 
-  .commerce-invoices-list__footer {
+  .bodea-invoices-list__footer {
     flex-direction: column;
     align-items: stretch;
   }

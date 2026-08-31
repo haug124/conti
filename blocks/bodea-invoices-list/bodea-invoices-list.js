@@ -77,13 +77,13 @@ function getInvoiceStatusVariant(status) {
 
 function buildSkeletonRows(count = 5) {
   return Array.from({ length: count }, () => `
-    <tr class="commerce-invoices-list__row commerce-invoices-list__row--skeleton">
-      <td><span class="commerce-invoices-list__skeleton-line"></span></td>
-      <td><span class="commerce-invoices-list__skeleton-line"></span></td>
-      <td><span class="commerce-invoices-list__skeleton-line"></span></td>
-      <td><span class="commerce-invoices-list__skeleton-line"></span></td>
-      <td><span class="commerce-invoices-list__skeleton-line"></span></td>
-      <td><span class="commerce-invoices-list__skeleton-button"></span></td>
+    <tr class="bodea-invoices-list__row bodea-invoices-list__row--skeleton">
+      <td><span class="bodea-invoices-list__skeleton-line"></span></td>
+      <td><span class="bodea-invoices-list__skeleton-line"></span></td>
+      <td><span class="bodea-invoices-list__skeleton-line"></span></td>
+      <td><span class="bodea-invoices-list__skeleton-line"></span></td>
+      <td><span class="bodea-invoices-list__skeleton-line"></span></td>
+      <td><span class="bodea-invoices-list__skeleton-button"></span></td>
     </tr>
   `).join('');
 }
@@ -140,7 +140,7 @@ function setTopBarCustomerName(block, customer) {
 function renderShell(block) {
   document.body.classList.add('dashboard-page');
   block.innerHTML = '';
-  block.classList.add('commerce-invoices-list', 'commerce-invoices-shell');
+  block.classList.add('bodea-invoices-list', 'commerce-invoices-shell');
 
   const nav = buildNav(window.location.pathname);
   block.appendChild(nav);
@@ -154,24 +154,24 @@ function renderShell(block) {
   const page = document.createElement('div');
   page.className = 'commerce-invoices-shell__page';
   page.innerHTML = `
-    <div class="commerce-invoices-list__card">
-      <div class="commerce-invoices-list__hero">
-        <div class="commerce-invoices-list__hero-copy">
-          <span class="commerce-invoices-list__hero-eyebrow">Account</span>
-          <h2 class="commerce-invoices-list__hero-title">Invoices</h2>
-          <p class="commerce-invoices-list__hero-text">Download invoice PDFs and review your invoice history.</p>
+    <div class="bodea-invoices-list__card">
+      <div class="bodea-invoices-list__hero">
+        <div class="bodea-invoices-list__hero-copy">
+          <span class="bodea-invoices-list__hero-eyebrow">Account</span>
+          <h2 class="bodea-invoices-list__hero-title">Invoices</h2>
+          <p class="bodea-invoices-list__hero-text">Download invoice PDFs and review your invoice history.</p>
         </div>
-        <span class="commerce-invoices-list__hero-badge" aria-live="polite">Loading…</span>
+        <span class="bodea-invoices-list__hero-badge" aria-live="polite">Loading…</span>
       </div>
-      <div class="commerce-invoices-list__filters">
-        <label for="commerce-invoices-month-filter" class="commerce-invoices-list__filter-label">Month</label>
-        <select id="commerce-invoices-month-filter" class="commerce-invoices-list__month-select" aria-label="Filter by month">
+      <div class="bodea-invoices-list__filters">
+        <label for="commerce-invoices-month-filter" class="bodea-invoices-list__filter-label">Month</label>
+        <select id="commerce-invoices-month-filter" class="bodea-invoices-list__month-select" aria-label="Filter by month">
           <option value="">All months</option>
         </select>
       </div>
-      <div class="commerce-invoices-list__content">
-        <div class="commerce-invoices-list__table-wrap">
-          <table class="commerce-invoices-list__table">
+      <div class="bodea-invoices-list__content">
+        <div class="bodea-invoices-list__table-wrap">
+          <table class="bodea-invoices-list__table">
             <thead>
               <tr>
                 <th>Invoice</th>
@@ -196,7 +196,7 @@ function renderShell(block) {
 }
 
 function setMeta(block, text) {
-  const meta = block.querySelector('.commerce-invoices-list__hero-badge');
+  const meta = block.querySelector('.bodea-invoices-list__hero-badge');
   if (meta) meta.textContent = text;
 }
 
@@ -511,11 +511,11 @@ async function downloadInvoicePdf(button, invoice, customer) {
 
 function buildDownloadButton(invoice) {
   if (!invoice.hasPdf) {
-    return '<span class="commerce-invoices-list__action-disabled">Unavailable</span>';
+    return '<span class="bodea-invoices-list__action-disabled">Unavailable</span>';
   }
 
   return `
-    <button class="commerce-invoices-list__download" type="button" data-invoice-id="${invoice.id}">
+    <button class="bodea-invoices-list__download" type="button" data-invoice-id="${invoice.id}">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7 10 12 15 17 10"/>
@@ -535,17 +535,17 @@ function renderTable(block, state) {
       : '';
 
     return `
-      <tr class="commerce-invoices-list__row">
-        <td><span class="commerce-invoices-list__invoice-number">#${invoice.number}</span></td>
+      <tr class="bodea-invoices-list__row">
+        <td><span class="bodea-invoices-list__invoice-number">#${invoice.number}</span></td>
         <td>
           ${orderHref
-    ? `<a class="commerce-invoices-list__order-link" href="${orderHref}">#${invoice.orderNumber}</a>`
+    ? `<a class="bodea-invoices-list__order-link" href="${orderHref}">#${invoice.orderNumber}</a>`
     : '—'}
         </td>
         <td>${formatInvoiceDate(invoice.invoiceDate)}</td>
         <td>
           ${status
-    ? `<span class="commerce-invoices-list__status" data-status="${getInvoiceStatusVariant(invoice.invoiceStatus)}">${status}</span>`
+    ? `<span class="bodea-invoices-list__status" data-status="${getInvoiceStatusVariant(invoice.invoiceStatus)}">${status}</span>`
     : '—'}
         </td>
         <td>${invoice.currency ?? '—'}</td>
@@ -557,20 +557,20 @@ function renderTable(block, state) {
   const footer = [];
 
   if (state.footerError) {
-    footer.push(`<p class="commerce-invoices-list__footer-message">${state.footerError}</p>`);
+    footer.push(`<p class="bodea-invoices-list__footer-message">${state.footerError}</p>`);
   }
 
   if (state.currentPage < state.totalPages) {
     footer.push(`
-      <button class="commerce-invoices-list__load-more" type="button" ${state.loadingMore ? 'disabled' : ''}>
+      <button class="bodea-invoices-list__load-more" type="button" ${state.loadingMore ? 'disabled' : ''}>
         ${state.loadingMore ? 'Loading…' : 'Load More'}
       </button>
     `);
   }
 
-  block.querySelector('.commerce-invoices-list__content').innerHTML = `
-    <div class="commerce-invoices-list__table-wrap">
-      <table class="commerce-invoices-list__table">
+  block.querySelector('.bodea-invoices-list__content').innerHTML = `
+    <div class="bodea-invoices-list__table-wrap">
+      <table class="bodea-invoices-list__table">
         <thead>
           <tr>
             <th>Invoice</th>
@@ -584,39 +584,39 @@ function renderTable(block, state) {
         <tbody>${tbody}</tbody>
       </table>
     </div>
-    ${footer.length ? `<div class="commerce-invoices-list__footer">${footer.join('')}</div>` : ''}
+    ${footer.length ? `<div class="bodea-invoices-list__footer">${footer.join('')}</div>` : ''}
   `;
 
-  block.querySelectorAll('.commerce-invoices-list__download').forEach((button) => {
+  block.querySelectorAll('.bodea-invoices-list__download').forEach((button) => {
     const invoice = state.invoices.find((entry) => entry.id === button.dataset.invoiceId);
     if (!invoice) return;
 
     button.addEventListener('click', () => downloadInvoicePdf(button, invoice, state.customer));
   });
 
-  const loadMoreButton = block.querySelector('.commerce-invoices-list__load-more');
+  const loadMoreButton = block.querySelector('.bodea-invoices-list__load-more');
   if (loadMoreButton) {
     loadMoreButton.addEventListener('click', () => state.loadMore());
   }
 }
 
 function renderEmptyState(block, message) {
-  block.querySelector('.commerce-invoices-list__content').innerHTML = `
-    <div class="commerce-invoices-list__state">
-      <p class="commerce-invoices-list__state-message">${message}</p>
+  block.querySelector('.bodea-invoices-list__content').innerHTML = `
+    <div class="bodea-invoices-list__state">
+      <p class="bodea-invoices-list__state-message">${message}</p>
     </div>
   `;
 }
 
 function renderErrorState(block, retry) {
-  block.querySelector('.commerce-invoices-list__content').innerHTML = `
-    <div class="commerce-invoices-list__state">
-      <p class="commerce-invoices-list__state-message">We could not load invoices right now.</p>
-      <button class="commerce-invoices-list__retry" type="button">Try Again</button>
+  block.querySelector('.bodea-invoices-list__content').innerHTML = `
+    <div class="bodea-invoices-list__state">
+      <p class="bodea-invoices-list__state-message">We could not load invoices right now.</p>
+      <button class="bodea-invoices-list__retry" type="button">Try Again</button>
     </div>
   `;
 
-  block.querySelector('.commerce-invoices-list__retry').addEventListener('click', retry);
+  block.querySelector('.bodea-invoices-list__retry').addEventListener('click', retry);
 }
 
 function dedupeInvoices(invoices) {
@@ -665,8 +665,8 @@ function filterInvoicesByMonth(invoices, monthFilter) {
 }
 
 function renderMonthFilter(block, state) {
-  const filterWrap = block.querySelector('.commerce-invoices-list__filters');
-  const select = filterWrap?.querySelector('.commerce-invoices-list__month-select');
+  const filterWrap = block.querySelector('.bodea-invoices-list__filters');
+  const select = filterWrap?.querySelector('.bodea-invoices-list__month-select');
   if (!select) return;
 
   const months = getUniqueMonthsFromInvoices(state.invoices);
@@ -697,7 +697,7 @@ function renderMonthFilter(block, state) {
 }
 
 export default async function decorate(block) {
-  block.classList.add('commerce-invoices-list');
+  block.classList.add('bodea-invoices-list');
 
   if (!checkIsAuthenticated()) {
     window.location.href = rootLink(CUSTOMER_LOGIN_PATH);

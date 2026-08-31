@@ -1,8 +1,8 @@
 {
   "definitions": [{
-    "title": "Commerce Invoices List",
-    "id": "commerce-invoices-list",
-    "model": "commerce-invoices-list",
+    "title": "Bodea Invoices List",
+    "id": "bodea-invoices-list",
+    "model": "bodea-invoices-list",
     "plugins": {
       "da": {
         "type": "key-value-block"
@@ -10,7 +10,7 @@
     }
   }],
   "models": [{
-    "id": "commerce-invoices-list",
+    "id": "bodea-invoices-list",
     "fields": [
       {
         "component": "number",
