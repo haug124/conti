@@ -1,0 +1,23 @@
+{
+  "definitions": [{
+    "title": "Bodea Orders List",
+    "id": "bodea-orders-list",
+    "model": "bodea-orders-list",
+    "plugins": {
+      "da": {
+        "type": "key-value-block"
+      }
+    }
+  }],
+  "models": [{
+    "id": "bodea-orders-list",
+    "fields": [
+      {
+        "component": "number",
+        "name": "page-size",
+        "label": "Page Size"
+      }
+    ]
+  }],
+  "filters": []
+}

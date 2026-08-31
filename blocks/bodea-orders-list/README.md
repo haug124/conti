@@ -1,0 +1,28 @@
+# Bodea Orders List Block
+
+## Overview
+
+The Bodea Orders List block displays a paginated table of customer orders with status, date, products, and links to order details. Uses Commerce order API and shares nav with the Bodea Dashboard.
+
+## DA.live Integration
+
+- **Block name (component id)**: `bodea-orders-list` (replaces legacy `chep-orders-list`). Update authored pages that still reference the old block name.
+- Content in block cells (optional)
+- Block config: `page-size` (default 10, max 50)
+
+## Block Config (readBlockConfig)
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| `page-size` | number | 10 | Orders per page (1–50) |
+
+## Behavior
+
+- Paginated list with skeleton loading
+- Links to order detail pages via `CUSTOMER_ORDER_DETAILS_PATH`
+- Product preview icons from equipment SKU mapping
+
+## Accessibility
+
+- Table semantics for order list
+- Ensure `:focus-visible` on links and buttons
