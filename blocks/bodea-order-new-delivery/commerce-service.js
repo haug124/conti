@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   initializeCart,
   addProductsToCart,
@@ -232,11 +231,11 @@ export async function persistOrderMetadata({ cartId, metadata }) {
   const attributeCodes = getMetadataAttributeCodes(customAttributesInput);
   const outgoingCustomAttributes = customAttributesInput.custom_attributes;
 
-  console.info('Attempting cart metadata persistence for order-new-delivery.', {
+  console.info('Attempting cart metadata persistence for bodea-order-new-delivery.', {
     cartId,
     attributeCodes,
   });
-  console.info('Outgoing cart custom_attributes payload for order-new-delivery.', {
+  console.info('Outgoing cart custom_attributes payload for bodea-order-new-delivery.', {
     cartId,
     customAttributes: outgoingCustomAttributes,
   });
@@ -296,7 +295,7 @@ export async function persistOrderMetadata({ cartId, metadata }) {
   }
 
   const missingAttributeCodes = getMissingAttributeCodes(attributeCodes, persistedAttributes);
-  console.info('Returned cart.custom_attributes payload for order-new-delivery.', {
+  console.info('Returned cart.custom_attributes payload for bodea-order-new-delivery.', {
     cartId: persistedCartId,
     customAttributes: persistedAttributes || [],
     persistedAttributeCodes,
@@ -315,7 +314,7 @@ export async function persistOrderMetadata({ cartId, metadata }) {
     );
   }
 
-  console.info('Cart metadata persistence succeeded for order-new-delivery.', {
+  console.info('Cart metadata persistence succeeded for bodea-order-new-delivery.', {
     cartId: persistedCartId,
     attributeCodes,
     persistedAttributeCodes,

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /** Shown in wizard and sent as order metadata source (cart custom attribute). */
 export const ORDER_SOURCE = 'Bodea';
 

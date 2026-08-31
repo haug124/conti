@@ -16,7 +16,7 @@
  */
 
 import { MAP_CONFIG, QUICK_ACTIONS, SITE_COORDINATES } from './dashboard-config.js';
-import { getDeliverySites } from '../order-new-delivery/sites.js';
+import { getDeliverySites } from '../bodea-order-new-delivery/sites.js';
 import {
   rootLink,
   CUSTOMER_ORDERS_PATH,

@@ -35,7 +35,7 @@ import {
 } from '../../scripts/commerce.js';
 import '../../scripts/initializers/auth.js';
 import '../../scripts/initializers/account.js';
-import { loadDeliverySitesFromAddressBook } from '../order-new-delivery/sites.js';
+import { loadDeliverySitesFromAddressBook } from '../bodea-order-new-delivery/sites.js';
 import { buildNav, toggleNav } from './dashboard-nav.js';
 import { buildKpiSection, updateKpiSection } from './dashboard-kpi.js';
 import { buildOrdersSection, updateOrdersSection } from './dashboard-orders.js';

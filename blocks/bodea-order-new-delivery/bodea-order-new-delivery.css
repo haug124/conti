@@ -1,7 +1,5 @@
-/* stylelint-disable no-descending-specificity, no-duplicate-selectors */
-
 /* ================================================================
-   order-new-delivery.css — Bodea order wizard design system
+   bodea-order-new-delivery.css — Bodea order wizard design system
    NOTE: html { font-size: 62.5% } in styles.css → 1rem = 10px.
          All font-size values below use the 10 px base rem scale.
    ================================================================ */
@@ -9,7 +7,7 @@
 /* ----------------------------------------------------------------
    1. VARIABLES / DESIGN TOKENS
    ---------------------------------------------------------------- */
-.order-new-delivery {
+.bodea-order-new-delivery {
   --ond-blue: var(--color-brand-500);
   --ond-blue-dark: var(--color-brand-600);
   --ond-blue-light: var(--color-brand-300);
@@ -39,7 +37,6 @@
 /* ----------------------------------------------------------------
    2. CONTAINER / LAYOUT + SHELL (nav bar on left, matches orders/invoices/dashboard)
    ---------------------------------------------------------------- */
-
 /* Shared dashboard shell – matches invoices/orders block theme */
 .dashboard-page {
   display: block;
@@ -82,7 +79,7 @@ body.dashboard-page main > .section > div {
   padding: 0 !important;
 }
 
-.order-new-delivery-shell {
+.bodea-order-new-delivery-shell {
   display: flex;
   width: 100%;
   height: 100dvh;
@@ -94,13 +91,13 @@ body.dashboard-page main > .section > div {
   line-height: 1.5;
 }
 
-.order-new-delivery-shell *,
-.order-new-delivery-shell *::before,
-.order-new-delivery-shell *::after {
+.bodea-order-new-delivery-shell *,
+.bodea-order-new-delivery-shell *::before,
+.bodea-order-new-delivery-shell *::after {
   box-sizing: border-box;
 }
 
-.order-new-delivery__main {
+.bodea-order-new-delivery__main {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -108,7 +105,7 @@ body.dashboard-page main > .section > div {
   overflow: hidden;
 }
 
-.order-new-delivery__topbar {
+.bodea-order-new-delivery__topbar {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -120,7 +117,7 @@ body.dashboard-page main > .section > div {
   flex-shrink: 0;
 }
 
-.order-new-delivery__menu-btn {
+.bodea-order-new-delivery__menu-btn {
   display: none;
   align-items: center;
   justify-content: center;
@@ -133,16 +130,16 @@ body.dashboard-page main > .section > div {
   cursor: pointer;
 }
 
-.order-new-delivery__menu-btn:hover {
+.bodea-order-new-delivery__menu-btn:hover {
   background: var(--color-neutral-200);
   color: var(--color-brand-500);
 }
 
-.order-new-delivery__topbar-copy {
+.bodea-order-new-delivery__topbar-copy {
   min-width: 0;
 }
 
-.order-new-delivery__eyebrow {
+.bodea-order-new-delivery__eyebrow {
   display: block;
   color: var(--color-neutral-600);
   font-size: 11px;
@@ -151,14 +148,14 @@ body.dashboard-page main > .section > div {
   text-transform: uppercase;
 }
 
-.order-new-delivery__page-title {
+.bodea-order-new-delivery__page-title {
   margin: 0;
   color: var(--color-neutral-900);
   font-size: 18px;
   font-weight: 700;
 }
 
-.order-new-delivery__account-link {
+.bodea-order-new-delivery__account-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -169,28 +166,28 @@ body.dashboard-page main > .section > div {
   font-weight: 600;
 }
 
-.order-new-delivery__account-link:hover {
+.bodea-order-new-delivery__account-link:hover {
   color: var(--color-brand-500);
 }
 
-.order-new-delivery__page {
+.bodea-order-new-delivery__page {
   flex: 1;
   overflow: auto;
   padding: 24px;
 }
 
-main .order-new-delivery-container {
+main .bodea-order-new-delivery-container {
   max-width: 900px;
   margin: 0 auto;
 }
 
-.order-new-delivery {
+.bodea-order-new-delivery {
   background: var(--ond-page-bg);
   padding: 0;
 }
 
 /* Left nav (shared with dashboard/orders/invoices) */
-.order-new-delivery-shell .bodea-nav {
+.bodea-order-new-delivery-shell .bodea-nav {
   display: flex;
   flex-direction: column;
   width: 240px;
@@ -204,7 +201,7 @@ main .order-new-delivery-container {
   scrollbar-color: rgb(255 255 255 / 20%) transparent;
 }
 
-.order-new-delivery-shell .bodea-nav__overlay {
+.bodea-order-new-delivery-shell .bodea-nav__overlay {
   display: none;
   position: fixed;
   inset: 0;
@@ -214,11 +211,11 @@ main .order-new-delivery-container {
   transition: opacity 0.25s ease;
 }
 
-.order-new-delivery-shell .bodea-nav__overlay--visible {
+.bodea-order-new-delivery-shell .bodea-nav__overlay--visible {
   opacity: 1;
 }
 
-.order-new-delivery-shell .bodea-nav__logo {
+.bodea-order-new-delivery-shell .bodea-nav__logo {
   padding: 24px 20px 20px;
   border-bottom: 1px solid rgb(255 255 255 / 12%);
   flex-shrink: 0;
@@ -227,7 +224,7 @@ main .order-new-delivery-container {
   align-items: center;
 }
 
-.order-new-delivery-shell .bodea-nav__logo-link {
+.bodea-order-new-delivery-shell .bodea-nav__logo-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -235,14 +232,14 @@ main .order-new-delivery-container {
   text-decoration: none !important;
 }
 
-.order-new-delivery-shell .bodea-nav__logo-link:hover,
-.order-new-delivery-shell .bodea-nav__logo-link:focus {
+.bodea-order-new-delivery-shell .bodea-nav__logo-link:hover,
+.bodea-order-new-delivery-shell .bodea-nav__logo-link:focus {
   opacity: 1;
   background: transparent !important;
   outline: none;
 }
 
-.order-new-delivery-shell .bodea-nav__logo-img {
+.bodea-order-new-delivery-shell .bodea-nav__logo-img {
   display: block;
   max-width: 260px;
   width: 100%;
@@ -252,20 +249,20 @@ main .order-new-delivery-container {
   mix-blend-mode: lighten;
 }
 
-.order-new-delivery-shell .bodea-nav__list {
+.bodea-order-new-delivery-shell .bodea-nav__list {
   list-style: none;
   margin: 0;
   padding: 16px 0;
   flex: 1;
 }
 
-.order-new-delivery-shell .bodea-nav__item {
+.bodea-order-new-delivery-shell .bodea-nav__item {
   margin: 2px 12px;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.order-new-delivery-shell .bodea-nav__link {
+.bodea-order-new-delivery-shell .bodea-nav__link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -278,18 +275,18 @@ main .order-new-delivery-container {
   position: relative;
 }
 
-.order-new-delivery-shell .bodea-nav__link:hover {
+.bodea-order-new-delivery-shell .bodea-nav__link:hover {
   background: rgb(255 255 255 / 10%);
   color: var(--color-neutral-50) !important;
 }
 
-.order-new-delivery-shell .bodea-nav__item--active .bodea-nav__link {
+.bodea-order-new-delivery-shell .bodea-nav__item--active .bodea-nav__link {
   background: rgb(255 255 255 / 15%);
   color: var(--color-neutral-50) !important;
   font-weight: 600;
 }
 
-.order-new-delivery-shell .bodea-nav__item--active .bodea-nav__link::before {
+.bodea-order-new-delivery-shell .bodea-nav__item--active .bodea-nav__link::before {
   content: "";
   position: absolute;
   left: -12px;
@@ -301,7 +298,7 @@ main .order-new-delivery-container {
   border-radius: 0 3px 3px 0;
 }
 
-.order-new-delivery-shell .bodea-nav__icon {
+.bodea-order-new-delivery-shell .bodea-nav__icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -310,23 +307,23 @@ main .order-new-delivery-container {
   flex-shrink: 0;
 }
 
-.order-new-delivery-shell .bodea-nav__label {
+.bodea-order-new-delivery-shell .bodea-nav__label {
   flex: 1;
 }
 
-.order-new-delivery-shell .bodea-nav__active-indicator {
+.bodea-order-new-delivery-shell .bodea-nav__active-indicator {
   display: flex;
   align-items: center;
   opacity: 0.6;
 }
 
-.order-new-delivery-shell .bodea-nav__footer {
+.bodea-order-new-delivery-shell .bodea-nav__footer {
   padding: 16px 20px;
   border-top: 1px solid rgb(255 255 255 / 12%);
   flex-shrink: 0;
 }
 
-.order-new-delivery-shell .bodea-nav__footer-text {
+.bodea-order-new-delivery-shell .bodea-nav__footer-text {
   display: block;
   color: rgb(255 255 255 / 50%);
   font-size: 11px;
@@ -335,7 +332,7 @@ main .order-new-delivery-container {
   text-transform: uppercase;
 }
 
-.order-new-delivery-shell .bodea-nav__footer-sub {
+.bodea-order-new-delivery-shell .bodea-nav__footer-sub {
   display: block;
   margin-top: 3px;
   color: rgb(255 255 255 / 35%);
@@ -343,19 +340,19 @@ main .order-new-delivery-container {
 }
 
 @media (max-width: 767px) {
-  .order-new-delivery-shell .order-new-delivery__menu-btn {
+  .bodea-order-new-delivery-shell .bodea-order-new-delivery__menu-btn {
     display: inline-flex;
   }
 
-  .order-new-delivery-shell .order-new-delivery__topbar {
+  .bodea-order-new-delivery-shell .bodea-order-new-delivery__topbar {
     padding: 0 16px;
   }
 
-  .order-new-delivery-shell .order-new-delivery__page {
+  .bodea-order-new-delivery-shell .bodea-order-new-delivery__page {
     padding: 16px;
   }
 
-  .order-new-delivery-shell .bodea-nav {
+  .bodea-order-new-delivery-shell .bodea-nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -363,11 +360,11 @@ main .order-new-delivery-container {
     transform: translateX(-100%);
   }
 
-  .order-new-delivery-shell .bodea-nav--open {
+  .bodea-order-new-delivery-shell .bodea-nav--open {
     transform: translateX(0);
   }
 
-  .order-new-delivery-shell .bodea-nav__overlay {
+  .bodea-order-new-delivery-shell .bodea-nav__overlay {
     display: block;
   }
 }
@@ -1041,12 +1038,12 @@ main .order-new-delivery-container {
   color: var(--ond-text-primary);
   border: 0;
   background: transparent;
-  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 .ond-qty-value::-webkit-outer-spin-button,
 .ond-qty-value::-webkit-inner-spin-button {
-  appearance: none;
+  -webkit-appearance: none;
   margin: 0;
 }
 
@@ -1145,7 +1142,6 @@ main .order-new-delivery-container {
 }
 
 /* Blue fill: behind image, visible through transparent trailer */
-
 /* +2px at full fill (65) aligns bar with new truck artwork; scales with fill level */
 .truck-capacity-fill {
   position: absolute;
@@ -1164,7 +1160,6 @@ main .order-new-delivery-container {
 /* Animate fill on mount (left-to-right growth) */
 @keyframes ond-truck-fill-in {
   from { width: 0; }
-
   to {
     width: calc(
       var(--fill-width-pct, 0) * 1% + var(--fill-width-pct, 0) / 65 * 2px
@@ -1470,7 +1465,7 @@ main .order-new-delivery-container {
   pointer-events: none;
 }
 
-.ond-cal__day:hover:not([disabled], .ond-cal__day--empty) {
+.ond-cal__day:hover:not([disabled]):not(.ond-cal__day--empty) {
   background: var(--ond-blue-tint);
   color: var(--ond-blue);
 }
@@ -2015,7 +2010,7 @@ main .order-new-delivery-container {
 
 .ond-detail-value {
   color: var(--ond-text-primary);
-  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .ond-confirmation__payment-wrap {

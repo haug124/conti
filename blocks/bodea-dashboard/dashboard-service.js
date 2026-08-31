@@ -16,7 +16,7 @@
 import { getCookie } from '@dropins/tools/lib.js';
 import { getConfigValue, getHeaders } from '@dropins/tools/lib/aem/configs.js';
 import { CORE_FETCH_GRAPHQL, checkIsAuthenticated } from '../../scripts/commerce.js';
-import { COMPANY_SESSION_STORAGE_KEY, ensureB2bCompanyGraphqlContext } from '../order-new-delivery/sites.js';
+import { COMPANY_SESSION_STORAGE_KEY, ensureB2bCompanyGraphqlContext } from '../bodea-order-new-delivery/sites.js';
 import {
   COMMERCE_REST_PATH_PREFIX,
   DEFAULT_SPEND_TREND_WEEKS,

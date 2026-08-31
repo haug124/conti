@@ -8,8 +8,8 @@ import {
 } from '../../scripts/commerce.js';
 import { fetchOrdersPage } from './orders-service.js';
 import { buildNav, toggleNav } from '../bodea-dashboard/dashboard-nav.js';
-import { renderBrickProductIcon } from '../order-new-delivery/brick-product-icon.js';
-import { getEquipmentProductBySku } from '../order-new-delivery/equipment-products.js';
+import { renderBrickProductIcon } from '../bodea-order-new-delivery/brick-product-icon.js';
+import { getEquipmentProductBySku } from '../bodea-order-new-delivery/equipment-products.js';
 import { ORDER_STATUS_MAP } from '../bodea-dashboard/dashboard-config.js';
 
 import '../../scripts/initializers/account.js';

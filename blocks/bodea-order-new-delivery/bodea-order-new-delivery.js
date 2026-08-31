@@ -1,4 +1,3 @@
-/* eslint-disable max-len, no-unused-vars, no-plusplus, no-nested-ternary, no-shadow */
 import {
   CUSTOMER_ACCOUNT_PATH,
   CUSTOMER_ADDRESS_PATH,
@@ -73,6 +72,7 @@ function clearStepError(state, stepId) {
   state.submitError = '';
 }
 
+
 /* ------------------------------------------------------------------
    SVG icons
    ------------------------------------------------------------------ */
@@ -96,16 +96,16 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
 const DAY_ABBR = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
 function renderChevronLeft() {
-  return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>';
+  return `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>`;
 }
 function renderChevronRight() {
-  return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
+  return `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>`;
 }
 function renderChevronUp() {
-  return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l5-5 5 5"/></svg>';
+  return `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l5-5 5 5"/></svg>`;
 }
 function renderChevronDown() {
-  return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>';
+  return `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>`;
 }
 
 function renderCalendar(state, errors) {
@@ -292,9 +292,7 @@ function renderStepMessage(message) {
   return `<div class="ond-step-message" role="alert">${escapeHtml(message)}</div>`;
 }
 
-function renderChoiceCard({
-  name, value, label, checked, stepId,
-}) {
+function renderChoiceCard({ name, value, label, checked, stepId }) {
   return `
     <label class="ond-choice-card">
       <input
@@ -335,9 +333,7 @@ function calculateTruckCapacity(state) {
   const lastTruckPallets = remainder === 0 ? PACK_SPACES_PER_TRAILER : remainder;
   const lastTruckPercent = Math.round((lastTruckPallets / PACK_SPACES_PER_TRAILER) * 100);
 
-  return {
-    totalPackUnits, truckCountEstimate, fullTruckCount, lastTruckPercent,
-  };
+  return { totalPackUnits, truckCountEstimate, fullTruckCount, lastTruckPercent };
 }
 
 /**
@@ -449,9 +445,7 @@ function renderCapacityMetric(iconSvg, label, figure, hint) {
 }
 
 function renderCapacityCard(state) {
-  const {
-    totalPackUnits, truckCountEstimate, fullTruckCount, lastTruckPercent,
-  } = calculateTruckCapacity(state);
+  const { totalPackUnits, truckCountEstimate, fullTruckCount, lastTruckPercent } = calculateTruckCapacity(state);
   const stateClass = getCapacityStateClass(lastTruckPercent, truckCountEstimate);
   const isEmpty = totalPackUnits === 0;
 
@@ -772,19 +766,19 @@ function renderStepBody(stepId, state, siteListId) {
       content = `
         <div class="ond-choice-grid">
           ${renderChoiceCard({
-    name: 'orderType',
-    value: 'single',
-    label: 'Single Order',
-    checked: state.data.orderType === 'single',
-    stepId,
-  })}
+            name: 'orderType',
+            value: 'single',
+            label: 'Single Order',
+            checked: state.data.orderType === 'single',
+            stepId,
+          })}
           ${renderChoiceCard({
-    name: 'orderType',
-    value: 'seven-day',
-    label: '7 Day Order',
-    checked: state.data.orderType === 'seven-day',
-    stepId,
-  })}
+            name: 'orderType',
+            value: 'seven-day',
+            label: '7 Day Order',
+            checked: state.data.orderType === 'seven-day',
+            stepId,
+          })}
         </div>
         ${renderError(errors.fields.orderType)}
       `;
@@ -809,19 +803,19 @@ function renderStepBody(stepId, state, siteListId) {
       content = `
         <div class="ond-choice-grid">
           ${renderChoiceCard({
-    name: 'transport',
-    value: 'chep',
-    label: 'Bodea delivery',
-    checked: state.data.transport === 'chep',
-    stepId,
-  })}
+            name: 'transport',
+            value: 'chep',
+            label: 'Bodea delivery',
+            checked: state.data.transport === 'chep',
+            stepId,
+          })}
           ${renderChoiceCard({
-    name: 'transport',
-    value: 'customer',
-    label: 'Own fleet / pickup',
-    checked: state.data.transport === 'customer',
-    stepId,
-  })}
+            name: 'transport',
+            value: 'customer',
+            label: 'Own fleet / pickup',
+            checked: state.data.transport === 'customer',
+            stepId,
+          })}
         </div>
         ${renderError(errors.fields.transport)}
       `;
@@ -1533,29 +1527,29 @@ function attachInputListeners(block, state) {
    ------------------------------------------------------------------ */
 function buildTopBar(navElement) {
   const topBar = document.createElement('div');
-  topBar.className = 'order-new-delivery__topbar';
+  topBar.className = 'bodea-order-new-delivery__topbar';
   topBar.innerHTML = `
-    <button class="order-new-delivery__menu-btn" aria-label="Toggle navigation" type="button">
+    <button class="bodea-order-new-delivery__menu-btn" aria-label="Toggle navigation" type="button">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <line x1="3" y1="12" x2="21" y2="12"/>
         <line x1="3" y1="6" x2="21" y2="6"/>
         <line x1="3" y1="18" x2="21" y2="18"/>
       </svg>
     </button>
-    <div class="order-new-delivery__topbar-copy">
-      <span class="order-new-delivery__eyebrow">Customer Portal</span>
-      <h1 class="order-new-delivery__page-title">Order New Delivery</h1>
+    <div class="bodea-order-new-delivery__topbar-copy">
+      <span class="bodea-order-new-delivery__eyebrow">Customer Portal</span>
+      <h1 class="bodea-order-new-delivery__page-title">Order New Delivery</h1>
     </div>
-    <a class="order-new-delivery__account-link" href="${rootLink(CUSTOMER_ACCOUNT_PATH)}">
+    <a class="bodea-order-new-delivery__account-link" href="${rootLink(CUSTOMER_ACCOUNT_PATH)}">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
         <circle cx="12" cy="7" r="4"/>
       </svg>
-      <span class="order-new-delivery__account-name">My Account</span>
+      <span class="bodea-order-new-delivery__account-name">My Account</span>
     </a>
   `;
 
-  topBar.querySelector('.order-new-delivery__menu-btn')
+  topBar.querySelector('.bodea-order-new-delivery__menu-btn')
     .addEventListener('click', () => toggleNav(navElement));
 
   return topBar;
@@ -1564,21 +1558,21 @@ function buildTopBar(navElement) {
 function renderShell(block) {
   document.body.classList.add('dashboard-page');
   block.innerHTML = '';
-  block.classList.add('order-new-delivery', 'order-new-delivery-shell');
+  block.classList.add('bodea-order-new-delivery', 'bodea-order-new-delivery-shell');
 
   const nav = buildNav(window.location.pathname);
   block.appendChild(nav);
 
   const main = document.createElement('div');
-  main.className = 'order-new-delivery__main';
+  main.className = 'bodea-order-new-delivery__main';
 
   const topBar = buildTopBar(nav);
   main.appendChild(topBar);
 
   const page = document.createElement('div');
-  page.className = 'order-new-delivery__page';
+  page.className = 'bodea-order-new-delivery__page';
   const wizardContainer = document.createElement('div');
-  wizardContainer.className = 'order-new-delivery__wizard order-new-delivery-container';
+  wizardContainer.className = 'bodea-order-new-delivery__wizard bodea-order-new-delivery-container';
   wizardContainer.dataset.siteListId = block.dataset.siteListId;
   page.appendChild(wizardContainer);
   main.appendChild(page);
@@ -1627,14 +1621,14 @@ function renderBlock(wizardContainer, state) {
 }
 
 export default async function decorate(block) {
-  block.classList.add('order-new-delivery');
+  block.classList.add('bodea-order-new-delivery');
   block.dataset.siteListId = `ond-sites-${Math.random().toString(36).slice(2, 10)}`;
 
   if (checkIsAuthenticated()) {
     try {
       await loadDeliverySitesFromAddressBook();
     } catch (err) {
-      console.warn('order-new-delivery: Could not load address book for delivery sites.', err);
+      console.warn('bodea-order-new-delivery: Could not load address book for delivery sites.', err);
     }
   }
 
@@ -1662,7 +1656,7 @@ export default async function decorate(block) {
         renderBlock(wizardContainer, state);
       })
       .catch((err) => {
-        console.warn('order-new-delivery: Could not load SKU prices.', err);
+        console.warn('bodea-order-new-delivery: Could not load SKU prices.', err);
         state.ui.equipmentPricesLoaded = true;
         renderBlock(wizardContainer, state);
       });

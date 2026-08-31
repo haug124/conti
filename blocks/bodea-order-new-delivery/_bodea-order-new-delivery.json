@@ -1,8 +1,8 @@
 {
   "definitions": [{
-    "title": "Order New Delivery",
-    "id": "order-new-delivery",
-    "model": "order-new-delivery",
+    "title": "Bodea Order New Delivery",
+    "id": "bodea-order-new-delivery",
+    "model": "bodea-order-new-delivery",
     "plugins": {
       "da": {
         "rows": 1,

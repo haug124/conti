@@ -192,7 +192,7 @@ async function fetchCatalogServicePrices(unique, map) {
       cache: 'no-store',
     });
   } catch (err) {
-    console.warn('order-new-delivery: Catalog Service price GET failed; trying POST.', err);
+    console.warn('bodea-order-new-delivery: Catalog Service price GET failed; trying POST.', err);
     try {
       response = await CS_FETCH_GRAPHQL.fetchGraphQl(EQUIPMENT_PRICES_QUERY, {
         method: 'POST',
@@ -200,14 +200,14 @@ async function fetchCatalogServicePrices(unique, map) {
         cache: 'no-store',
       });
     } catch (err2) {
-      console.warn('order-new-delivery: Catalog Service price POST failed.', err2);
+      console.warn('bodea-order-new-delivery: Catalog Service price POST failed.', err2);
       return;
     }
   }
 
   if (response?.errors?.length) {
     const msgs = response.errors.map((e) => e.message).join('; ');
-    console.warn('order-new-delivery: Catalog Service GraphQL errors (may still have partial data):', msgs);
+    console.warn('bodea-order-new-delivery: Catalog Service GraphQL errors (may still have partial data):', msgs);
   }
 
   const products = normalizeCatalogServiceProducts(response);
@@ -235,13 +235,13 @@ async function mergeCorePricesForMissingSkus(skus, map) {
       cache: 'no-store',
     });
   } catch (err) {
-    console.warn('order-new-delivery: Core GraphQL price fetch failed.', err);
+    console.warn('bodea-order-new-delivery: Core GraphQL price fetch failed.', err);
     return;
   }
 
   if (response?.errors?.length) {
     const msgs = response.errors.map((e) => e.message).join('; ');
-    console.warn('order-new-delivery: Core price GraphQL errors:', msgs);
+    console.warn('bodea-order-new-delivery: Core price GraphQL errors:', msgs);
     return;
   }
 
@@ -282,7 +282,7 @@ export async function fetchEquipmentSkuPrices(skus) {
 
   if (countPricedEntries(map) === 0) {
     console.warn(
-      'order-new-delivery: No catalog prices resolved for equipment SKUs. '
+      'bodea-order-new-delivery: No catalog prices resolved for equipment SKUs. '
       + 'Check Catalog Service + Core endpoints, B2B company header, and shared catalog prices.',
     );
   }

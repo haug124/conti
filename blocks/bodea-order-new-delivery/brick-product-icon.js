@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
 /**
  * Stretcher-bond brick wall (masonry), material-colored.
- * Shared by order-new-delivery wizard and bodea-orders-list product previews.
+ * Shared by bodea-order-new-delivery wizard and bodea-orders-list product previews.
  *
  * @param {string} material clay-facing | clay-engineering | concrete | clay-common | clay-perf | vent
  * @param {{ className?: string }} [opts]
@@ -39,7 +38,7 @@ export function renderBrickProductIcon(material, opts = {}) {
       <line x1="2" y1="10.5" x2="30" y2="10.5"/>
       <line x1="2" y1="19.5" x2="30" y2="19.5"/>
     </g>
-    ${material === 'vent' ? '<rect x="12" y="13" width="8" height="4" rx="0.4" fill="rgb(255 255 255 / 35%)"/>' : ''}
-    ${material === 'clay-perf' ? '<circle cx="8" cy="15" r="1.2" fill="rgb(0 0 0 / 22%)"/><circle cx="16" cy="15" r="1.2" fill="rgb(0 0 0 / 22%)"/><circle cx="24" cy="15" r="1.2" fill="rgb(0 0 0 / 22%)"/>' : ''}
+    ${material === 'vent' ? `<rect x="12" y="13" width="8" height="4" rx="0.4" fill="rgb(255 255 255 / 35%)"/>` : ''}
+    ${material === 'clay-perf' ? `<circle cx="8" cy="15" r="1.2" fill="rgb(0 0 0 / 22%)"/><circle cx="16" cy="15" r="1.2" fill="rgb(0 0 0 / 22%)"/><circle cx="24" cy="15" r="1.2" fill="rgb(0 0 0 / 22%)"/>` : ''}
   </svg>`;
 }
