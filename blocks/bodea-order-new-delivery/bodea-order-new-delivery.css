@@ -4,6 +4,18 @@
          All font-size values below use the 10 px base rem scale.
    ================================================================ */
 
+body.dashboard-page {
+  /* Design tokens the dashboard/order blocks expect but that the Continental
+     theme doesn't define. Kept in sync with bodea-dashboard.css so this page
+     renders standalone (dark hero/nav surfaces the white text sits on). */
+  --color-surface-dark: #141414;      /* near-black nav / banner base */
+  --color-surface-dark-mid: #232323;  /* slightly lighter gradient stop */
+  --color-neutral-0: #fff;
+  --color-accent-500: var(--conti-orange);
+  --color-accent-600: var(--conti-orange-hover);
+  --color-teal-500: #57534e;
+}
+
 /* ----------------------------------------------------------------
    1. VARIABLES / DESIGN TOKENS
    ---------------------------------------------------------------- */
