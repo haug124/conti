@@ -1,0 +1,17 @@
+{
+  "definitions": [{
+    "title": "Bodea Company Users",
+    "id": "bodea-company-users",
+    "model": "bodea-company-users",
+    "plugins": {
+      "da": {
+        "type": "key-value-block"
+      }
+    }
+  }],
+  "models": [{
+    "id": "bodea-company-users",
+    "fields": []
+  }],
+  "filters": []
+}

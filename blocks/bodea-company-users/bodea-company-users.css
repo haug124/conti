@@ -1,0 +1,850 @@
+/** ******************************************************************
+ * ADOBE CONFIDENTIAL
+ * __________________
+ *
+ *  Copyright 2025 Adobe
+ *  All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Adobe and its suppliers, if any. The intellectual
+ * and technical concepts contained herein are proprietary to Adobe
+ * and its suppliers and are protected by all applicable intellectual
+ * property laws, including trade secret and copyright laws.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Adobe.
+ ****************************************************************** */
+
+/* ── Dashboard shell (left nav + main) ──────────────────────────────────── */
+
+.dashboard-page {
+  display: block;
+  overflow: hidden;
+  background: var(--color-neutral-200);
+}
+
+body.dashboard-page > header,
+body.dashboard-page > footer,
+body.dashboard-page footer {
+  display: none !important;
+}
+
+body.dashboard-page > main {
+  display: flex;
+  height: 100dvh;
+  width: 100%;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  grid-row: unset;
+}
+
+body.dashboard-page main > .section {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100%;
+}
+
+body.dashboard-page main > .section > div {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* When company users block is present, hide other sections so our shell takes full main */
+body.dashboard-page main > .section:not(:has(.bodea-company-users)) {
+  display: none !important;
+}
+
+body.dashboard-page main > .section:has(.bodea-company-users) {
+  flex: 1 1 100%;
+}
+
+.bodea-company-users-shell {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-neutral-200);
+}
+
+/* Override .bodea-company-users flex-direction:column when shell is active */
+.bodea-company-users.bodea-company-users-shell {
+  flex-direction: row;
+  gap: 0;
+}
+
+.bodea-company-users-shell__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.bodea-company-users-shell__topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  padding: 0 24px;
+  background: var(--color-neutral-50);
+  border-bottom: 1px solid var(--color-neutral-300);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
+  flex-shrink: 0;
+}
+
+.bodea-company-users-shell__menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-neutral-700);
+  cursor: pointer;
+}
+
+.bodea-company-users-shell__menu-btn:hover {
+  background: var(--color-neutral-200);
+  color: var(--color-brand-500);
+}
+
+.bodea-company-users-shell__topbar-copy {
+  min-width: 0;
+}
+
+.bodea-company-users-shell__eyebrow {
+  display: block;
+  color: var(--color-neutral-600);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bodea-company-users-shell__page-title {
+  margin: 0;
+  color: var(--color-neutral-900);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.bodea-company-users-shell__account-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  color: var(--color-neutral-700);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bodea-company-users-shell__account-link:hover {
+  color: var(--color-brand-500);
+}
+
+.bodea-company-users-shell__page {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+/* Left nav – shared with invoices/dashboard blocks */
+.bodea-nav {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  min-width: 240px;
+  background: linear-gradient(180deg, var(--color-surface-dark) 0%, var(--color-surface-dark-mid) 100%);
+  overflow: hidden auto;
+  flex-shrink: 0;
+  z-index: 200;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 20%) transparent;
+}
+
+.bodea-nav__overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+  z-index: 199;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.bodea-nav__overlay--visible {
+  opacity: 1;
+}
+
+.bodea-nav__logo {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bodea-nav__logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-neutral-50) !important;
+  text-decoration: none !important;
+}
+
+.bodea-nav__logo-link:hover,
+.bodea-nav__logo-link:focus {
+  opacity: 1;
+  background: transparent !important;
+  outline: none;
+}
+
+.bodea-nav__logo-img {
+  display: block;
+  max-width: 260px;
+  width: 100%;
+  height: auto;
+  max-height: 88px;
+  object-fit: contain;
+  mix-blend-mode: lighten; /* Makes black background transparent, white logo visible */
+}
+
+.bodea-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 16px 0;
+  flex: 1;
+}
+
+.bodea-nav__item {
+  margin: 2px 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.bodea-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 8px;
+  color: rgb(255 255 255 / 75%) !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+  position: relative;
+}
+
+.bodea-nav__link:hover {
+  background: rgb(255 255 255 / 10%);
+  color: var(--color-neutral-50) !important;
+}
+
+.bodea-nav__item--active .bodea-nav__link {
+  background: rgb(255 255 255 / 15%);
+  color: var(--color-neutral-50) !important;
+  font-weight: 600;
+}
+
+.bodea-nav__item--active .bodea-nav__link::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 28px;
+  background: var(--color-accent-500);
+  border-radius: 0 3px 3px 0;
+}
+
+.bodea-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.bodea-nav__label {
+  flex: 1;
+}
+
+.bodea-nav__active-indicator {
+  display: flex;
+  align-items: center;
+  opacity: 0.6;
+}
+
+.bodea-nav__footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  flex-shrink: 0;
+}
+
+.bodea-nav__footer-text {
+  display: block;
+  color: rgb(255 255 255 / 50%);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bodea-nav__footer-sub {
+  display: block;
+  margin-top: 3px;
+  color: rgb(255 255 255 / 35%);
+  font-size: 11px;
+}
+
+@media (max-width: 767px) {
+  .bodea-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    transform: translateX(-100%);
+  }
+
+  .bodea-nav--open {
+    transform: translateX(0);
+  }
+
+  .bodea-nav__overlay {
+    display: block;
+  }
+
+  .bodea-company-users-shell__menu-btn {
+    display: inline-flex;
+  }
+
+  .bodea-company-users-shell__topbar {
+    padding: 0 16px;
+  }
+
+  .bodea-company-users-shell__page {
+    padding: 16px;
+  }
+
+  .bodea-company-users-shell__account-name {
+    display: none;
+  }
+}
+
+.bodea-company-users {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+}
+
+.bodea-company-users__hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-medium);
+  overflow: hidden;
+  padding: var(--spacing-medium) var(--spacing-big);
+  border-radius: var(--shape-border-radius-card);
+  background:
+    radial-gradient(circle at top right, rgb(255 255 255 / 10%), transparent 32%),
+    linear-gradient(135deg, var(--color-surface-dark) 0%, var(--color-brand-600) 58%, var(--color-brand-500) 100%);
+  color: var(--color-neutral-50);
+  box-shadow: var(--shape-shadow-card);
+}
+
+.bodea-company-users__hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent-500), var(--color-teal-500));
+}
+
+.bodea-company-users__hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.bodea-company-users__hero-eyebrow,
+.bodea-company-users__section-eyebrow,
+.bodea-company-users__state-eyebrow {
+  display: inline-flex;
+  margin-bottom: var(--spacing-xxsmall);
+  color: rgb(255 255 255 / 75%);
+  font: var(--type-details-overline-font);
+  letter-spacing: var(--type-details-overline-letter-spacing);
+  text-transform: uppercase;
+}
+
+.bodea-company-users__hero-title {
+  margin: 0;
+  color: var(--color-neutral-50);
+  font-size: 2.6rem;
+  line-height: 1.15;
+}
+
+.bodea-company-users__hero-text {
+  max-width: 68ch;
+  margin: var(--spacing-xsmall) 0 0;
+  color: rgb(255 255 255 / 78%);
+  font: var(--type-body-2-default-font);
+}
+
+.bodea-company-users__hero-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 8%);
+  color: var(--color-neutral-50);
+  font: var(--type-details-caption-1-font);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.bodea-company-users__module {
+  overflow: hidden;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--shape-border-radius-card);
+  background: var(--color-neutral-50);
+  box-shadow: var(--shape-shadow-card);
+}
+
+.bodea-company-users__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-medium);
+  padding: var(--spacing-medium) var(--spacing-large);
+  border-bottom: 1px solid var(--color-neutral-300);
+  background: linear-gradient(180deg, rgb(3 105 161 / 3%), transparent);
+}
+
+.bodea-company-users__tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-small);
+}
+
+.bodea-company-users__tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 14rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 1rem;
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-700);
+  text-align: left;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.bodea-company-users__tab:hover {
+  border-color: var(--color-brand-500);
+  transform: translateY(-1px);
+}
+
+.bodea-company-users__tab[aria-selected="true"],
+.bodea-company-users__tab.is-active {
+  border-color: var(--color-brand-500);
+  background: rgb(3 105 161 / 6%);
+  box-shadow: inset 0 0 0 1px rgb(3 105 161 / 14%);
+}
+
+.bodea-company-users__tab-label {
+  color: var(--color-neutral-900);
+  font: var(--type-body-2-strong-font);
+}
+
+.bodea-company-users__tab-copy {
+  color: var(--color-neutral-600);
+  font: var(--type-details-caption-2-font);
+}
+
+.bodea-company-users__primary-action,
+.bodea-company-users .edit-user-button,
+.bodea-company-users .manage-user-button,
+.bodea-company-users .role-action-button,
+.bodea-company-users .filterButtons :is(button, .dropin-button),
+.bodea-company-users .addUserButtonContainer :is(button, .dropin-button),
+.bodea-company-users .add-role-section :is(button, .dropin-button),
+.bodea-company-users .company-management-company-users-management-modal__actions button,
+body.company-users-page .delete-role-modal__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.625rem;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 999px;
+  background: var(--color-neutral-50);
+  color: var(--color-brand-500);
+  font: var(--type-button-2-font);
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.bodea-company-users__primary-action {
+  background: var(--color-brand-500);
+  border-color: var(--color-brand-500);
+  color: var(--color-neutral-50);
+}
+
+.bodea-company-users__primary-action:hover {
+  background: var(--color-brand-600);
+  border-color: var(--color-brand-600);
+  color: var(--color-neutral-50);
+}
+
+.bodea-company-users .edit-user-button:hover,
+.bodea-company-users .manage-user-button:hover,
+.bodea-company-users .role-action-button:hover,
+.bodea-company-users .filterButtons :is(button, .dropin-button):hover,
+.bodea-company-users .addUserButtonContainer :is(button, .dropin-button):hover,
+.bodea-company-users .add-role-section :is(button, .dropin-button):hover,
+.bodea-company-users .company-management-company-users-management-modal__actions button:hover,
+body.company-users-page .delete-role-modal__actions button:hover {
+  border-color: var(--color-brand-500);
+  background: var(--color-neutral-100);
+  color: var(--color-brand-600) !important; /* Brand hover — overrides dropin-design */
+}
+
+.bodea-company-users__section-intro {
+  padding: var(--spacing-medium) var(--spacing-large) var(--spacing-small);
+}
+
+.bodea-company-users__section-eyebrow,
+.bodea-company-users__state-eyebrow {
+  color: var(--color-brand-500);
+}
+
+.bodea-company-users__section-title,
+.bodea-company-users__state-title {
+  margin: 0;
+  color: var(--color-neutral-900);
+  font: var(--type-headline-2-strong-font);
+}
+
+.bodea-company-users__section-description,
+.bodea-company-users__state-message {
+  max-width: 70ch;
+  margin: var(--spacing-xsmall) 0 0;
+  color: var(--color-neutral-700);
+  font: var(--type-body-2-default-font);
+}
+
+.bodea-company-users__panels {
+  padding: 0 var(--spacing-large) var(--spacing-large);
+}
+
+.bodea-company-users__panel {
+  display: none;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--shape-border-radius-card);
+  background: var(--color-neutral-50);
+  padding: var(--spacing-medium);
+}
+
+.bodea-company-users__panel.is-active {
+  display: block;
+}
+
+.bodea-company-users__panel-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-small);
+  min-height: 10rem;
+  color: var(--color-neutral-700);
+  font: var(--type-body-2-default-font);
+}
+
+.bodea-company-users__panel-loading p {
+  margin: 0;
+}
+
+.bodea-company-users__loading-dot {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  background: var(--color-brand-500);
+  box-shadow: 0 0 0 0 rgb(3 105 161 / 30%);
+  animation: bodea-company-users-pulse 1.4s infinite;
+}
+
+.bodea-company-users .filterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xsmall);
+  margin-bottom: var(--spacing-medium);
+}
+
+.bodea-company-users .companyUsersTable,
+.bodea-company-users .company-management-role-and-permission-table {
+  width: 100%;
+}
+
+.bodea-company-users .dropin-table__table {
+  width: 100%;
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.bodea-company-users .dropin-table__header__row {
+  border-bottom: 0;
+}
+
+.bodea-company-users .dropin-table__header__cell,
+.bodea-company-users .dropin-table__body__cell {
+  padding: var(--spacing-small) var(--spacing-medium);
+  border-bottom: 1px solid var(--color-neutral-300);
+  vertical-align: middle;
+}
+
+.bodea-company-users .dropin-table__header__cell {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-700);
+  font: var(--type-details-overline-font);
+  letter-spacing: var(--type-details-overline-letter-spacing);
+  text-transform: uppercase;
+}
+
+.bodea-company-users .dropin-table__body__row {
+  transition: background-color 0.12s ease;
+}
+
+.bodea-company-users .dropin-table__body__row:nth-child(even) {
+  background: var(--color-neutral-100);
+}
+
+.bodea-company-users .dropin-table__body__row:hover {
+  background: rgb(3 105 161 / 4%);
+}
+
+.bodea-company-users .dropin-table__body__cell {
+  color: var(--color-neutral-800);
+  font: var(--type-body-2-default-font);
+}
+
+.bodea-company-users .paginationContainer,
+.bodea-company-users .table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-small);
+  margin-top: var(--spacing-medium);
+  padding-top: var(--spacing-medium);
+  border-top: 1px solid var(--color-neutral-300);
+  flex-wrap: wrap;
+}
+
+.bodea-company-users .pageSizeSelector,
+.bodea-company-users .pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xsmall);
+}
+
+.bodea-company-users .companyUsersTable__empty,
+.bodea-company-users .roles-and-permissions-no-access,
+.bodea-company-users .roles-and-permissions-error {
+  border: 1px dashed var(--color-neutral-300);
+  border-radius: var(--shape-border-radius-card);
+  background: var(--color-neutral-100);
+  padding: var(--spacing-large);
+}
+
+.bodea-company-users .company-users__alert,
+.bodea-company-users .dropin-inline-alert,
+.bodea-company-users .dropin-alert {
+  margin-bottom: var(--spacing-medium);
+}
+
+.bodea-company-users .user-actions,
+.bodea-company-users .roles-actions,
+.bodea-company-users .role-actions-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xsmall);
+}
+
+.bodea-company-users .addUserButtonContainer,
+.bodea-company-users .add-role-section {
+  margin-top: var(--spacing-medium);
+}
+
+/* Ensure Add New User / Add New Role button text matches branded typography */
+.bodea-company-users .addUserButtonContainer :is(button, .dropin-button),
+.bodea-company-users .add-role-section :is(button, .dropin-button) {
+  font: var(--type-button-2-font) !important;
+  letter-spacing: var(--type-button-2-letter-spacing);
+}
+
+/* Primary dropin buttons (Add New User, Add New Role) – white text on brand blue */
+.bodea-company-users .dropin-button--primary,
+.bodea-company-users .dropin-button--primary span {
+  color: var(--color-neutral-50) !important;
+  background-color: var(--color-brand-500) !important;
+  border-color: var(--color-brand-500) !important;
+}
+
+.bodea-company-users .dropin-button--primary:hover,
+.bodea-company-users .dropin-button--primary:hover span {
+  color: var(--color-neutral-50) !important;
+  background-color: var(--color-brand-600) !important;
+  border-color: var(--color-brand-600) !important;
+}
+
+.bodea-company-users .addUserButtonContainer :is(button, .dropin-button) *,
+.bodea-company-users .add-role-section :is(button, .dropin-button) * {
+  font: inherit !important;
+  letter-spacing: inherit;
+}
+
+.bodea-company-users .dropin-picker__button {
+  min-height: 2.5rem;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: 999px;
+  background: var(--color-neutral-50);
+}
+
+.bodea-company-users .company-management-company-users-management-modal,
+body.company-users-page .delete-role-modal,
+body.company-users-page .dropin-modal .company-user-form__card,
+body.company-users-page .dropin-modal .edit-role-and-permission {
+  border-radius: 1.25rem;
+  box-shadow: 0 24px 60px rgb(15 23 42 / 18%);
+}
+
+.bodea-company-users .company-management-company-users-management-modal__header {
+  border-bottom-color: var(--color-neutral-300);
+}
+
+body.company-users-page .dropin-modal .company-user-form__card,
+body.company-users-page .dropin-modal .edit-role-and-permission {
+  background: var(--color-neutral-50);
+}
+
+.bodea-company-users__state-card {
+  padding: var(--spacing-large);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--shape-border-radius-card);
+  background: var(--color-neutral-50);
+  box-shadow: var(--shape-shadow-card);
+}
+
+.bodea-company-users__state-action {
+  display: inline-flex;
+  margin-top: var(--spacing-medium);
+  color: var(--color-brand-500);
+  font: var(--type-body-2-strong-font);
+  text-decoration: none;
+}
+
+.bodea-company-users__state-action:hover {
+  color: var(--color-brand-600);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+@keyframes bodea-company-users-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(3 105 161 / 30%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 0.65rem rgb(3 105 161 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(3 105 161 / 0%);
+  }
+}
+
+@media (max-width: 900px) {
+  .bodea-company-users__hero,
+  .bodea-company-users__toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bodea-company-users__primary-action {
+    width: 100%;
+  }
+
+  .bodea-company-users__tabs {
+    width: 100%;
+  }
+
+  .bodea-company-users__tab {
+    flex: 1 1 16rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .bodea-company-users__hero {
+    padding: var(--spacing-medium);
+  }
+
+  .bodea-company-users__hero-title {
+    font-size: 2.1rem;
+  }
+
+  .bodea-company-users__toolbar,
+  .bodea-company-users__section-intro,
+  .bodea-company-users__panels {
+    padding-left: var(--spacing-medium);
+    padding-right: var(--spacing-medium);
+  }
+
+  .bodea-company-users__panel {
+    padding: var(--spacing-small);
+  }
+
+  .bodea-company-users .paginationContainer,
+  .bodea-company-users .table-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bodea-company-users .dropin-table__body__cell,
+  .bodea-company-users .dropin-table__header__cell {
+    padding-left: var(--spacing-small);
+    padding-right: var(--spacing-small);
+  }
+}
