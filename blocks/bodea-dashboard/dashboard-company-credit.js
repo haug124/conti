@@ -232,7 +232,16 @@ export function updateCompanyCreditSection(section, payload, isAuthenticated) {
   available = Math.min(Math.max(0, available), limit);
   const used = Math.max(0, limit - available);
   const currency = payload?.currency || 'GBP';
-  const pct = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+  const pctExact = limit > 0 ? Math.min(100, (used / limit) * 100) : 0;
+  const pct = Math.round(pctExact);
+  /* Small usage (e.g. $2.4k of $1m ≈ 0.2%) must not read as a flat "0%".
+     Show one/two decimals when it rounds to 0 but credit is actually used. */
+  let pctLabel;
+  if (pctExact === 0) pctLabel = '0';
+  else if (pctExact < 1) pctLabel = pctExact.toFixed(pctExact < 0.1 ? 2 : 1);
+  else pctLabel = String(pct);
+  /* Keep a visible sliver on the bar whenever any credit is used. */
+  const pctFill = used > 0 ? Math.max(pctExact, 1.5) : 0;
 
   const root = document.createElement('div');
   root.className = 'company-credit';
@@ -253,7 +262,7 @@ export function updateCompanyCreditSection(section, payload, isAuthenticated) {
   cardUsed.innerHTML = `
     <span class="company-credit__mini-label">Used</span>
     <span class="company-credit__mini-value company-credit__mini-value--used">${formatMoney(used, currency)}</span>
-    <span class="company-credit__mini-sub">${pct}% utilised</span>
+    <span class="company-credit__mini-sub">${pctLabel}% utilised</span>
   `;
 
   const cardAvail = document.createElement('div');
@@ -278,7 +287,7 @@ export function updateCompanyCreditSection(section, payload, isAuthenticated) {
   h3.textContent = 'Credit utilisation';
   const badge = document.createElement('span');
   badge.className = 'company-credit__util-badge';
-  badge.textContent = `${pct}% used`;
+  badge.textContent = `${pctLabel}% used`;
 
   head.appendChild(h3);
   head.appendChild(badge);
@@ -287,7 +296,7 @@ export function updateCompanyCreditSection(section, payload, isAuthenticated) {
   track.className = 'company-credit__bar-track';
   const barFill = document.createElement('div');
   barFill.className = 'company-credit__bar-fill';
-  barFill.style.width = `${pct}%`;
+  barFill.style.width = `${pctFill}%`;
   barFill.setAttribute('role', 'presentation');
   track.appendChild(barFill);
 
@@ -306,7 +315,7 @@ export function updateCompanyCreditSection(section, payload, isAuthenticated) {
   track.setAttribute('aria-valuenow', String(pct));
   track.setAttribute(
     'aria-valuetext',
-    `${pct}% used (${formatMoney(used, currency)} of ${formatMoney(limit, currency)} limit)`,
+    `${pctLabel}% used (${formatMoney(used, currency)} of ${formatMoney(limit, currency)} limit)`,
   );
   track.setAttribute('aria-label', 'Credit utilisation');
 
