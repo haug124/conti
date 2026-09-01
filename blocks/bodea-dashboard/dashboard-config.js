@@ -150,7 +150,7 @@ export const NAV_ITEMS = [
   },
   {
     id: 'materials',
-    label: 'Materials',
+    label: 'Order Tires',
     href: '/order',
     matchPaths: ['/order', '/order-new-delivery', '/equipment'],
     icon: 'materials',
