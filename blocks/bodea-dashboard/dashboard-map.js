@@ -43,7 +43,9 @@ const NOMINATIM_DELAY_MS = 550;
  */
 function shouldTryUkPostcodeApi(site) {
   const cc = (site.countryCode || '').toUpperCase();
-  if (cc && cc !== 'GB' && cc !== 'UK') return false;
+  // Only use the UK postcodes.io shortcut for explicit GB/UK addresses;
+  // a missing country must not be assumed to be the UK.
+  if (cc !== 'GB' && cc !== 'UK') return false;
   return Boolean(site.postcode && String(site.postcode).trim());
 }
 
@@ -127,13 +129,16 @@ async function resolveSiteCoordinates(site) {
     site.city,
     site.postcode,
     site.region,
-    site.countryCode,
-    'United Kingdom',
   ].filter(Boolean).join(', ');
 
   if (!q.trim()) return null;
 
-  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`;
+  // Bias the search to the address's own country (was hard-coded to the UK).
+  let cc = (site.countryCode || '').toLowerCase();
+  if (cc === 'uk') cc = 'gb'; // ISO code is GB, not UK
+  const params = new URLSearchParams({ format: 'json', limit: '1', q });
+  if (cc) params.set('countrycodes', cc);
+  const url = `https://nominatim.openstreetmap.org/search?${params.toString()}`;
 
   try {
     const res = await fetch(url, {
