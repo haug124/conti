@@ -30,37 +30,30 @@ export const SPEND_TREND_PERIOD_OPTIONS = [4, 8, 12];
 export const DEFAULT_SPEND_TREND_WEEKS = 12;
 
 /**
- * Featured masonry SKUs (Commerce catalog). HCS-BR-* = Heavy Construction Supplies brick lines.
+ * Featured tire SKUs (Commerce catalog). Continental passenger-car tire lines.
  */
 export const FEATURED_EQUIPMENT_SKUS = [
-  'HCS-BR-FAC-WIRECUT-P450',
-  'HCS-BR-ENG-CLASSAB-P350',
-  'HCS-BR-CMU-SOLID-P450',
-  'HCS-BR-COM-UTILITY-P450',
-  'HCS-BR-PRF-MULTICELL-P450',
-  'HCS-BR-AIR-VENT-P030',
+  'ASC2-205-55-R16',
+  'EC6-225-45-R18',
+  'PC7-245-40-R19',
+  'WT870P-225-45-R18',
+  'SC7-255-35-R20',
+  'WT870P-245-40-R19',
 ];
 
 /** Primary SKU for demo low-stock / notifications (first featured line). */
 export const PRIMARY_EQUIPMENT_SKU = FEATURED_EQUIPMENT_SKUS[0];
 
 /**
- * Product titles for Commerce name field and UI
- * (short format: Type (detail) – Standard Size, Pack of ~n).
+ * Product titles for Commerce name field and UI (Continental line – tire size).
  */
 export const EQUIPMENT_CATALOG_NAMES = {
-  'HCS-BR-FAC-WIRECUT-P450':
-    'Facing Brick (Wirecut) – Standard Size, Pack of ~450',
-  'HCS-BR-ENG-CLASSAB-P350':
-    'Engineering Brick (Class A/B) – Standard Size, Pack of ~350',
-  'HCS-BR-CMU-SOLID-P450':
-    'Concrete Brick – Standard Size, Pack of ~450',
-  'HCS-BR-COM-UTILITY-P450':
-    'Common Brick – Standard Size, Pack of ~450',
-  'HCS-BR-PRF-MULTICELL-P450':
-    'Perforated Brick – Standard Size, Pack of ~450',
-  'HCS-BR-AIR-VENT-P030':
-    'Air Brick (Ventilation) – Standard Size, Pack of ~30',
+  'ASC2-205-55-R16': 'AllSeasonContact 2 – 205/55 R16',
+  'EC6-225-45-R18': 'EcoContact 6 – 225/45 R18',
+  'PC7-245-40-R19': 'PremiumContact 7 – 245/40 R19',
+  'WT870P-225-45-R18': 'WinterContact TS 870 P – 225/45 R18',
+  'SC7-255-35-R20': 'SportContact 7 – 255/35 R20',
+  'WT870P-245-40-R19': 'WinterContact TS 870 P – 245/40 R19',
 };
 
 /**
@@ -69,40 +62,40 @@ export const EQUIPMENT_CATALOG_NAMES = {
 export const EQUIPMENT_DISPLAY_NAMES = { ...EQUIPMENT_CATALOG_NAMES };
 
 /**
- * Demo list price (USD) per salable unit. One unit = one pack (see EQUIPMENT_CATALOG_NAMES
- * “Pack of ~n”). Values are prior list reduced ~70% (×0.3) for lower demo unit economics.
+ * Demo list price (USD) per tire. Used as a fallback when Commerce returns no price
+ * for the SKU.
  */
 export const EQUIPMENT_CATALOG_PRICES_USD = {
-  'HCS-BR-FAC-WIRECUT-P450': 209.4,
-  'HCS-BR-ENG-CLASSAB-P350': 229.5,
-  'HCS-BR-CMU-SOLID-P450': 164.4,
-  'HCS-BR-COM-UTILITY-P450': 175.5,
-  'HCS-BR-PRF-MULTICELL-P450': 201.6,
-  'HCS-BR-AIR-VENT-P030': 33.6,
+  'ASC2-205-55-R16': 109,
+  'EC6-225-45-R18': 121,
+  'PC7-245-40-R19': 158,
+  'WT870P-225-45-R18': 136,
+  'SC7-255-35-R20': 194,
+  'WT870P-245-40-R19': 164,
 };
 
 /**
- * Legacy CHEP pallet SKUs → canonical HCS-BR SKUs (Commerce migration; see scripts).
+ * Legacy SKUs → canonical tire SKUs (Commerce migration; see scripts).
  */
 export const LEGACY_EQUIPMENT_SKU_MIGRATION = [
-  { from: 'CHEP-UK-WOOD-1200X1000-01', to: 'HCS-BR-FAC-WIRECUT-P450' },
-  { from: 'CHEP-EU-WOOD-1200X800-03', to: 'HCS-BR-ENG-CLASSAB-P350' },
-  { from: 'CHEP-WOOD-METAL-800X600-08', to: 'HCS-BR-CMU-SOLID-P450' },
-  { from: 'CHEP-PLASTIC-1200X800-01120', to: 'HCS-BR-COM-UTILITY-P450' },
-  { from: 'CHEP-PLASTIC-1200X1000-LIPS-00077', to: 'HCS-BR-PRF-MULTICELL-P450' },
-  { from: 'CHEP-PLASTIC-QTR-600X400-16', to: 'HCS-BR-AIR-VENT-P030' },
+  { from: 'CHEP-UK-WOOD-1200X1000-01', to: 'ASC2-205-55-R16' },
+  { from: 'CHEP-EU-WOOD-1200X800-03', to: 'EC6-225-45-R18' },
+  { from: 'CHEP-WOOD-METAL-800X600-08', to: 'PC7-245-40-R19' },
+  { from: 'CHEP-PLASTIC-1200X800-01120', to: 'WT870P-225-45-R18' },
+  { from: 'CHEP-PLASTIC-1200X1000-LIPS-00077', to: 'SC7-255-35-R20' },
+  { from: 'CHEP-PLASTIC-QTR-600X400-16', to: 'WT870P-245-40-R19' },
 ];
 
 /**
- * Intermediate masonry SKUs (HCS-MSY-*) → canonical HCS-BR-* (after earlier migration).
+ * Intermediate SKUs → canonical tire SKUs (after earlier migration).
  */
 export const EQUIPMENT_MSY_TO_BR_SKU_MIGRATION = [
-  { from: 'HCS-MSY-FAC-215102565-450', to: 'HCS-BR-FAC-WIRECUT-P450' },
-  { from: 'HCS-MSY-ENG-215102565-350', to: 'HCS-BR-ENG-CLASSAB-P350' },
-  { from: 'HCS-MSY-CMU-215102565-450', to: 'HCS-BR-CMU-SOLID-P450' },
-  { from: 'HCS-MSY-COM-215102565-450', to: 'HCS-BR-COM-UTILITY-P450' },
-  { from: 'HCS-MSY-PRF-215102565-450', to: 'HCS-BR-PRF-MULTICELL-P450' },
-  { from: 'HCS-MSY-AIR-215065-040', to: 'HCS-BR-AIR-VENT-P030' },
+  { from: 'HCS-MSY-FAC-215102565-450', to: 'ASC2-205-55-R16' },
+  { from: 'HCS-MSY-ENG-215102565-350', to: 'EC6-225-45-R18' },
+  { from: 'HCS-MSY-CMU-215102565-450', to: 'PC7-245-40-R19' },
+  { from: 'HCS-MSY-COM-215102565-450', to: 'WT870P-225-45-R18' },
+  { from: 'HCS-MSY-PRF-215102565-450', to: 'SC7-255-35-R20' },
+  { from: 'HCS-MSY-AIR-215065-040', to: 'WT870P-245-40-R19' },
 ];
 
 /**
@@ -114,12 +107,12 @@ export const EQUIPMENT_MSY_TO_BR_SKU_MIGRATION = [
  * are used as the denominator for the stock level bar only.
  */
 export const EQUIPMENT_STOCK_CAPACITY = {
-  'HCS-BR-FAC-WIRECUT-P450': 500,
-  'HCS-BR-ENG-CLASSAB-P350': 400,
-  'HCS-BR-CMU-SOLID-P450': 500,
-  'HCS-BR-COM-UTILITY-P450': 500,
-  'HCS-BR-PRF-MULTICELL-P450': 500,
-  'HCS-BR-AIR-VENT-P030': 60,
+  'ASC2-205-55-R16': 500,
+  'EC6-225-45-R18': 400,
+  'PC7-245-40-R19': 500,
+  'WT870P-225-45-R18': 500,
+  'SC7-255-35-R20': 500,
+  'WT870P-245-40-R19': 60,
 };
 
 /**

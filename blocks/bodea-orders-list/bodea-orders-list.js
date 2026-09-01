@@ -8,7 +8,7 @@ import {
 } from '../../scripts/commerce.js';
 import { fetchOrdersPage } from './orders-service.js';
 import { buildNav, toggleNav } from '../bodea-dashboard/dashboard-nav.js';
-import { renderBrickProductIcon } from '../bodea-order-new-delivery/brick-product-icon.js';
+import { renderTireProductIcon } from '../bodea-order-new-delivery/tire-product-icon.js';
 import { getEquipmentProductBySku } from '../bodea-order-new-delivery/equipment-products.js';
 import { ORDER_STATUS_MAP } from '../bodea-dashboard/dashboard-config.js';
 
@@ -31,7 +31,7 @@ function escapeHtml(str) {
 
 function getMaterialFromSku(sku) {
   const product = getEquipmentProductBySku(sku);
-  return product?.material ?? 'clay-common';
+  return product?.material ?? 'all-season';
 }
 
 function buildProductPreviewIcons(items) {
@@ -44,7 +44,7 @@ function buildProductPreviewIcons(items) {
     if (!sku || seen.has(sku)) continue;
     seen.add(sku);
     const material = getMaterialFromSku(sku);
-    icons.push(renderBrickProductIcon(material, { className: 'bodea-orders-list__brick-icon' }));
+    icons.push(renderTireProductIcon(material, { className: 'bodea-orders-list__tire-icon' }));
     if (icons.length >= 4) break;
   }
 

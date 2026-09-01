@@ -6,7 +6,7 @@ import {
   rootLink,
 } from '../../scripts/commerce.js';
 import { buildNav, toggleNav } from '../bodea-dashboard/dashboard-nav.js';
-import { renderBrickProductIcon } from './brick-product-icon.js';
+import { renderTireProductIcon } from './tire-product-icon.js';
 import { EQUIPMENT_PRODUCTS } from './equipment-products.js';
 import { fetchEquipmentSkuPrices, formatMoneyAmount } from './equipment-prices.js';
 import {
@@ -652,12 +652,9 @@ function renderEquipmentUnitPrice(state, sku) {
 }
 
 function formatMaterial(material) {
-  if (material === 'clay-facing') return 'Facing brick';
-  if (material === 'clay-engineering') return 'Engineering brick';
-  if (material === 'concrete') return 'Concrete / CMU';
-  if (material === 'clay-common') return 'Common brick';
-  if (material === 'clay-perf') return 'Perforated brick';
-  if (material === 'vent') return 'Air brick';
+  if (material === 'all-season') return 'All Season';
+  if (material === 'summer') return 'Summer';
+  if (material === 'winter') return 'Winter';
   return material;
 }
 
@@ -672,7 +669,7 @@ function renderEquipmentCards(state, errors) {
       <div class="ond-equipment-card${isSelected ? ' is-selected' : ''}">
         <div class="ond-equipment-card__top">
           <div class="ond-equipment-card__icon">
-            ${renderBrickProductIcon(product.material)}
+            ${renderTireProductIcon(product.material)}
           </div>
           <div class="ond-equipment-card__info">
             <div class="ond-equipment-card__name">${escapeHtml(shortName)}</div>

@@ -2,34 +2,34 @@ import { EQUIPMENT_CATALOG_NAMES } from '../bodea-dashboard/dashboard-config.js'
 
 export const EQUIPMENT_PRODUCTS = [
   {
-    label: EQUIPMENT_CATALOG_NAMES['HCS-BR-FAC-WIRECUT-P450'],
-    sku: 'HCS-BR-FAC-WIRECUT-P450',
-    material: 'clay-facing',
+    label: EQUIPMENT_CATALOG_NAMES['ASC2-205-55-R16'],
+    sku: 'ASC2-205-55-R16',
+    material: 'all-season',
   },
   {
-    label: EQUIPMENT_CATALOG_NAMES['HCS-BR-ENG-CLASSAB-P350'],
-    sku: 'HCS-BR-ENG-CLASSAB-P350',
-    material: 'clay-engineering',
+    label: EQUIPMENT_CATALOG_NAMES['EC6-225-45-R18'],
+    sku: 'EC6-225-45-R18',
+    material: 'summer',
   },
   {
-    label: EQUIPMENT_CATALOG_NAMES['HCS-BR-CMU-SOLID-P450'],
-    sku: 'HCS-BR-CMU-SOLID-P450',
-    material: 'concrete',
+    label: EQUIPMENT_CATALOG_NAMES['PC7-245-40-R19'],
+    sku: 'PC7-245-40-R19',
+    material: 'summer',
   },
   {
-    label: EQUIPMENT_CATALOG_NAMES['HCS-BR-COM-UTILITY-P450'],
-    sku: 'HCS-BR-COM-UTILITY-P450',
-    material: 'clay-common',
+    label: EQUIPMENT_CATALOG_NAMES['WT870P-225-45-R18'],
+    sku: 'WT870P-225-45-R18',
+    material: 'winter',
   },
   {
-    label: EQUIPMENT_CATALOG_NAMES['HCS-BR-PRF-MULTICELL-P450'],
-    sku: 'HCS-BR-PRF-MULTICELL-P450',
-    material: 'clay-perf',
+    label: EQUIPMENT_CATALOG_NAMES['SC7-255-35-R20'],
+    sku: 'SC7-255-35-R20',
+    material: 'summer',
   },
   {
-    label: EQUIPMENT_CATALOG_NAMES['HCS-BR-AIR-VENT-P030'],
-    sku: 'HCS-BR-AIR-VENT-P030',
-    material: 'vent',
+    label: EQUIPMENT_CATALOG_NAMES['WT870P-245-40-R19'],
+    sku: 'WT870P-245-40-R19',
+    material: 'winter',
   },
 ];
 

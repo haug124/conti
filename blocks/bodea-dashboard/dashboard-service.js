@@ -51,8 +51,8 @@ function getDemoOrderForDeliveryToday() {
         qty: 50,
       },
       {
-        name: EQUIPMENT_DISPLAY_NAMES['HCS-BR-ENG-CLASSAB-P350'],
-        sku: 'HCS-BR-ENG-CLASSAB-P350',
+        name: EQUIPMENT_DISPLAY_NAMES['EC6-225-45-R18'],
+        sku: 'EC6-225-45-R18',
         qty: 25,
       },
     ],
