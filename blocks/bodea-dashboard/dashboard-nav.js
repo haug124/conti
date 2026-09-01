@@ -33,10 +33,12 @@ const ICONS = {
 
   /* Stretcher-bond brick courses — construction / masonry (not package/logistics) */
   materials: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <rect x="3" y="4" width="18" height="5" rx="1"/>
-    <rect x="3" y="10" width="8" height="5" rx="1"/>
-    <rect x="13" y="10" width="8" height="5" rx="1"/>
-    <rect x="3" y="16" width="18" height="5" rx="1"/>
+    <circle cx="12" cy="12" r="9"/>
+    <circle cx="12" cy="12" r="3.5"/>
+    <line x1="12" y1="3" x2="12" y2="8.5"/>
+    <line x1="12" y1="15.5" x2="12" y2="21"/>
+    <line x1="3" y1="12" x2="8.5" y2="12"/>
+    <line x1="15.5" y1="12" x2="21" y2="12"/>
   </svg>`,
 
   locations: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
